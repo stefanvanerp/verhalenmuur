@@ -26,8 +26,7 @@ export default function AdminPage() {
       return;
     }
 
-    setStories(data && data.length ? data : startStories);
-  }
+setStories(data || []);  }
 
   useEffect(() => {
     loadStories();
