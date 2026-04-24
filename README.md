@@ -1,3 +1,5 @@
-# Verhalenmuur Cinema
+# Verhalenmuur
 
-Cinema versie van Premiere Stories Wall met Masters of the Universe artwork en aanpasbare CTA.
+Root `/` is het moderatie dashboard.
+
+Open `/screen` op het bioscoopscherm voor de schone publieke weergave zonder knoppen of statistieken.
