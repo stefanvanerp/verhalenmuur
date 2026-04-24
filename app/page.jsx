@@ -57,7 +57,16 @@ export default function Page() {
           <div className="brand-block">
             <div className="live-pill"><span /> LIVE vanuit Pathé Tuschinski</div>
             <div className="brand-eyebrow">Witness how he became He-Man</div>
-            <img className="movie-logo" src="/motu-logo.png" alt="Masters of the Universe" />
+           <img 
+  src="/motu-logo.png"
+  alt="Masters of the Universe"
+  style={{
+    width: "320px",
+    maxWidth: "35vw",
+    marginBottom: "10px",
+    filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.8))"
+  }}
+/>
             <div className="date"><span>4 juni</span> in de bioscoop</div>
           </div>
           <nav className="controls">
