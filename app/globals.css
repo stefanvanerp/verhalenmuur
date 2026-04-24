@@ -36,3 +36,7 @@
   height: 100%;
   max-height: none;
 }
+/* Verberg beheerknoppen op bioscoopscherm */
+.cinema .controls {
+  display: none !important;
+}
