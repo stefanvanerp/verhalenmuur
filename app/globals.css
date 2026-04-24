@@ -40,6 +40,30 @@ width: 110px;
 .cta {
   padding: 20px 28px !important;
 }
+/* --- QR FIX: binnen CTA houden --- */
+
+.qr-block {
+  gap: 12px !important;
+  margin-left: auto !important;
+  flex-shrink: 0 !important;
+}
+
+.qr-block img {
+  width: 84px !important;
+  height: 84px !important;
+}
+
+.qr-block span {
+  max-width: 90px !important;
+  line-height: 1.15 !important;
+  font-size: 14px !important;
+}
+
+.cta {
+  padding: 16px 24px !important;
+  max-width: 860px !important;
+  overflow: hidden !important;
+}
 
 .cta p {
   opacity: 0.8 !important;
