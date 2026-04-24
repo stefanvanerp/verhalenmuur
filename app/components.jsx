@@ -11,17 +11,12 @@ export function Brand() {
 
 export function CTA() {
   return (
-    <section className="cta">
-      <h1>ZIE JEZELF OP HET GROTE DOEK</h1>
-      <p>Maak je story en tag <span>@sonypicturesnl</span></p>
-
-      <div className="qr-block">
-        <img src="/qr.jpg" alt="Scan QR" />
-        <span>Scan en upload je story</span>
-      </div>
-    </section>
-  );
-}
+<section className="cta">
+  <div>
+    <h1>ZIE JEZELF OP HET GROTE DOEK</h1>
+    <p>Maak je story en tag <span>@sonypicturesnl</span></p>
+  </div>
+</section>
 
 export function StoryCard({ story }) {
   return (
