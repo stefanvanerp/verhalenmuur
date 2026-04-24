@@ -136,3 +136,31 @@ button { cursor: pointer; }
 
   display: block;
 }
+/* --- FORCE REAL INSTAGRAM STORY CARDS --- */
+
+.story-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 240px) !important;
+  gap: 28px !important;
+  justify-content: space-between !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+.story-card {
+  width: 240px !important;
+  height: 427px !important;
+  aspect-ratio: 9 / 16 !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+}
+
+.story-card img,
+.story-card > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
