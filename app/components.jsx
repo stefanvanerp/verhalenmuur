@@ -9,10 +9,16 @@ export function Brand() {
 
 export function CTA() {
   return (
-    <section className="cta">
-      <h1>ZIE JEZELF OP HET GROTE DOEK</h1>
-      <p>Maak je story en tag <span>@sonypicturesnl</span></p>
-    </section>
+    <div className="cta">
+      <div className="cta-inner">
+        <img src="/insta.png" className="cta-icon" />
+
+        <div>
+          <h2>ZIE JEZELF OP HET GROTE DOEK</h2>
+          <p>MAAK JE STORY EN TAG @SONYPICTURESNl</p>
+        </div>
+      </div>
+    </div>
   );
 }
 
