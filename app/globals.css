@@ -22,8 +22,21 @@ button, input { font: inherit; }
 .qr-floating img { width: 128px; height: 128px; object-fit: contain; background: white; padding: 7px; border-radius: 12px; display: block; }
 .qr-floating span { max-width: 125px; color: white; font-size: 17px; line-height: 1.15; font-weight: 900; }
 
-.story-grid { width: 100%; align-self: end; display: grid; grid-template-columns: repeat(4, 230px); justify-content: space-between; align-items: end; gap: 28px; transform: translateY(-32px); }
-.story-card { position: relative; width: 230px; height: 409px; border-radius: 22px; overflow: hidden; background: #19151d; box-shadow: 0 30px 70px rgba(0,0,0,.62), 0 0 0 1px rgba(255,255,255,.11); }
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+  align-items: start;
+}
+.story-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+}
 .story-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .story-overlay { position: absolute; inset-inline: 0; bottom: 0; padding: 58px 16px 16px; background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,0)); }
 .story-overlay strong { display: block; font-size: 16px; }
