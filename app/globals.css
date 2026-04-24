@@ -85,3 +85,45 @@ button { cursor: pointer; }
   .qr-floating { top: 190px; right: 40px; transform: scale(.9); transform-origin: top right; }
   .caption { font-size: 16px; }
 }
+/* --- FIX STORIES 9:16 + BIGGER QR --- */
+
+.story-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  align-items: end !important;
+}
+
+.story-card {
+  aspect-ratio: 9 / 16 !important;
+  height: 46vh !important;
+  max-height: 520px !important;
+  width: 100% !important;
+  border-radius: 22px !important;
+  overflow: hidden !important;
+}
+
+.story-card > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.qr-floating {
+  right: 56px !important;
+  top: 165px !important;
+  padding: 14px 18px !important;
+  gap: 16px !important;
+}
+
+.qr-floating img {
+  width: 135px !important;
+  height: 135px !important;
+  object-fit: contain !important;
+}
+
+.qr-floating span {
+  font-size: 18px !important;
+  line-height: 1.15 !important;
+  max-width: 130px !important;
+}
