@@ -23,8 +23,8 @@
 }
 
 .story-card {
-  border-radius: 18px !important;
-  overflow: hidden;
+  height: 38vh !important;
+  max-height: 400px !important;
 }
 /* --- FIT TO CINEMA SCREEN --- */
 
@@ -42,9 +42,9 @@
 }
 
 .cta {
-  margin: 28px 0 28px !important;
-  padding: 22px 32px !important;
-  max-width: 820px !important;
+  margin: 20px 0 20px !important;
+  padding: 20px 28px !important;
+  max-width: 760px !important;
 }
 
 .story-grid {
