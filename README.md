@@ -1,3 +1,3 @@
-# Premiere Wall
+# Verhalenmuur Cinema
 
-Werkend Vercel prototype zonder Tailwind build stap.
+Cinema versie van Premiere Stories Wall met Masters of the Universe artwork en aanpasbare CTA.
