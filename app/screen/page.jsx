@@ -11,6 +11,10 @@ export default function ScreenPage() {
       <div className="screen-shell">
         <Brand />
         <CTA />
+<div className="qr-floating">
+  <img src="/qr.jpg" alt="Scan QR" />
+  <span>Scan & upload je story</span>
+</div>
         <StoryGrid stories={approved} />
       </div>
     </main>
