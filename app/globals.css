@@ -164,3 +164,24 @@ button { cursor: pointer; }
   object-fit: cover !important;
   display: block !important;
 }
+/* --- MOVE STORIES UP AND FIT SCREEN --- */
+
+.story-grid {
+  margin-top: 8px !important;
+  transform: translateY(-34px) !important;
+}
+
+.story-card {
+  width: 230px !important;
+  height: 409px !important;
+}
+
+.cta {
+  margin-bottom: 8px !important;
+}
+
+.brand {
+  transform: scale(0.88) !important;
+  transform-origin: top left !important;
+  margin-bottom: -18px !important;
+}
