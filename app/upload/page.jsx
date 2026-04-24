@@ -40,8 +40,8 @@ export default function UploadPage() {
 
     const imageUrl = data.publicUrl;
 
-    // in database zetten
- const { error } = await supabase.from('stories').insert([
+ // in database zetten
+const { error } = await supabase.from('stories').insert([
   {
     user_name: username,
     caption: caption,
@@ -55,7 +55,6 @@ if (error) {
   setLoading(false);
   return;
 }
-    ]);
 
     setLoading(false);
     alert('Upload gelukt!');
