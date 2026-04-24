@@ -127,3 +127,12 @@ button { cursor: pointer; }
   line-height: 1.15 !important;
   max-width: 130px !important;
 }
+.story-card {
+  aspect-ratio: 9 / 16 !important;
+  width: 100% !important;
+
+  border-radius: 22px;
+  overflow: hidden;
+
+  display: block;
+}
