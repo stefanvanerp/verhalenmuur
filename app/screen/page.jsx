@@ -1,31 +1,35 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { startStories } from '../data';
-import { supabase, supabaseConfigured } from '../supabase';
 import { Brand, CTA, QRFloating, StoryGrid } from '../components';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 export default function ScreenPage() {
-  const [stories, setStories] = useState(startStories);
+  const [stories, setStories] = useState([]);
 
-  async function loadStories() {
-    if (!supabaseConfigured) return;
+  useEffect(() => {
+    fetchStories();
 
+    const interval = setInterval(fetchStories, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  async function fetchStories() {
     const { data, error } = await supabase
       .from('stories')
       .select('*')
       .eq('status', 'approved')
-      .order('created_at', { ascending: false })
-      .limit(12);
+      .order('created_at', { ascending: false });
 
-    if (!error && data && data.length) setStories(data);
+    if (!error) {
+      setStories(data);
+    }
   }
-
-  useEffect(() => {
-    loadStories();
-    const interval = setInterval(loadStories, 2500);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <main className="app screen">
