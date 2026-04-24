@@ -88,7 +88,7 @@ setStories(data || []);  }
             {incoming.map((story) => (
               <div className="moderation-item" key={story.id}>
                 <img src={story.image_url} alt="" />
-                <div><strong>{story.user_name || '@gast'}</strong><p>{story.caption}</p></div>
+<strong>{story.username || '@gast'}</strong> 
                 <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Goed</button>
                 <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
               </div>
@@ -98,7 +98,7 @@ setStories(data || []);  }
             {rejected.map((story) => (
               <div className="moderation-item compact" key={story.id}>
                 <img src={story.image_url} alt="" />
-                <div><strong>{story.user_name || '@gast'}</strong><p>{story.caption}</p></div>
+             <strong>{story.username || '@gast'}</strong>
                 <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Terugzetten</button>
               </div>
             ))}
