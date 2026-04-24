@@ -41,13 +41,14 @@ export default function UploadPage() {
     const imageUrl = data.publicUrl;
 
     // in database zetten
-    await supabase.from('stories').insert([
+ await supabase.from('stories').insert([
   {
     user_name: username,
     caption: caption,
     image_url: imageUrl,
     status: 'new'
   }
+]);
 ]);
     ]);
 
