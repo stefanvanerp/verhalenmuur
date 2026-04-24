@@ -40,3 +40,11 @@
 .cinema .controls {
   display: none !important;
 }
+/* Verberg knoppen zodra de app fullscreen staat */
+:fullscreen .controls {
+  display: none !important;
+}
+
+:-webkit-full-screen .controls {
+  display: none !important;
+}
