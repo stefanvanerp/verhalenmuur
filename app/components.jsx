@@ -11,8 +11,7 @@ export function CTA() {
   return (
     <div className="cta">
       <div className="cta-inner">
-        <img src="/insta.png" className="cta-icon" />
-
+<img src="/instagram.png" />
         <div>
           <h2>ZIE JEZELF OP HET GROTE DOEK</h2>
           <p>MAAK JE STORY EN TAG @SONYPICTURESNl</p>
