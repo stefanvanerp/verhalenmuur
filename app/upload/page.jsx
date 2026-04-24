@@ -42,12 +42,13 @@ export default function UploadPage() {
 
     // in database zetten
     await supabase.from('stories').insert([
-      {
-        username,
-        caption,
-        image_url: imageUrl,
-        status: 'pending'
-      }
+  {
+    user_name: username,
+    caption: caption,
+    image_url: imageUrl,
+    status: 'new'
+  }
+]);
     ]);
 
     setLoading(false);
