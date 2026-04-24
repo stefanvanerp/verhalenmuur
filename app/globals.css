@@ -26,3 +26,21 @@ width: 110px;
   background: white;
   padding: 6px;
 }
+/* --- QR CTA POLISH --- */
+
+.qr-block {
+  gap: 20px !important;
+}
+
+.qr-block img {
+  width: 110px !important;
+  height: 110px !important;
+}
+
+.cta {
+  padding: 20px 28px !important;
+}
+
+.cta p {
+  opacity: 0.8 !important;
+}
