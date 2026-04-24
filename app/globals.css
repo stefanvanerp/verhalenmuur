@@ -70,3 +70,44 @@
   height: 36vh !important;
   max-height: 380px !important;
 }
+/* --- FORCE FIT CINEMA SCREEN --- */
+
+body, html {
+  overflow: hidden !important;
+}
+
+.cinema {
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 32px !important;
+}
+
+/* header kleiner maken */
+.hero {
+  transform: scale(0.75);
+  transform-origin: top left;
+  margin-bottom: -40px !important;
+}
+
+/* CTA compacter */
+.cta {
+  margin: 10px 0 !important;
+  padding: 14px 22px !important;
+  max-width: 640px !important;
+}
+
+/* stories nemen rest van ruimte */
+.story-grid {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px !important;
+}
+
+/* cards automatisch schalen */
+.story-card {
+  height: 100% !important;
+  max-height: 340px !important;
+}
