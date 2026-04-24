@@ -23,7 +23,7 @@ export function CTA() {
 export function QRFloating() {
   return (
     <aside className="qr-floating">
-      <img src="/qr.png" alt="QR code uploadpagina" />
+    <img src="/qr.jpg" alt="Scan QR" />
       <span>Scan en upload je story</span>
     </aside>
   );
