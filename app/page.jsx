@@ -48,7 +48,7 @@ setStories(data || []);  }
   }
 
   const approved = useMemo(() => stories.filter((story) => story.status === 'approved'), [stories]);
-  const incoming = stories.filter((story) => story.status === 'new');
+ const incoming = stories.filter((story) => story.status === 'new' || story.status === 'pending');
   const rejected = stories.filter((story) => story.status === 'rejected');
   const stats = {
     new: incoming.length,
