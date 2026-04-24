@@ -8,13 +8,16 @@ export default function ScreenPage() {
     <main className="app screen">
       <div className="background" />
       <div className="glow" />
+
       <div className="screen-shell">
         <Brand />
         <CTA />
-<div className="qr-floating">
-  <img src="/qr.jpg" alt="Scan QR" />
-  <span>Scan & upload je story</span>
-</div>
+
+        <div className="qr-floating">
+          <img src="/qr.jpg" alt="Scan QR" />
+          <span>Scan en upload je story</span>
+        </div>
+
         <StoryGrid stories={approved} />
       </div>
     </main>
