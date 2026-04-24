@@ -10,3 +10,19 @@
   overflow: hidden;
   border-radius: 20px;
 }
+.qr-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  color: white;
+  font-weight: 700;
+}
+
+.qr-block img {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  background: white;
+  padding: 6px;
+}
