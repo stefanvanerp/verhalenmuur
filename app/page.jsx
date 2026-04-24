@@ -1,44 +1,61 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { STORAGE_KEY, startStories } from './data';
-import { Brand, CTA, QRFloating, StoryGrid } from './components';
-
-function loadStories() {
-  if (typeof window === 'undefined') return startStories;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : startStories;
-  } catch {
-    return startStories;
-  }
-}
+import { startStories } from './data';
+import { supabase, supabaseConfigured } from './supabase';
+import { Brand, CTA, StoryGrid } from './components';
 
 export default function AdminPage() {
   const [stories, setStories] = useState(startStories);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
+  async function loadStories() {
+    if (!supabaseConfigured) {
+      setMessage('Supabase keys ontbreken in Vercel. Demo data wordt getoond.');
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from('stories')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+
+    setStories(data && data.length ? data : startStories);
+  }
 
   useEffect(() => {
-    setStories(loadStories());
+    loadStories();
+    const interval = setInterval(loadStories, 2500);
+    return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
-  }, [stories]);
+  async function setStatus(id, status) {
+    if (String(id).startsWith('demo-')) return;
+    setLoading(true);
+    const { error } = await supabase
+      .from('stories')
+      .update({ status })
+      .eq('id', id);
+
+    if (error) setMessage(error.message);
+    await loadStories();
+    setLoading(false);
+  }
 
   const approved = useMemo(() => stories.filter((story) => story.status === 'approved'), [stories]);
+  const incoming = stories.filter((story) => story.status === 'new');
+  const rejected = stories.filter((story) => story.status === 'rejected');
   const stats = {
-    new: stories.filter((story) => story.status === 'new').length,
-    approved: stories.filter((story) => story.status === 'approved').length,
-    rejected: stories.filter((story) => story.status === 'rejected').length
+    new: incoming.length,
+    approved: approved.length,
+    rejected: rejected.length
   };
-
-  function setStatus(id, status) {
-    setStories((items) => items.map((item) => item.id === id ? { ...item, status } : item));
-  }
-
-  function resetDemo() {
-    setStories(startStories);
-  }
 
   return (
     <main className="app admin">
@@ -54,9 +71,10 @@ export default function AdminPage() {
           <nav className="admin-controls">
             <a href="/upload" target="_blank" rel="noreferrer">Open uploadpagina</a>
             <a href="/screen" target="_blank" rel="noreferrer">Open bioscoopscherm</a>
-            <button onClick={resetDemo}>Reset demo</button>
           </nav>
         </header>
+
+        {message ? <div className="notice">{message}</div> : null}
 
         <section className="admin-stats">
           <div><span>Nieuw</span><strong>{stats.new}</strong></div>
@@ -67,13 +85,22 @@ export default function AdminPage() {
         <section className="admin-layout">
           <div className="admin-panel">
             <h2>Nieuw binnen</h2>
-            {stories.filter((story) => story.status === 'new').length === 0 && <p className="empty">Geen nieuwe inzendingen.</p>}
-            {stories.filter((story) => story.status === 'new').map((story) => (
+            {incoming.length === 0 ? <p className="empty">Nog geen nieuwe uploads.</p> : null}
+            {incoming.map((story) => (
               <div className="moderation-item" key={story.id}>
-                <img src={story.image} alt="" />
-                <div><strong>{story.user}</strong><p>{story.caption}</p></div>
-                <button onClick={() => setStatus(story.id, 'approved')}>Goed</button>
-                <button onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
+                <img src={story.image_url} alt="" />
+                <div><strong>{story.user_name || '@gast'}</strong><p>{story.caption}</p></div>
+                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Goed</button>
+                <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
+              </div>
+            ))}
+
+            <h2 className="panel-subtitle">Afgewezen</h2>
+            {rejected.map((story) => (
+              <div className="moderation-item compact" key={story.id}>
+                <img src={story.image_url} alt="" />
+                <div><strong>{story.user_name || '@gast'}</strong><p>{story.caption}</p></div>
+                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Terugzetten</button>
               </div>
             ))}
           </div>
@@ -81,7 +108,6 @@ export default function AdminPage() {
           <div className="admin-preview">
             <Brand />
             <CTA />
-            <QRFloating />
             <StoryGrid stories={approved} />
           </div>
         </section>

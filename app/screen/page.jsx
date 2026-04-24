@@ -1,29 +1,31 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
-import { STORAGE_KEY, startStories } from '../data';
+import { useEffect, useState } from 'react';
+import { startStories } from '../data';
+import { supabase, supabaseConfigured } from '../supabase';
 import { Brand, CTA, QRFloating, StoryGrid } from '../components';
-
-function loadStories() {
-  if (typeof window === 'undefined') return startStories;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : startStories;
-  } catch {
-    return startStories;
-  }
-}
 
 export default function ScreenPage() {
   const [stories, setStories] = useState(startStories);
 
+  async function loadStories() {
+    if (!supabaseConfigured) return;
+
+    const { data, error } = await supabase
+      .from('stories')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .limit(12);
+
+    if (!error && data && data.length) setStories(data);
+  }
+
   useEffect(() => {
-    setStories(loadStories());
-    const interval = setInterval(() => setStories(loadStories()), 2000);
+    loadStories();
+    const interval = setInterval(loadStories, 2500);
     return () => clearInterval(interval);
   }, []);
-
-  const approved = useMemo(() => stories.filter((story) => story.status === 'approved'), [stories]);
 
   return (
     <main className="app screen">
@@ -33,7 +35,7 @@ export default function ScreenPage() {
         <Brand />
         <CTA />
         <QRFloating />
-        <StoryGrid stories={approved} />
+        <StoryGrid stories={stories} />
       </div>
     </main>
   );

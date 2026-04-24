@@ -1,9 +1,17 @@
-# Verhalenmuur
+# Verhalenmuur Supabase Live
 
 Routes:
 
 - `/` moderatie dashboard
 - `/screen` bioscoopscherm
-- `/upload` uploadpagina demo
+- `/upload` uploadpagina voor gasten
 
-Demo gebruikt browser localStorage. Voor echte live sync tussen telefoons en scherm is Supabase nodig.
+Vercel environment variables:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+Supabase:
+
+- table: `stories`
+- bucket: `stories`

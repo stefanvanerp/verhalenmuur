@@ -1,52 +1,30 @@
-export const STORAGE_KEY = 'verhalenmuur_stories_v1';
-
 export const startStories = [
   {
-    id: 1,
-    user: 'heman_fan',
-    time: '3m',
-    status: 'approved',
-    image: 'https://images.unsplash.com/photo-1514306191717-452ec28c7814?q=80&w=900&auto=format&fit=crop',
-    caption: 'De kracht is terug! 💪\n#MastersoftheUniverse'
+    id: 'demo-1',
+    user_name: '@sonypicturesnl',
+    caption: 'Première avond is begonnen.',
+    image_url: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=900&auto=format&fit=crop',
+    status: 'approved'
   },
   {
-    id: 2,
-    user: 'mastersfan',
-    time: '5m',
-    status: 'approved',
-    image: 'https://images.unsplash.com/photo-1514306191717-452ec28c7814?q=80&w=900&auto=format&fit=crop',
-    caption: 'He-Man terug op het grote doek!'
+    id: 'demo-2',
+    user_name: '@filmliefde',
+    caption: 'Ready voor de film.',
+    image_url: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=900&auto=format&fit=crop',
+    status: 'approved'
   },
   {
-    id: 3,
-    user: 'cinemadude',
-    time: '6m',
-    status: 'approved',
-    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=900&auto=format&fit=crop',
-    caption: 'Movie night! 🍿'
+    id: 'demo-3',
+    user_name: '@premiereguest',
+    caption: 'Op de rode loper.',
+    image_url: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=900&auto=format&fit=crop',
+    status: 'approved'
   },
   {
-    id: 4,
-    user: 'premieregirl',
-    time: '8m',
-    status: 'approved',
-    image: 'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=900&auto=format&fit=crop',
-    caption: 'Zie je zo in de zaal!'
-  },
-  {
-    id: 5,
-    user: 'filmfan_97',
-    time: 'nu',
-    status: 'new',
-    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=900&auto=format&fit=crop',
-    caption: 'Klaar voor vanavond!'
-  },
-  {
-    id: 6,
-    user: 'spoilervrij',
-    time: 'nu',
-    status: 'rejected',
-    image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=900&auto=format&fit=crop',
-    caption: 'Afgekeurde demo post'
+    id: 'demo-4',
+    user_name: '@moviecrew',
+    caption: 'Zie je zo in de zaal.',
+    image_url: 'https://images.unsplash.com/photo-1505686994434-e3cc5abf1330?q=80&w=900&auto=format&fit=crop',
+    status: 'approved'
   }
 ];

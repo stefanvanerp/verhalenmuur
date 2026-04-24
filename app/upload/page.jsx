@@ -1,71 +1,102 @@
 'use client';
 
 import { useState } from 'react';
-import { STORAGE_KEY, startStories } from '../data';
-
-function getStories() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : startStories;
-  } catch {
-    return startStories;
-  }
-}
+import { supabase, supabaseConfigured } from '../supabase';
 
 export default function UploadPage() {
-  const [user, setUser] = useState('');
+  const [file, setFile] = useState(null);
+  const [userName, setUserName] = useState('');
   const [caption, setCaption] = useState('');
-  const [image, setImage] = useState('');
-  const [done, setDone] = useState(false);
+  const [preview, setPreview] = useState('');
+  const [status, setStatus] = useState('');
+  const [busy, setBusy] = useState(false);
 
-  function handleFile(event) {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => setImage(String(reader.result));
-    reader.readAsDataURL(file);
+  function onFileChange(event) {
+    const selected = event.target.files?.[0];
+    setFile(selected || null);
+    setPreview(selected ? URL.createObjectURL(selected) : '');
   }
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault();
-    if (!user || !caption || !image) return;
-    const current = getStories();
-    const newStory = {
-      id: Date.now(),
-      user: user.replace('@', ''),
-      time: 'nu',
-      status: 'new',
-      image,
-      caption
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([newStory, ...current]));
-    setDone(true);
+    if (!supabaseConfigured) {
+      setStatus('Supabase is nog niet gekoppeld.');
+      return;
+    }
+    if (!file) {
+      setStatus('Kies eerst een foto of screenshot.');
+      return;
+    }
+
+    setBusy(true);
+    setStatus('Uploaden...');
+
+    const safeName = file.name.replace(/[^a-z0-9.]/gi, '-').toLowerCase();
+    const filePath = `${Date.now()}-${safeName}`;
+    const { error: uploadError } = await supabase.storage
+      .from('stories')
+      .upload(filePath, file, { upsert: false });
+
+    if (uploadError) {
+      setStatus(uploadError.message);
+      setBusy(false);
+      return;
+    }
+
+    const { data: publicData } = supabase.storage.from('stories').getPublicUrl(filePath);
+
+    const { error: insertError } = await supabase.from('stories').insert({
+      user_name: userName || '@gast',
+      caption: caption || 'Mijn première story',
+      image_url: publicData.publicUrl,
+      status: 'new'
+    });
+
+    if (insertError) {
+      setStatus(insertError.message);
+      setBusy(false);
+      return;
+    }
+
+    setStatus('Gelukt! Je upload staat klaar voor moderatie.');
+    setFile(null);
+    setPreview('');
+    setUserName('');
+    setCaption('');
+    event.target.reset();
+    setBusy(false);
   }
 
   return (
     <main className="upload-page">
-      <form className="upload-card" onSubmit={submit}>
-        <div className="kicker">Verhalenmuur</div>
-        <h1>Upload je story</h1>
-        <p>Maak je story, tag @sonypicturesnl en upload hier je beeld voor het grote doek.</p>
+      <div className="upload-card">
+        <img className="upload-logo" src="/motu-logo.png" alt="Masters of the Universe" />
+        <h1>Zie jezelf op het grote doek</h1>
+        <p>Upload je story screenshot of première foto. Na goedkeuring verschijnt hij op het bioscoopscherm.</p>
 
-        <label>Instagram naam
-          <input value={user} onChange={(e) => setUser(e.target.value)} placeholder="@jouwnaam" />
-        </label>
+        <form onSubmit={submit} className="upload-form">
+          <label>
+            Instagram naam
+            <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="@jouwnaam" />
+          </label>
 
-        <label>Caption
-          <textarea value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Bijvoorbeeld: De kracht is terug!" />
-        </label>
+          <label>
+            Korte tekst
+            <input value={caption} onChange={(event) => setCaption(event.target.value)} placeholder="Bijvoorbeeld: ready voor de film" />
+          </label>
 
-        <label>Foto of screenshot
-          <input type="file" accept="image/*" onChange={handleFile} />
-        </label>
+          <label>
+            Upload beeld
+            <input type="file" accept="image/*" onChange={onFileChange} />
+          </label>
 
-        {image && <img className="upload-preview" src={image} alt="Preview" />}
+          {preview ? <img className="upload-preview" src={preview} alt="Preview" /> : null}
 
-        <button type="submit">Insturen voor moderatie</button>
-        {done && <div className="success">Gelukt! Je inzending staat klaar voor moderatie.</div>}
-      </form>
+          <button disabled={busy} type="submit">{busy ? 'Uploaden...' : 'Insturen'}</button>
+        </form>
+
+        {status ? <div className="upload-status">{status}</div> : null}
+      </div>
     </main>
   );
 }

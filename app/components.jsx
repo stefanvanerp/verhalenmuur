@@ -1,10 +1,8 @@
 export function Brand() {
   return (
     <section className="brand">
-      <div className="live"><span />LIVE vanuit Pathé Tuschinski</div>
-      <div className="tagline">WITNESS HOW HE BECAME HE-MAN</div>
-      <img className="logo" src="/motu-logo.png" alt="Masters of the Universe" />
-      <div className="date"><span>4 JUNI</span> IN DE BIOSCOOP</div>
+      <img src="/motu-logo.png" alt="Masters of the Universe" />
+      <p><strong>4 JUNI</strong> IN DE BIOSCOOP</p>
     </section>
   );
 }
@@ -12,10 +10,8 @@ export function Brand() {
 export function CTA() {
   return (
     <section className="cta">
-      <div>
-        <h1>ZIE JEZELF OP HET GROTE DOEK</h1>
-        <p>Maak je story en tag <span>@sonypicturesnl</span></p>
-      </div>
+      <h1>ZIE JEZELF OP HET GROTE DOEK</h1>
+      <p>Maak je story en tag <span>@sonypicturesnl</span></p>
     </section>
   );
 }
@@ -23,7 +19,7 @@ export function CTA() {
 export function QRFloating() {
   return (
     <aside className="qr-floating">
-    <img src="/qr.jpg" alt="Scan QR" />
+      <img src="/qr.png" alt="Scan QR" />
       <span>Scan en upload je story</span>
     </aside>
   );
@@ -31,30 +27,18 @@ export function QRFloating() {
 
 export function StoryGrid({ stories }) {
   const visible = stories.slice(0, 4);
+
   return (
     <section className="story-grid">
-      {visible.map((story) => <StoryCard key={story.id} story={story} />)}
+      {visible.map((story) => (
+        <article className="story-card" key={story.id}>
+          <img src={story.image_url} alt={story.user_name || 'Story'} />
+          <div className="story-overlay">
+            <strong>{story.user_name || '@gast'}</strong>
+            <span>{story.caption || 'Première story'}</span>
+          </div>
+        </article>
+      ))}
     </section>
-  );
-}
-
-export function StoryCard({ story }) {
-  return (
-    <article className="story-card">
-      <img src={story.image} alt="" />
-      <div className="story-overlay" />
-      <div className="story-top">
-        <div className="avatar" />
-        <div>
-          <div className="username">{story.user}</div>
-          <div className="time">{story.time}</div>
-        </div>
-        <div className="story-icon">◎</div>
-      </div>
-      <div className="caption">
-        {story.caption.split('\n').map((line, i) => <strong key={i}>{line}</strong>)}
-        <span>@sonypicturesnl</span>
-      </div>
-    </article>
   );
 }
