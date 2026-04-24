@@ -61,3 +61,12 @@
   padding: 18px 26px !important;
   max-width: 720px !important;
 }
+.cta {
+  margin: 12px 0 12px !important;
+  padding: 16px 24px !important;
+  max-width: 680px !important;
+  }
+  .story-card {
+  height: 36vh !important;
+  max-height: 380px !important;
+}
