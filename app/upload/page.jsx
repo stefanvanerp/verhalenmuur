@@ -48,7 +48,6 @@ const { error } = await supabase.from('stories').insert([
     image_url: imageUrl,
     status: 'new'
   }
-]);
 
 if (error) {
   alert(error.message);
