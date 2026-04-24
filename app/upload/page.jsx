@@ -1,102 +1,100 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase, supabaseConfigured } from '../supabase';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 export default function UploadPage() {
   const [file, setFile] = useState(null);
-  const [userName, setUserName] = useState('');
+  const [username, setUsername] = useState('');
   const [caption, setCaption] = useState('');
-  const [preview, setPreview] = useState('');
-  const [status, setStatus] = useState('');
-  const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function onFileChange(event) {
-    const selected = event.target.files?.[0];
-    setFile(selected || null);
-    setPreview(selected ? URL.createObjectURL(selected) : '');
-  }
+  async function handleUpload(e) {
+    e.preventDefault();
+    if (!file) return;
 
-  async function submit(event) {
-    event.preventDefault();
-    if (!supabaseConfigured) {
-      setStatus('Supabase is nog niet gekoppeld.');
-      return;
-    }
-    if (!file) {
-      setStatus('Kies eerst een foto of screenshot.');
-      return;
-    }
+    setLoading(true);
 
-    setBusy(true);
-    setStatus('Uploaden...');
+    const fileName = `${Date.now()}-${file.name}`;
 
-    const safeName = file.name.replace(/[^a-z0-9.]/gi, '-').toLowerCase();
-    const filePath = `${Date.now()}-${safeName}`;
+    // upload naar storage
     const { error: uploadError } = await supabase.storage
       .from('stories')
-      .upload(filePath, file, { upsert: false });
+      .upload(fileName, file);
 
     if (uploadError) {
-      setStatus(uploadError.message);
-      setBusy(false);
+      alert('Upload failed');
+      setLoading(false);
       return;
     }
 
-    const { data: publicData } = supabase.storage.from('stories').getPublicUrl(filePath);
+    // public URL ophalen
+    const { data } = supabase.storage
+      .from('stories')
+      .getPublicUrl(fileName);
 
-    const { error: insertError } = await supabase.from('stories').insert({
-      user_name: userName || '@gast',
-      caption: caption || 'Mijn première story',
-      image_url: publicData.publicUrl,
-      status: 'new'
-    });
+    const imageUrl = data.publicUrl;
 
-    if (insertError) {
-      setStatus(insertError.message);
-      setBusy(false);
-      return;
-    }
+    // in database zetten
+    await supabase.from('stories').insert([
+      {
+        username,
+        caption,
+        image_url: imageUrl,
+        status: 'pending'
+      }
+    ]);
 
-    setStatus('Gelukt! Je upload staat klaar voor moderatie.');
+    setLoading(false);
+    alert('Upload gelukt!');
+
     setFile(null);
-    setPreview('');
-    setUserName('');
+    setUsername('');
     setCaption('');
-    event.target.reset();
-    setBusy(false);
   }
 
   return (
-    <main className="upload-page">
-      <div className="upload-card">
-        <img className="upload-logo" src="/motu-logo.png" alt="Masters of the Universe" />
-        <h1>Zie jezelf op het grote doek</h1>
-        <p>Upload je story screenshot of première foto. Na goedkeuring verschijnt hij op het bioscoopscherm.</p>
+    <main style={{ padding: 40 }}>
+      <h1>Upload je story</h1>
 
-        <form onSubmit={submit} className="upload-form">
-          <label>
-            Instagram naam
-            <input value={userName} onChange={(event) => setUserName(event.target.value)} placeholder="@jouwnaam" />
-          </label>
+      <form onSubmit={handleUpload}>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
 
-          <label>
-            Korte tekst
-            <input value={caption} onChange={(event) => setCaption(event.target.value)} placeholder="Bijvoorbeeld: ready voor de film" />
-          </label>
+        <br /><br />
 
-          <label>
-            Upload beeld
-            <input type="file" accept="image/*" onChange={onFileChange} />
-          </label>
+        <input
+          type="text"
+          placeholder="Caption"
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
+        />
 
-          {preview ? <img className="upload-preview" src={preview} alt="Preview" /> : null}
+        <br /><br />
 
-          <button disabled={busy} type="submit">{busy ? 'Uploaden...' : 'Insturen'}</button>
-        </form>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
+          required
+        />
 
-        {status ? <div className="upload-status">{status}</div> : null}
-      </div>
+        <br /><br />
+
+        <button disabled={loading}>
+          {loading ? 'Uploading...' : 'Upload'}
+        </button>
+      </form>
     </main>
   );
 }
