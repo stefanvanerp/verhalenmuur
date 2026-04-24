@@ -111,3 +111,35 @@ body, html {
   height: 100% !important;
   max-height: 340px !important;
 }
+.cinema {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
+  padding: 18px 32px !important;
+  display: block !important;
+}
+
+.hero {
+  transform: scale(0.72) !important;
+  transform-origin: top left !important;
+  margin-bottom: -55px !important;
+}
+
+.cta {
+  margin: 8px 0 18px !important;
+  padding: 14px 22px !important;
+  max-width: 640px !important;
+}
+
+.story-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 24px !important;
+  margin-top: 16px !important;
+}
+
+.story-card {
+  height: 34vh !important;
+  max-height: 340px !important;
+  min-height: 0 !important;
+}
