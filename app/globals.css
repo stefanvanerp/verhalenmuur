@@ -111,3 +111,31 @@ button, input { font: inherit; }
   width: 250px !important;
   height: 444px !important;
 }
+.cta {
+  margin: 20px 0;
+  border-radius: 20px;
+  border: 1px solid rgba(255,0,0,0.4);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(20px);
+  padding: 20px 30px;
+}
+
+.cta-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.cta-icon {
+  width: 60px;
+  height: 60px;
+}
+
+.cta h2 {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.cta p {
+  opacity: 0.8;
+}
