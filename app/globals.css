@@ -143,3 +143,22 @@ body, html {
   max-height: 340px !important;
   min-height: 0 !important;
 }
+.story-card {
+  height: 28vh !important;
+  max-height: 280px !important;
+}
+
+.story-grid {
+  margin-top: 10px !important;
+  gap: 22px !important;
+}
+
+.cta {
+  margin: 6px 0 14px !important;
+  padding: 12px 20px !important;
+}
+
+.hero {
+  transform: scale(0.66) !important;
+  margin-bottom: -70px !important;
+}
