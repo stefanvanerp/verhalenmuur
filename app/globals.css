@@ -56,3 +56,8 @@
   height: 42vh !important;
   max-height: 430px !important;
 }
+.cta {
+  margin: 16px 0 16px !important;
+  padding: 18px 26px !important;
+  max-width: 720px !important;
+}
