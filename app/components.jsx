@@ -46,8 +46,7 @@ if (!stories || stories.length <= 1) return;
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [stories]);
-
+}, [stories.length]);
   const looped = [...stories, ...stories];
 
   return (
