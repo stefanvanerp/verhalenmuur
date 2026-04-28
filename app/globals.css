@@ -59,43 +59,6 @@ button, input { font: inherit; }
 .qr-floating img { width: 128px; height: 128px; object-fit: contain; background: white; padding: 7px; border-radius: 12px; display: block; }
 .qr-floating span { max-width: 125px; color: white; font-size: 17px; line-height: 1.15; font-weight: 900; }
 
-.story-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 260px);
-  gap: 48px;
-  justify-content: center;
-
-  align-self: center;   /* 👈 dit is de key */
-  transform: translateY(40px); /* 👈 fine-tune positie */
-}
-
-.story-card {
-  width: 300px;
-  height: 533px;
-  border-radius: 22px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.65);
-  opacity: 1;
-  transform: none;
-}
-
-.story-card:nth-child(1),
-.story-card:nth-child(2),
-.story-card:nth-child(3),
-.story-card:nth-child(4),
-.story-card:nth-child(5) {
-  opacity: 1;
-  transform: none;
-}
-
-.story-card img,
-.story-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: black;
-}
 
 .story-overlay {
   position: absolute;
@@ -270,35 +233,4 @@ button, input { font: inherit; }
     transform: translateX(0) scale(1);
   }
 }
-.story-grid {
-  overflow: hidden;
-  width: 100%;
-}
-
-.story-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-}
-
-.story-card {
-  min-width: 220px;
-  height: 380px;
-  flex-shrink: 0;
-}
-
-.story-card img,
-.story-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-@keyframes scrollStories {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
-}
+.story-grid
