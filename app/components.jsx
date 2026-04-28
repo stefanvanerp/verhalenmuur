@@ -35,7 +35,6 @@ export function QRFloating() {
     </aside>
   );
 }
-import { useEffect, useState } from "react";
 
 export function StoryGrid({ stories }) {
   const [currentIndex, setCurrentIndex] = useState(0);
