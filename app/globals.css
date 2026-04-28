@@ -139,7 +139,7 @@ button, input { font: inherit; }
 }
 .story-grid {
   width: 100%;
-  max-width: 1520px;
+  max-width: 1112px; /* EXACT 4 cards */
   margin: 80px auto 0;
   overflow: hidden;
 }
