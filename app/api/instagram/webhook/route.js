@@ -44,22 +44,25 @@ export async function POST(request) {
         const senderId = event.sender?.id;
         const messageId = event.message?.mid;
 
-       // bepaal type (image of video)
+  // bepaal type via de echte Content-Type van de URL
 let mediaType = "image";
 
-if (storyUrl.includes(".mp4") || storyUrl.includes("video")) {
-  mediaType = "video";
-}
+try {
+  const mediaResponse = await fetch(storyUrl, { method: "HEAD" });
+  const contentType = mediaResponse.headers.get("content-type") || "";
 
-const { error } = await supabase.from("stories").insert([
-  {
-    user_name: "",
-    caption: "",
-    image_url: storyUrl,
-    media_type: mediaType,
-    status: "new",
-  },
-]);
+  if (contentType.startsWith("video/")) {
+    mediaType = "video";
+  }
+
+  console.log("Detected media type:", contentType, mediaType);
+} catch (error) {
+  console.error("Media type detection failed:", error.message);
+
+  if (storyUrl?.includes(".mp4") || storyUrl?.includes("video")) {
+    mediaType = "video";
+  }
+}
 
         if (error) {
           console.error("Supabase insert error:", error.message);
