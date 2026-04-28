@@ -56,7 +56,7 @@ export function StoryGrid({ stories }) {
       <div
         className="story-track"
         style={{
-          transform: `translateX(-${currentIndex * 244}px)`,
+          transform: `translateX(-${currentIndex * 284}px)`,
           transition: "transform 0.8s ease-in-out",
         }}
       >
