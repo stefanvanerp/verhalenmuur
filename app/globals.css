@@ -137,61 +137,38 @@ button, input { font: inherit; }
   height: 100%;
   object-fit: cover;
 }
-/* --- FIX STORY SPACING --- */
-
 .story-grid {
-  display: grid !important;
-  grid-template-columns: repeat(4, 250px) !important;
-  gap: 40px !important;
-  justify-content: center !important;
-  align-items: start !important;
+  width: 100%;
+  max-width: 1520px;
+  margin: 80px auto 0;
+  overflow: hidden;
+}
+
+.story-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  will-change: transform;
 }
 
 .story-card {
-  width: 250px !important;
-  height: 444px !important;
-}
-.cta {
-  margin: 20px 0;
-  border-radius: 20px;
-  border: 1px solid rgba(255,0,0,0.4);
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(20px);
-  padding: 20px 30px;
-}
-
-.cta-inner {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.cta-icon {
-  width: 60px;
-  height: 60px;
-}
-
-.cta h2 {
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.cta p {
-  opacity: 0.8;
-}
-.moderation-media {
-  width: 140px;
-  height: 220px;
-  object-fit: contain;
+  width: 260px;
+  min-width: 260px;
+  height: 460px;
+  flex: 0 0 260px;
+  border-radius: 22px;
+  overflow: hidden;
   background: #000;
-  border-radius: 14px;
-  flex-shrink: 0;
 }
 
-.moderation-item {
-  align-items: center;
-  gap: 20px;
-  /* Moderation layout strakker maken */
+.story-card img,
+.story-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 .moderation-item {
   display: flex;
   align-items: center;
@@ -201,7 +178,6 @@ button, input { font: inherit; }
   background: rgba(255, 255, 255, 0.04);
 }
 
-/* Media preview (image + video gelijk trekken) */
 .moderation-media {
   width: 140px;
   height: 220px;
@@ -211,26 +187,7 @@ button, input { font: inherit; }
   flex-shrink: 0;
 }
 
-/* Buttons iets netter */
 .moderation-item button {
   padding: 10px 16px;
   border-radius: 10px;
 }
-}
-.story-card {
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  animation: storyFadeIn 0.6s ease;
-}
-
-@keyframes storyFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(24px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
-}
-.story-grid
