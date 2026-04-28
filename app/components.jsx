@@ -36,17 +36,6 @@ export function QRFloating() {
   );
 }
 
-.story-grid {
-  overflow: hidden;
-  width: 100%;
-}
-
-.story-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-}
-
 .story-card {
   min-width: 220px;
   height: 380px;
