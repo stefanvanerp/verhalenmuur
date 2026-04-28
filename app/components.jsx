@@ -9,20 +9,16 @@ export function Brand() {
   );
 }
 
-export function CTA() {
+eexport function CTA() {
   return (
-    <div className="cta">
-      <div className="cta-inner">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-          className="cta-icon"
-          alt="Instagram"
-        />
-        <div>
-          <h2>ZIE JEZELF OP HET GROTE DOEK</h2>
-          <p>MAAK JE STORY EN TAG @SONYPICTURESNl</p>
-        </div>
-      </div>
+    <div className="cta-hero">
+      <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
+
+      <h2>MAAK JE STORY EN TAG</h2>
+
+      <p className="cta-tag">@SONYPICTURESNL</p>
+
+      <p className="cta-hashtag">#MASTERSOFTHEUNIVERSE</p>
     </div>
   );
 }
