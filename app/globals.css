@@ -11,7 +11,7 @@ button, input { font: inherit; }
   position: relative;
   z-index: 2;
   height: 100vh;
-  padding: 24px 54px 24px;
+  padding: 34px 54px 56px;
   display: grid;
   grid-template-rows: auto auto 1fr;
   overflow: hidden;
@@ -22,13 +22,13 @@ button, input { font: inherit; }
 .brand strong { color: #ff2b24; }
 
 .cta {
-  margin: 40px auto;
-  max-width: 900px;
+  margin: 16px 0 0;
+  max-width: 720px;
   border-radius: 24px;
   border: 1px solid rgba(255, 0, 0, 0.4);
   background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
   backdrop-filter: blur(20px);
-padding: 80px 54px 60px;
+  padding: 18px 28px;
 }
 
 .cta-inner {
@@ -65,7 +65,7 @@ padding: 80px 54px 60px;
   gap: 48px;
   justify-content: center;
   align-self: end;
-  margin-bottom: 0;
+  margin-bottom: 20px;
 }
 
 .story-card {
