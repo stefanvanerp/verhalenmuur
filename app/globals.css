@@ -216,3 +216,16 @@ button, input { font: inherit; }
 .cta p {
   opacity: 0.8;
 }
+.moderation-media {
+  width: 140px;
+  height: 220px;
+  object-fit: contain;
+  background: #000;
+  border-radius: 14px;
+  flex-shrink: 0;
+}
+
+.moderation-item {
+  align-items: center;
+  gap: 20px;
+}
