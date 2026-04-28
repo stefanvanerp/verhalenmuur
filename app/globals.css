@@ -11,12 +11,12 @@ button, input { font: inherit; }
   position: relative;
   z-index: 2;
   height: 100vh;
-  padding: 24px 54px 70px;
+  padding: 24px 54px 24px;
   display: grid;
   grid-template-rows: auto auto 1fr;
   overflow: hidden;
 }
-.brand { max-width: 360px; transform: scale(.88); transform-origin: top left; margin-bottom: -18px; }
+.brand { max-width: 360px; transform: scale(.88); transform-origin: top left; margin-bottom: -30px; }
 .brand img { width: 100%; filter: drop-shadow(0 12px 28px rgba(0,0,0,.85)); display: block; }
 .brand p { margin: 5px 0 0; font-size: 15px; letter-spacing: .18em; font-weight: 900; }
 .brand strong { color: #ff2b24; }
@@ -28,7 +28,7 @@ button, input { font: inherit; }
   border: 1px solid rgba(255, 0, 0, 0.4);
   background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
   backdrop-filter: blur(20px);
-  padding: 24px 32px;
+padding: 80px 54px 60px;
 }
 
 .cta-inner {
