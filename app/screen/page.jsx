@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Brand, CTA, QRFloating, StoryGrid } from '../components';
+import { Brand, CTA, StoryGrid } from '../components';
 import { createClient } from '@supabase/supabase-js';
 
 const supabase = createClient(
@@ -38,7 +38,6 @@ export default function ScreenPage() {
       <div className="screen-shell">
         <Brand />
         <CTA />
-        <QRFloating />
         <StoryGrid stories={stories} />
       </div>
     </main>
