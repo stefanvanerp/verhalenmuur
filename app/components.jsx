@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export function Brand() {
   return (
     <section className="brand">
@@ -34,30 +36,19 @@ export function QRFloating() {
   );
 }
 
-export function StoryGrid({ stories }) {
-  const looped = [...stories, ...stories];
+.story-grid {
+  overflow: hidden;
+  width: 100%;
+}
 
-  return (
-    <section className="story-grid">
-      <div className="story-track">
-        {looped.map((story, index) => (
-          <article className="story-card" key={`${story.id}-${index}`}>
-            {story.media_type === "video" ||
-            story.image_url?.includes(".mp4") ||
-            story.image_url?.includes("video") ? (
-              <video
-                src={story.image_url}
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
-            ) : (
-              <img src={story.image_url} alt="Story" />
-            )}
-          </article>
-        ))}
-      </div>
-    </section>
-  );
+.story-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+}
+
+.story-card {
+  min-width: 220px;
+  height: 380px;
+  flex-shrink: 0;
 }
