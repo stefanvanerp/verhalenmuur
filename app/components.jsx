@@ -35,3 +35,30 @@ export function QRFloating() {
     </aside>
   );
 }
+export function StoryGrid({ stories }) {
+  const looped = [...stories, ...stories];
+
+  return (
+    <section className="story-grid">
+      <div className="story-track">
+        {looped.map((story, index) => (
+          <article className="story-card" key={`${story.id}-${index}`}>
+            {story.media_type === "video" ||
+            story.image_url?.includes(".mp4") ||
+            story.image_url?.includes("video") ? (
+              <video
+                src={story.image_url}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <img src={story.image_url} alt="Story" />
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
