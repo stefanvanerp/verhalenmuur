@@ -69,8 +69,8 @@ button, input { font: inherit; }
 }
 
 .story-card {
-  width: 250px;
-  height: 445px;
+  width: 300px;
+  height: 533px;
   border-radius: 22px;
   overflow: hidden;
   position: relative;
