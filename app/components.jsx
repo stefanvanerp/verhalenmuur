@@ -41,7 +41,9 @@ export function StoryGrid({ stories }) {
     <section className="story-grid">
       {visible.map((story) => (
         <article className="story-card" key={story.id}>
-          {story.media_type === "video" ? (
+          {story.media_type === "video" ||
+          story.image_url?.includes(".mp4") ||
+          story.image_url?.includes("video") ? (
             <video
               src={story.image_url}
               autoPlay
