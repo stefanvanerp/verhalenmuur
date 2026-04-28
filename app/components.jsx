@@ -9,7 +9,7 @@ export function Brand() {
   );
 }
 
-eexport function CTA() {
+export function CTA() {
   return (
     <div className="cta-hero">
       <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
