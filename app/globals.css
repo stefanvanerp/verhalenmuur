@@ -189,5 +189,10 @@ button, input { font: inherit; }
 
 .moderation-item button {
   padding: 10px 16px;
+  .story-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+}
   border-radius: 10px;
 }
