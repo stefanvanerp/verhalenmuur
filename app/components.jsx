@@ -40,8 +40,7 @@ export function StoryGrid({ stories }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (!stories || stories.length <= 4) return;
-
+if (!stories || stories.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % stories.length);
     }, 5000);
