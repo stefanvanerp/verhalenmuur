@@ -26,22 +26,25 @@ export async function POST(request) {
     return Response.json({ received: false }, { status: 404 });
   }
 
- for (const entry of body.entry || []) {
-  for (const event of entry.messaging || []) {
-    const attachments = event.message?.attachments || [];
+  for (const entry of body.entry || []) {
+    for (const event of entry.messaging || []) {
+      const attachments = event.message?.attachments || [];
 
-    for (const attachment of attachments) {
-      if (attachment.type !== "story_mention") continue;
+      for (const attachment of attachments) {
+        if (attachment.type !== "story_mention") continue;
 
-      const storyUrl = attachment.payload?.url;
-      const senderId = event.sender?.id;
-      const messageId = event.message?.mid;
+        const storyUrl = attachment.payload?.url;
+        const senderId = event.sender?.id;
+        const messageId = event.message?.mid;
 
-      console.log("Story mention received:", {
-        senderId,
-        messageId,
-        storyUrl,
-      });
+        console.log("Story mention received:", {
+          senderId,
+          messageId,
+          storyUrl,
+        });
+      }
     }
   }
+
+  return Response.json({ received: true }, { status: 200 });
 }
