@@ -41,11 +41,7 @@ export function StoryGrid({ stories }) {
     <section className="story-grid">
       {visible.map((story) => (
         <article className="story-card" key={story.id}>
-          <img src={story.image_url} alt={story.user_name || 'Story'} />
-          <div className="story-overlay">
-            <strong>{story.user_name || '@gast'}</strong>
-            <span>{story.caption || 'Première story'}</span>
-          </div>
+          <img src={story.image_url} alt="Story" />
         </article>
       ))}
     </section>
