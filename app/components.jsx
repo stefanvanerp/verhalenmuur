@@ -35,24 +35,38 @@ export function QRFloating() {
     </aside>
   );
 }
+import { useEffect, useState } from "react";
+
 export function StoryGrid({ stories }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (!stories || stories.length <= 4) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => (i + 1) % stories.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [stories]);
+
   const looped = [...stories, ...stories];
 
   return (
     <section className="story-grid">
-      <div className="story-track">
+      <div
+        className="story-track"
+        style={{
+          transform: `translateX(-${currentIndex * 244}px)`,
+          transition: "transform 0.8s ease-in-out",
+        }}
+      >
         {looped.map((story, index) => (
           <article className="story-card" key={`${story.id}-${index}`}>
             {story.media_type === "video" ||
             story.image_url?.includes(".mp4") ||
             story.image_url?.includes("video") ? (
-              <video
-                src={story.image_url}
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
+              <video src={story.image_url} autoPlay muted loop playsInline />
             ) : (
               <img src={story.image_url} alt="Story" />
             )}
