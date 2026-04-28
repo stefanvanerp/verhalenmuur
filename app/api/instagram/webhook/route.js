@@ -44,11 +44,19 @@ export async function POST(request) {
         const senderId = event.sender?.id;
         const messageId = event.message?.mid;
 
-       const { error } = await supabase.from("stories").insert([
+       // bepaal type (image of video)
+let mediaType = "image";
+
+if (storyUrl.includes(".mp4") || storyUrl.includes("video")) {
+  mediaType = "video";
+}
+
+const { error } = await supabase.from("stories").insert([
   {
     user_name: "",
     caption: "",
     image_url: storyUrl,
+    media_type: mediaType,
     status: "new",
   },
 ]);
