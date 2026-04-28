@@ -44,14 +44,14 @@ export async function POST(request) {
         const senderId = event.sender?.id;
         const messageId = event.message?.mid;
 
-        const { error } = await supabase.from("stories").insert([
-          {
-            user_name: senderId,
-            caption: "Instagram story mention",
-            image_url: storyUrl,
-            status: "new",
-          },
-        ]);
+       const { error } = await supabase.from("stories").insert([
+  {
+    user_name: "",
+    caption: "",
+    image_url: storyUrl,
+    status: "new",
+  },
+]);
 
         if (error) {
           console.error("Supabase insert error:", error.message);
