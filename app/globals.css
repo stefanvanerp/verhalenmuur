@@ -228,4 +228,29 @@ button, input { font: inherit; }
 .moderation-item {
   align-items: center;
   gap: 20px;
+  /* Moderation layout strakker maken */
+.moderation-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Media preview (image + video gelijk trekken) */
+.moderation-media {
+  width: 140px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: #000;
+  flex-shrink: 0;
+}
+
+/* Buttons iets netter */
+.moderation-item button {
+  padding: 10px 16px;
+  border-radius: 10px;
+}
 }
