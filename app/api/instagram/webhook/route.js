@@ -26,21 +26,22 @@ export async function POST(request) {
     return Response.json({ received: false }, { status: 404 });
   }
 
-  for (const entry of body.entry || []) {
-    for (const change of entry.changes || []) {
-     console.log("Field type:", change.field);
-      const value = change.value;
-      const senderId = value?.sender?.id;
-      const messageText = value?.message?.text;
-      const messageId = value?.message?.mid;
+ for (const entry of body.entry || []) {
+  for (const event of entry.messaging || []) {
+    const attachments = event.message?.attachments || [];
 
-      console.log("Instagram message event:", {
+    for (const attachment of attachments) {
+      if (attachment.type !== "story_mention") continue;
+
+      const storyUrl = attachment.payload?.url;
+      const senderId = event.sender?.id;
+      const messageId = event.message?.mid;
+
+      console.log("Story mention received:", {
         senderId,
         messageId,
-        messageText,
+        storyUrl,
       });
     }
   }
-
-  return Response.json({ received: true }, { status: 200 });
 }
