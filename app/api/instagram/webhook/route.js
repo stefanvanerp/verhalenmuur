@@ -63,7 +63,15 @@ try {
     mediaType = "video";
   }
 }
-
+const { error } = await supabase.from("stories").insert([
+  {
+    user_name: "",
+    caption: "",
+    image_url: storyUrl,
+    media_type: mediaType,
+    status: "new",
+  },
+]);
         if (error) {
           console.error("Supabase insert error:", error.message);
         } else {
