@@ -28,8 +28,7 @@ export async function POST(request) {
 
   for (const entry of body.entry || []) {
     for (const change of entry.changes || []) {
-      if (change.field !== "messages") continue;
-
+     console.log("Field type:", change.field);
       const value = change.value;
       const senderId = value?.sender?.id;
       const messageText = value?.message?.text;
