@@ -64,8 +64,9 @@ button, input { font: inherit; }
   grid-template-columns: repeat(4, 260px);
   gap: 48px;
   justify-content: center;
-  align-self: end;
-  margin-bottom: 20px;
+
+  align-self: center;   /* 👈 dit is de key */
+  transform: translateY(40px); /* 👈 fine-tune positie */
 }
 
 .story-card {
