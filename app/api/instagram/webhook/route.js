@@ -1,3 +1,10 @@
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
@@ -37,11 +44,24 @@ export async function POST(request) {
         const senderId = event.sender?.id;
         const messageId = event.message?.mid;
 
-        console.log("Story mention received:", {
-          senderId,
-          messageId,
-          storyUrl,
-        });
+        const { error } = await supabase.from("stories").insert([
+          {
+            user_name: senderId,
+            caption: "Instagram story mention",
+            image_url: storyUrl,
+            status: "new",
+          },
+        ]);
+
+        if (error) {
+          console.error("Supabase insert error:", error.message);
+        } else {
+          console.log("Story mention saved:", {
+            senderId,
+            messageId,
+            storyUrl,
+          });
+        }
       }
     }
   }
