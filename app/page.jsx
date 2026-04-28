@@ -83,16 +83,31 @@ setStories(data || []);  }
 
         <section className="admin-layout">
           <div className="admin-panel">
-            <h2>Nieuw binnen</h2>
-            {incoming.length === 0 ? <p className="empty">Nog geen nieuwe uploads.</p> : null}
-            {incoming.map((story) => (
-              <div className="moderation-item" key={story.id}>
-                <img src={story.image_url} alt="" />
-<strong>{story.username || '@gast'}</strong> 
-                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Goed</button>
-                <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
-              </div>
-            ))}
+     {incoming.map((story) => (
+  <div className="moderation-item" key={story.id}>
+    {story.media_type === "video" ||
+    story.image_url?.includes(".mp4") ||
+    story.image_url?.includes("video") ? (
+      <video
+        src={story.image_url}
+        controls
+        muted
+        playsInline
+        className="moderation-media"
+      />
+    ) : (
+      <img
+        src={story.image_url}
+        alt=""
+        className="moderation-media"
+      />
+    )}
+
+    <strong>{story.username || '@gast'}</strong> 
+    <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Goed</button>
+    <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
+  </div>
+))}
 
             <h2 className="panel-subtitle">Afgewezen</h2>
             {rejected.map((story) => (
