@@ -35,9 +35,3 @@ export function QRFloating() {
     </aside>
   );
 }
-
-.story-card {
-  min-width: 220px;
-  height: 380px;
-  flex-shrink: 0;
-}
