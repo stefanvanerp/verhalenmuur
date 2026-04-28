@@ -41,9 +41,21 @@ export function StoryGrid({ stories }) {
     <section className="story-grid">
       {visible.map((story) => (
         <article className="story-card" key={story.id}>
-          <img src={story.image_url} alt="Story" />
+          {story.media_type === "video" ? (
+            <video
+              src={story.image_url}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          ) : (
+            <img src={story.image_url} alt="Story" />
+          )}
         </article>
       ))}
     </section>
+  );
+}
   );
 }
