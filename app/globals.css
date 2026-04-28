@@ -270,3 +270,30 @@ button, input { font: inherit; }
     transform: translateX(0) scale(1);
   }
 }
+.story-grid {
+  overflow: hidden;
+  width: 100%;
+}
+
+.story-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: scrollStories 35s linear infinite;
+}
+
+.story-card {
+  min-width: 220px;
+  height: 380px;
+  flex-shrink: 0;
+}
+
+@keyframes scrollStories {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
