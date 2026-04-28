@@ -52,11 +52,12 @@ button, input { font: inherit; }
 .qr-floating span { max-width: 125px; color: white; font-size: 17px; line-height: 1.15; font-weight: 900; }
 
 .story-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
-  margin-top: 40px;
-  align-items: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 120px;
+  padding-bottom: 80px;
 }
 .story-card {
   position: relative;
