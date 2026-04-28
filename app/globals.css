@@ -194,5 +194,55 @@ button, input { font: inherit; }
   gap: 24px;
   width: max-content;
 }
-  border-radius: 10px;
+
+  .cta-hero {
+  max-width: 920px;
+  margin: 30px auto 50px;
+  padding: 32px 48px;
+  text-align: center;
+
+  border-radius: 28px;
+  background: rgba(0, 0, 0, 0.75);
+
+  border: 1px solid rgba(255, 43, 36, 0.5);
+
+  box-shadow:
+    0 0 60px rgba(255, 43, 36, 0.2),
+    0 25px 80px rgba(0, 0, 0, 0.7);
+
+  backdrop-filter: blur(20px);
+}
+
+.cta-kicker {
+  margin: 0 0 10px;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cta-hero h2 {
+  margin: 0;
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 1000;
+  letter-spacing: 0.04em;
+}
+
+.cta-tag {
+  margin-top: 14px;
+  font-size: 36px;
+  font-weight: 1000;
+  color: #ff2b24;
+
+  text-shadow: 0 0 20px rgba(255, 43, 36, 0.7);
+}
+
+.cta-hashtag {
+  margin-top: 16px;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.85);
+}border-radius: 10px;
 }
