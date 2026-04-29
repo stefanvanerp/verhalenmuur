@@ -167,7 +167,7 @@ return (
   />
 
 <div className="upload-group">
-  <label>🎬 Kies achtergrond afbeelding</label>
+  <label>Kies achtergrond afbeelding</label>
   <input
     type="file"
     accept="image/*"
@@ -190,17 +190,16 @@ return (
         .from('artwork')
         .getPublicUrl(fileName);
 
-      setSettings({
-        ...settings,
+      setSettings((prev) => ({
+        ...prev,
         background_url: data.publicUrl,
-      });
+      }));
     }}
   />
 </div>
 
 <div className="upload-group">
   <label>Kies film logo</label>
-
   <input
     type="file"
     accept="image/*"
@@ -223,10 +222,10 @@ return (
         .from('artwork')
         .getPublicUrl(fileName);
 
-      setSettings({
-        ...settings,
+      setSettings((prev) => ({
+        ...prev,
         logo_url: data.publicUrl,
-      });
+      }));
     }}
   />
 </div>
