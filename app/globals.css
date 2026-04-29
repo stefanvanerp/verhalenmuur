@@ -471,25 +471,28 @@ button, input { font: inherit; }
   position: relative;
   z-index: 3;
 }
-.youtube-background {
-  opacity: 1 !important;
-  filter: none !important;
-  background: red !important;
-}
-
-.video-background {
+iframe.youtube-background {
   position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  object-fit: cover;
-  filter: blur(14px);
-  opacity: 0.32;
-  transform: scale(1.08);
-  z-index: 0;
-  pointer-events: none;
-}
+  top: 50% !important;
+  left: 50% !important;
 
+  /* 👇 GROTER maken zodat balken verdwijnen */
+  width: 140vw !important;
+  height: 78.75vw !important;
+
+  min-height: 140vh !important;
+  min-width: 220vh !important;
+
+  transform: translate(-50%, -50%) scale(1.2) !important;
+
+  border: none !important;
+  pointer-events: none !important;
+
+  opacity: 0.8 !important;
+  filter: brightness(0.75) contrast(1.1) !important;
+
+  z-index: 0 !important;
+}
 .glow {
   position: fixed;
   z-index: 1;
