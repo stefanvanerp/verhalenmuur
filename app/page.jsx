@@ -133,75 +133,97 @@ return (
 
         {message ? <div className="notice">{message}</div> : null}
 
-        <section className="admin-stats">
+     <section className="admin-stats">
   <div><span>Nieuw</span><strong>{stats.new}</strong></div>
   <div><span>Goedgekeurd</span><strong>{stats.approved}</strong></div>
   <div><span>Afgewezen</span><strong>{stats.rejected}</strong></div>
 </section>
 
-<div className="upload-group">
-  <label>Kies achtergrond afbeelding</label>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+<section className="settings-panel">
 
-      const fileName = `bg-${Date.now()}-${file.name}`;
+  <div className="upload-group">
+    <label>Kies achtergrond afbeelding</label>
+    <input
+      type="file"
+      accept="image/*"
+      onChange={async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-      const { error } = await supabase.storage
-        .from('artwork')
-        .upload(fileName, file);
+        const fileName = `bg-${Date.now()}-${file.name}`;
+
+        const { error } = await supabase.storage
+          .from('artwork')
+          .upload(fileName, file);
+
+        if (error) {
+          alert('Upload mislukt');
+          return;
+        }
+
+        const { data } = supabase.storage
+          .from('artwork')
+          .getPublicUrl(fileName);
+
+        setSettings((prev) => ({
+          ...prev,
+          background_url: data.publicUrl,
+        }));
+      }}
+    />
+  </div>
+
+  <div className="upload-group">
+    <label>Kies film logo</label>
+    <input
+      type="file"
+      accept="image/*"
+      onChange={async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const fileName = `logo-${Date.now()}-${file.name}`;
+
+        const { error } = await supabase.storage
+          .from('artwork')
+          .upload(fileName, file);
+
+        if (error) {
+          alert('Upload mislukt');
+          return;
+        }
+
+        const { data } = supabase.storage
+          .from('artwork')
+          .getPublicUrl(fileName);
+
+        setSettings((prev) => ({
+          ...prev,
+          logo_url: data.publicUrl,
+        }));
+      }}
+    />
+  </div>
+
+  <button
+    className="save-settings-button"
+    onClick={async () => {
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert({ ...settings, id: 1 });
 
       if (error) {
-        alert('Upload mislukt');
+        alert(error.message);
         return;
       }
 
-      const { data } = supabase.storage
-        .from('artwork')
-        .getPublicUrl(fileName);
-
-      setSettings((prev) => ({
-        ...prev,
-        background_url: data.publicUrl,
-      }));
+      alert('Instellingen opgeslagen');
     }}
-  />
-</div>
+  >
+    Opslaan
+  </button>
 
-<div className="upload-group">
-  <label>Kies film logo</label>
-  <input
-    type="file"
-    accept="image/*"
-    onChange={async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const fileName = `logo-${Date.now()}-${file.name}`;
-
-      const { error } = await supabase.storage
-        .from('artwork')
-        .upload(fileName, file);
-
-      if (error) {
-        alert('Upload mislukt');
-        return;
-      }
-
-      const { data } = supabase.storage
-        .from('artwork')
-        .getPublicUrl(fileName);
-
-      setSettings((prev) => ({
-        ...prev,
-        logo_url: data.publicUrl,
-      }));
-    }}
-  />
-</div>
+</section>
 
         <section className="admin-layout">
           <div className="admin-panel">
