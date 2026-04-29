@@ -476,14 +476,14 @@ iframe.youtube-background {
   top: 50% !important;
   left: 50% !important;
 
-  /* 👇 GROTER maken zodat balken verdwijnen */
   width: 140vw !important;
   height: 78.75vw !important;
 
   min-height: 140vh !important;
   min-width: 220vh !important;
 
-  transform: translate(-50%, -50%) scale(1.2) !important;
+  /* 👇 HIER zit jouw regel */
+  transform: translate(-50%, -50%) scale(1.35) !important;
 
   border: none !important;
   pointer-events: none !important;
@@ -493,12 +493,6 @@ iframe.youtube-background {
 
   z-index: 0 !important;
 }
-.glow {
-  position: fixed;
-  z-index: 1;
-  pointer-events: none;
-}
-
 .screen-shell {
   position: relative;
   z-index: 3;
