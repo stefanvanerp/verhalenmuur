@@ -199,7 +199,8 @@ return (
 </div>
 
 <div className="upload-group">
-  <label>🧩 Kies film logo</label>
+  <label>Kies film logo</label>
+
   <input
     type="file"
     accept="image/*"
