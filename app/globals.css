@@ -472,17 +472,10 @@ button, input { font: inherit; }
   z-index: 3;
 }
 .youtube-background {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 120vw !important;
-  height: 120vh !important;
-  left: -10vw !important;
-  top: -10vh !important;
-  border: 0 !important;
-filter: blur(1px) brightness(0.7);
-opacity: 0.6;
-  z-index: 0;
-  pointer-events: none;
+  opacity: 1 !important;
+  filter: none !important;
+  background: red !important;
+}
 }
 
 .video-background {
