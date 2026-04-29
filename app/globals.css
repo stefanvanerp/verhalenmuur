@@ -351,3 +351,17 @@ button, input { font: inherit; }
   object-fit: cover;
   display: block;
 }
+.story-preview,
+.story-preview img,
+.story-preview video,
+.pending-story img,
+.pending-story video,
+.moderation-card img,
+.moderation-card video {
+  width: 96px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+}
