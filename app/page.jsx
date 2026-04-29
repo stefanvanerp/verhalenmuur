@@ -31,13 +31,14 @@ export default function AdminPage() {
   const [stories, setStories] = useState(startStories);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-const [settings, setSettings] = useState({
-  cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
-  cta_title: 'MAAK JE STORY EN TAG',
-  cta_handle: '@SONYPICTURESNL',
-  cta_hashtag: '#MASTERSOFTHEUNIVERSE',
-});
-  </section>
+
+  const [settings, setSettings] = useState({
+    cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
+    cta_title: 'MAAK JE STORY EN TAG',
+    cta_handle: '@SONYPICTURESNL',
+    cta_hashtag: '#MASTERSOFTHEUNIVERSE',
+  });
+
   async function loadStories() {
     if (!supabaseConfigured) {
       setMessage('Supabase keys ontbreken in Vercel. Demo data wordt getoond.');
