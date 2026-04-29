@@ -40,6 +40,26 @@ export default function ScreenPage() {
     const interval = setInterval(fetchStories, 3000);
     return () => clearInterval(interval);
   }, []);
+  useEffect(() => {
+  const channel = supabase
+    .channel('settings-changes')
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: 'site_settings',
+      },
+      () => {
+        fetchSettings();
+      }
+    )
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, []);
 
    return (
     <main className="app screen">
