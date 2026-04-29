@@ -335,13 +335,15 @@ button, input { font: inherit; }
   margin-top: 180px;
 }
 .story-card {
-  width: 120px;          /* of wat je nu gebruikt */
-  height: 210px;         /* vaste hoogte = consistent */
+  width: 120px;
+  aspect-ratio: 9 / 16;
   border-radius: 16px;
   overflow: hidden;
   background: black;
 }
-
+.story-card {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
 .story-card img,
 .story-card video {
   width: 100%;
