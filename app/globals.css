@@ -4,8 +4,14 @@ a { color: inherit; }
 button, input { font: inherit; }
 
 .app { position: relative; min-height: 100vh; overflow: hidden; }
-.background { position: fixed; inset: 0; background-image: linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)), url('/motu-bg.jpg'); background-size: cover; background-position: center; transform: scale(1.02); z-index: 0; }
-.glow { position: fixed; width: 720px; height: 720px; right: -180px; top: -260px; background: radial-gradient(circle, rgba(255,37,28,.35), rgba(255,37,28,0) 65%); z-index: 1; pointer-events: none; }
+.background {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  z-index: 0;
+}.glow { position: fixed; width: 720px; height: 720px; right: -180px; top: -260px; background: radial-gradient(circle, rgba(255,37,28,.35), rgba(255,37,28,0) 65%); z-index: 1; pointer-events: none; }
 
 .screen-shell {
   position: relative;
