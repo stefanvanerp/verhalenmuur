@@ -31,7 +31,13 @@ export default function AdminPage() {
   const [stories, setStories] = useState(startStories);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-
+const [settings, setSettings] = useState({
+  cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
+  cta_title: 'MAAK JE STORY EN TAG',
+  cta_handle: '@SONYPICTURESNL',
+  cta_hashtag: '#MASTERSOFTHEUNIVERSE',
+});
+  </section>
   async function loadStories() {
     if (!supabaseConfigured) {
       setMessage('Supabase keys ontbreken in Vercel. Demo data wordt getoond.');
@@ -115,10 +121,38 @@ export default function AdminPage() {
         {message ? <div className="notice">{message}</div> : null}
 
         <section className="admin-stats">
-          <div><span>Nieuw</span><strong>{stats.new}</strong></div>
-          <div><span>Goedgekeurd</span><strong>{stats.approved}</strong></div>
-          <div><span>Afgewezen</span><strong>{stats.rejected}</strong></div>
-        </section>
+  <div><span>Nieuw</span><strong>{stats.new}</strong></div>
+  <div><span>Goedgekeurd</span><strong>{stats.approved}</strong></div>
+  <div><span>Afgewezen</span><strong>{stats.rejected}</strong></div>
+</section>
+
+<section className="settings-panel">
+  <h2>Teksten aanpassen</h2>
+
+  <input
+    value={settings.cta_kicker}
+    onChange={(e) => setSettings({ ...settings, cta_kicker: e.target.value })}
+    placeholder="Kleine tekst"
+  />
+
+  <input
+    value={settings.cta_title}
+    onChange={(e) => setSettings({ ...settings, cta_title: e.target.value })}
+    placeholder="Hoofdtitel"
+  />
+
+  <input
+    value={settings.cta_handle}
+    onChange={(e) => setSettings({ ...settings, cta_handle: e.target.value })}
+    placeholder="Instagram handle"
+  />
+
+  <input
+    value={settings.cta_hashtag}
+    onChange={(e) => setSettings({ ...settings, cta_hashtag: e.target.value })}
+    placeholder="Hashtag"
+  />
+</section>
 
         <section className="admin-layout">
           <div className="admin-panel">
