@@ -1,3 +1,4 @@
+const [settings, setSettings] = useState(null);
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -11,25 +12,35 @@ const supabase = createClient(
 
 export default function ScreenPage() {
   const [stories, setStories] = useState([]);
-
-  useEffect(() => {
-    fetchStories();
-
-    const interval = setInterval(fetchStories, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const [settings, setSettings] = useState(null);
 
   async function fetchStories() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('stories')
       .select('*')
       .eq('status', 'approved')
       .order('created_at', { ascending: false });
 
-    if (!error) {
-      setStories(data);
-    }
+    if (data) setStories(data);
   }
+
+  async function fetchSettings() {
+    const { data } = await supabase
+      .from('site_settings')
+      .select('*')
+      .eq('id', 1)
+      .single();
+
+    if (data) setSettings(data);
+  }
+
+  useEffect(() => {
+    fetchStories();
+    fetchSettings();
+
+    const interval = setInterval(fetchStories, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
    return (
     <main className="app screen">
