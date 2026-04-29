@@ -166,19 +166,8 @@ return (
     placeholder="Hashtag"
   />
 
-  <input
-    value={settings.logo_url}
-    onChange={(e) => setSettings({ ...settings, logo_url: e.target.value })}
-    placeholder="Logo URL, bv /motu-logo.png"
-  />
-
-  <input
-    value={settings.background_url}
-    onChange={(e) => setSettings({ ...settings, background_url: e.target.value })}
-    placeholder="Achtergrond URL, bv /motu-bg.jpg"
-  />
-
-  <p>Upload achtergrond</p>
+<div className="upload-group">
+  <label>🎬 Kies achtergrond afbeelding</label>
   <input
     type="file"
     accept="image/*"
@@ -207,8 +196,10 @@ return (
       });
     }}
   />
+</div>
 
-  <p>Upload logo</p>
+<div className="upload-group">
+  <label>🧩 Kies film logo</label>
   <input
     type="file"
     accept="image/*"
@@ -226,6 +217,18 @@ return (
         alert('Upload mislukt');
         return;
       }
+
+      const { data } = supabase.storage
+        .from('artwork')
+        .getPublicUrl(fileName);
+
+      setSettings({
+        ...settings,
+        logo_url: data.publicUrl,
+      });
+    }}
+  />
+</div>
 
       const { data } = supabase.storage
         .from('artwork')
