@@ -248,7 +248,21 @@ export default function AdminPage() {
               onChange={handleBackgroundImageUpload}
             />
           </div>
-
+<div className="upload-group">
+  <label>YouTube trailer link</label>
+  <input
+    type="url"
+    placeholder="https://www.youtube.com/watch?v=..."
+    value={settings?.background_youtube_url || ''}
+    onChange={(e) =>
+      setSettings((prev) => ({
+        ...prev,
+        background_youtube_url: e.target.value,
+        background_video_url: '',
+      }))
+    }
+  />
+</div>
           <div className="upload-group">
             <label>Kies achtergrond video</label>
             <input
