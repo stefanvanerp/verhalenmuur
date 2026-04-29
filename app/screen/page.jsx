@@ -102,12 +102,14 @@ export default function ScreenPage() {
       <div className="screen-shell">
         <Brand settings={settings} />
 
-       <div className="cinema-headline">
-  <span>
-    DEEL JE STORIES MET{" "}
-    <strong>@SONYPICTURESNL</strong>{" "}
-    <em>#MASTERSOFTHEUNIVERSE</em>
-  </span>
+     <div className="cinema-headline">
+  <span>DEEL JE STORIES MET</span>
+</div>
+
+<div className="cta-bar">
+  <strong>{settings?.cta_title || 'MAAK JE STORY EN TAG'}</strong>
+  <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
+  <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
 </div>
 
         <div className="stories-lower">
