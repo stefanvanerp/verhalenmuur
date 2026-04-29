@@ -310,3 +310,9 @@ button, input { font: inherit; }
     transform: scale(1.025);
   }
 }
+.insta-logo {
+  width: 42px;
+  height: 42px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 10px rgba(255, 80, 140, 0.6));
+}
