@@ -206,7 +206,7 @@ export default function AdminPage() {
 
           <div className="admin-preview">
             <Brand />
-            <CTA />
+           <CTA settings={settings} />
             <StoryGrid stories={approved} />
           </div>
         </section>
