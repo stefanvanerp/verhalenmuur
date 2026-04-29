@@ -1,4 +1,3 @@
-const [settings, setSettings] = useState(null);
 'use client';
 
 import { useEffect, useState } from 'react';
