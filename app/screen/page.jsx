@@ -36,19 +36,15 @@ export default function ScreenPage() {
     <div className="background" />
     <div className="glow" />
 
-    <div className="screen-shell">
-      <Brand />
+   <div className="screen-shell">
+  <Brand />
 
-      <div className="cinema-frame">
-        <div className="cta-wrapper cinematic-cta">
-          <CTA />
-        </div>
+  <div className="cta-wrapper cinematic-cta">
+    <CTA />
+  </div>
 
-        <div className="stories-lower">
-          <StoryGrid stories={stories} />
-        </div>
-      </div>
-    </div>
-  </main>
-);
+  <div className="stories-lower">
+    <StoryGrid stories={stories} />
+  </div>
+</div>
     }
