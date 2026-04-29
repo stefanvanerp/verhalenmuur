@@ -282,40 +282,7 @@ button, input { font: inherit; }
 }
 
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px;
-  height: 46px;
-  margin: 0 auto 14px;
-  border-radius: 15px;
-  font-size: 36px;
-  line-height: 1;
-  color: white;
-  background: radial-gradient(circle at 30% 30%, #ffd36a, #ff3d77 45%, #7b3cff 75%);
-  box-shadow: 0 0 26px rgba(255, 70, 120, 0.65);
-}
-
-.stories-lower {
-  margin-top: 70px;
-}
-
-@keyframes ctaBreath {
-  0%, 100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.025);
-  }
-}
-.insta-logo {
-  width: 42px;
-  height: 42px;
-  margin-bottom: 12px;
-  filter: drop-shadow(0 0 10px rgba(255, 80, 140, 0.6));
-}
-.cta-hero {
+ .cta-hero {
   display: flex;
   align-items: center;
   gap: 22px;
