@@ -61,7 +61,7 @@ export default function ScreenPage() {
   };
 }, []);
 
-  return (
+return (
   <main className="app screen">
     {settings?.background_video_url && (
       <video
@@ -74,15 +74,17 @@ export default function ScreenPage() {
       />
     )}
 
-    <div
-      className="background"
-      style={{
-        backgroundImage: `
-          linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
-          url(${settings?.background_url || '/motu-bg.jpg'})
-        `,
-      }}
-    />
+    {!settings?.background_video_url && (
+      <div
+        className="background"
+        style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
+            url(${settings?.background_url || '/motu-bg.jpg'})
+          `,
+        }}
+      />
+    )}
 
     <div className="glow" />
 
@@ -99,3 +101,4 @@ export default function ScreenPage() {
     </div>
   </main>
 );
+}
