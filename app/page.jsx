@@ -5,6 +5,28 @@ import { startStories } from './data';
 import { supabase, supabaseConfigured } from './supabase';
 import { Brand, CTA, StoryGrid } from './components';
 
+function StoryPreview({ story, controls = false }) {
+  const isVideo =
+    story.media_type === 'video' ||
+    story.image_url?.includes('.mp4') ||
+    story.image_url?.includes('video');
+
+  return (
+    <div className="story-preview">
+      {isVideo ? (
+        <video
+          src={story.image_url}
+          controls={controls}
+          muted
+          playsInline
+        />
+      ) : (
+        <img src={story.image_url} alt="Story" />
+      )}
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [stories, setStories] = useState(startStories);
   const [loading, setLoading] = useState(false);
@@ -26,7 +48,8 @@ export default function AdminPage() {
       return;
     }
 
-setStories(data || []);  }
+    setStories(data || []);
+  }
 
   useEffect(() => {
     loadStories();
@@ -36,30 +59,46 @@ setStories(data || []);  }
 
   async function setStatus(id, status) {
     if (String(id).startsWith('demo-')) return;
+
     setLoading(true);
+
     const { error } = await supabase
       .from('stories')
       .update({ status })
       .eq('id', id);
 
     if (error) setMessage(error.message);
+
     await loadStories();
     setLoading(false);
   }
 
-  const approved = useMemo(() => stories.filter((story) => story.status === 'approved'), [stories]);
- const incoming = stories.filter((story) => story.status === 'new' || story.status === 'pending');
-  const rejected = stories.filter((story) => story.status === 'rejected');
+  const approved = useMemo(
+    () => stories.filter((story) => story.status === 'approved'),
+    [stories]
+  );
+
+  const incoming = useMemo(
+    () => stories.filter((story) => story.status === 'new' || story.status === 'pending'),
+    [stories]
+  );
+
+  const rejected = useMemo(
+    () => stories.filter((story) => story.status === 'rejected'),
+    [stories]
+  );
+
   const stats = {
     new: incoming.length,
     approved: approved.length,
-    rejected: rejected.length
+    rejected: rejected.length,
   };
 
   return (
     <main className="app admin">
       <div className="background" />
       <div className="glow" />
+
       <div className="admin-shell">
         <header className="admin-header">
           <div>
@@ -67,6 +106,7 @@ setStories(data || []);  }
             <h1>Premiere Stories Wall</h1>
             <p>Moderatie dashboard en bioscoopweergave voor filmpremières.</p>
           </div>
+
           <nav className="admin-controls">
             <a href="/upload" target="_blank" rel="noreferrer">Open uploadpagina</a>
             <a href="/screen" target="_blank" rel="noreferrer">Open bioscoopscherm</a>
@@ -83,43 +123,49 @@ setStories(data || []);  }
 
         <section className="admin-layout">
           <div className="admin-panel">
-     {incoming.map((story) => (
-  <div className="moderation-item" key={story.id}>
-    {story.media_type === "video" ||
-    story.image_url?.includes(".mp4") ||
-    story.image_url?.includes("video") ? (
-      <video
-        src={story.image_url}
-        controls
-        muted
-        playsInline
-        className="moderation-media"
-      />
-    ) : (
-      <img
-        src={story.image_url}
-        alt=""
-        className="moderation-media"
-      />
-    )}
+            <h2 className="panel-subtitle">Nieuw</h2>
 
-<div className="story-preview">
-  {story.media_type === "video" ||
-  story.image_url?.includes(".mp4") ||
-  story.image_url?.includes("video") ? (
-    <video src={story.image_url} muted playsInline />
-  ) : (
-    <img src={story.image_url} alt="Story" />
-  )}
-</div>
-))}
+            {incoming.map((story) => (
+              <div className="moderation-item" key={story.id}>
+                <StoryPreview story={story} controls />
+
+                <strong>{story.username || '@gast'}</strong>
+
+                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>
+                  Goed
+                </button>
+
+                <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>
+                  Afwijs
+                </button>
+              </div>
+            ))}
+
+            <h2 className="panel-subtitle">Goedgekeurd</h2>
+
+            {approved.map((story) => (
+              <div className="moderation-item compact" key={story.id}>
+                <StoryPreview story={story} />
+
+                <strong>{story.username || '@gast'}</strong>
+
+                <button disabled={loading} onClick={() => setStatus(story.id, 'pending')}>
+                  Terughalen
+                </button>
+              </div>
+            ))}
 
             <h2 className="panel-subtitle">Afgewezen</h2>
+
             {rejected.map((story) => (
               <div className="moderation-item compact" key={story.id}>
-                <img src={story.image_url} alt="" />
-             <strong>{story.username || '@gast'}</strong>
-                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Terugzetten</button>
+                <StoryPreview story={story} />
+
+                <strong>{story.username || '@gast'}</strong>
+
+                <button disabled={loading} onClick={() => setStatus(story.id, 'pending')}>
+                  Terugzetten
+                </button>
               </div>
             ))}
           </div>
