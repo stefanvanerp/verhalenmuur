@@ -186,7 +186,7 @@ return (
 
       setMessage(error ? error.message : 'Instellingen opgeslagen');
 
-      <input
+<input
   type="file"
   accept="image/*"
   onChange={async (e) => {
@@ -213,6 +213,7 @@ return (
       background_url: data.publicUrl,
     });
   }}
+/>
 <input
   type="file"
   accept="image/*"
@@ -241,10 +242,6 @@ return (
     });
   }}
 />
-    }}
-  >
-    Opslaan
-  </button>
 </section>
 
         <section className="admin-layout">
