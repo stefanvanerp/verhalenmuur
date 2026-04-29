@@ -108,7 +108,6 @@ export default function AdminPage() {
           </div>
 
           <nav className="admin-controls">
-            <a href="/upload" target="_blank" rel="noreferrer">Open uploadpagina</a>
             <a href="/screen" target="_blank" rel="noreferrer">Open bioscoopscherm</a>
           </nav>
         </header>
