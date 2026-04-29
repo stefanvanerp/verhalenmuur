@@ -663,12 +663,17 @@ iframe.youtube-background {
 .cinema-headline {
   position: fixed;
   top: 6vh;
+
+  /* 👇 NIET meer full center */
   left: 50%;
   transform: translateX(-50%);
+
   z-index: 5;
 
+  width: 60vw; /* 👈 begrensd zodat hij niet over logo heen kan */
+  margin-left: 120px; /* 👈 schuift ‘m visueel weg van logo */
+
   text-align: center;
-  width: 90vw;
 
   color: white;
   text-transform: uppercase;
