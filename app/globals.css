@@ -660,3 +660,35 @@ iframe.youtube-background {
     0 35px 90px rgba(0,0,0,0.75),
     0 0 0 1px rgba(255,255,255,0.18) !important;
 }
+.cinema-headline {
+  position: fixed;
+  top: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  text-align: center;
+  width: 90vw;
+
+  color: white;
+  text-transform: uppercase;
+
+  font-weight: 900;
+  letter-spacing: 0.04em;
+
+  text-shadow: 0 6px 40px rgba(0,0,0,0.9);
+}
+
+.cinema-headline span {
+  font-size: 34px;
+  opacity: 0.85;
+}
+
+.cinema-headline strong {
+  font-weight: 900;
+}
+
+.cinema-headline em {
+  font-style: normal;
+  opacity: 0.9;
+}
