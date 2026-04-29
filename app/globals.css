@@ -339,7 +339,7 @@ button, input { font: inherit; }
 }
 .stories-lower {
   position: fixed;
-  bottom: 12vh; /* 👈 omhoog */
+  bottom: 18vh; /* 👈 omhoog */
   left: 50%;
   transform: translateX(-50%);
   z-index: 5;
@@ -686,8 +686,8 @@ iframe.youtube-background {
 }
 
 .cinema-headline span {
-  font-size: 34px;
-  opacity: 0.85;
+  font-size: 28px;
+  opacity: 0.75;
 }
 
 .cinema-headline strong {
@@ -697,4 +697,18 @@ iframe.youtube-background {
 .cinema-headline em {
   font-style: normal;
   opacity: 0.9;
+}
+.production-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at 50% 65%,
+    rgba(0,0,0,0.2),
+    rgba(0,0,0,0.85)
+  );
+
+  z-index: 1;
+  pointer-events: none;
 }
