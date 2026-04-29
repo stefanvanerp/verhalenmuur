@@ -255,3 +255,58 @@ button, input { font: inherit; }
   justify-content: center;
   margin-top: 20px;
 }
+.cinema-frame {
+  width: min(1180px, calc(100vw - 80px));
+  margin: 20px auto 0;
+  padding: 52px 60px 70px;
+  border: 1px solid rgba(255, 213, 160, 0.45);
+  border-radius: 34px;
+  background: rgba(0, 0, 0, 0.18);
+  box-shadow:
+    0 0 28px rgba(255, 198, 120, 0.22),
+    inset 0 0 40px rgba(255, 255, 255, 0.04);
+}
+
+.cinematic-cta {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 26px 38px 28px;
+  border: 1px solid rgba(255, 213, 160, 0.35);
+  border-radius: 26px;
+  background: rgba(5, 5, 10, 0.5);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 36px rgba(255, 70, 110, 0.22),
+    inset 0 0 30px rgba(255, 255, 255, 0.04);
+  animation: ctaBreath 4s ease-in-out infinite;
+}
+
+.cinematic-cta::before {
+  content: "◎";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin: 0 auto 14px;
+  border-radius: 15px;
+  font-size: 36px;
+  line-height: 1;
+  color: white;
+  background: radial-gradient(circle at 30% 30%, #ffd36a, #ff3d77 45%, #7b3cff 75%);
+  box-shadow: 0 0 26px rgba(255, 70, 120, 0.65);
+}
+
+.stories-lower {
+  margin-top: 70px;
+}
+
+@keyframes ctaBreath {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.025);
+  }
+}
