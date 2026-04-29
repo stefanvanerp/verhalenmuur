@@ -102,8 +102,6 @@ export default function ScreenPage() {
       <div className="screen-shell">
         <Brand settings={settings} />
 
-<Brand settings={settings} />
-
 <div className="cta-bar">
   <div className="cta-main">
     {settings?.cta_title || 'MAAK JE STORY EN TAG'}
