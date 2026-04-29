@@ -78,6 +78,7 @@ export default function ScreenPage() {
     <main className="app screen">
       {youtubeId && (
         <iframe
+          title="Trailer achtergrond"
           className="youtube-background"
           src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&modestbranding=1&playsinline=1`}
           allow="autoplay; encrypted-media"
