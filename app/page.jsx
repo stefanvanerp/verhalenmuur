@@ -103,10 +103,15 @@ setStories(data || []);  }
       />
     )}
 
-    <strong>{story.username || '@gast'}</strong> 
-    <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>Goed</button>
-    <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>Afwijs</button>
-  </div>
+<div className="story-preview">
+  {story.media_type === "video" ||
+  story.image_url?.includes(".mp4") ||
+  story.image_url?.includes("video") ? (
+    <video src={story.image_url} muted playsInline />
+  ) : (
+    <img src={story.image_url} alt="Story" />
+  )}
+</div>
 ))}
 
             <h2 className="panel-subtitle">Afgewezen</h2>
