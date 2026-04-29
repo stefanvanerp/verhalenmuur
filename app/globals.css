@@ -315,3 +315,52 @@ button, input { font: inherit; }
   margin-bottom: 12px;
   filter: drop-shadow(0 0 10px rgba(255, 80, 140, 0.6));
 }
+.cta-hero {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.cta-copy {
+  text-align: left;
+}
+
+.insta-logo-css {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  position: relative;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 30% 30%, #ffd76a 0 12%, #ff7a00 28%, #ff2d75 52%, #7a35ff 80%);
+  box-shadow: 0 0 18px rgba(255, 60, 130, 0.7);
+}
+
+.insta-logo-css::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border: 3px solid white;
+  border-radius: 10px;
+}
+
+.insta-logo-css::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  right: 12px;
+  top: 12px;
+  background: white;
+  border-radius: 50%;
+}
+
+.insta-logo-css span {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 3px solid white;
+  border-radius: 50%;
+}
