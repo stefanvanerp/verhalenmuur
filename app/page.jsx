@@ -231,8 +231,8 @@ return (
           </div>
 
           <div className="admin-preview">
-            <Brand />
-           <CTA settings={settings} />
+<Brand settings={settings} /> 
+            <CTA settings={settings} />
             <StoryGrid stories={approved} />
           </div>
         </section>
