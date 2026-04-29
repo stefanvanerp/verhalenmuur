@@ -9,7 +9,7 @@ export function Brand() {
   );
 }
 
-export function CTA() {
+export function CTA({ settings }) {
   return (
     <div className="cta-hero">
       <div className="insta-logo-css">
@@ -17,13 +17,19 @@ export function CTA() {
       </div>
 
       <div className="cta-copy">
-        <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
+        <p className="cta-kicker">
+          {settings?.cta_kicker || 'ZIE JEZELF OP HET GROTE DOEK'}
+        </p>
 
-        <h2>MAAK JE STORY EN TAG</h2>
+        <h2>{settings?.cta_title || 'MAAK JE STORY EN TAG'}</h2>
 
-        <p className="cta-tag">@SONYPICTURESNL</p>
+        <p className="cta-tag">
+          {settings?.cta_handle || '@SONYPICTURESNL'}
+        </p>
 
-        <p className="cta-hashtag">#MASTERSOFTHEUNIVERSE</p>
+        <p className="cta-hashtag">
+          {settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}
+        </p>
       </div>
     </div>
   );
