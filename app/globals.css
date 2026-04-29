@@ -523,3 +523,20 @@ button, input { font: inherit; }
   filter: blur(16px);
   opacity: 0.3;
 }
+.youtube-background {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw; /* 16:9 ratio */
+  min-height: 100vh;
+  min-width: 177.77vh;
+
+  transform: translate(-50%, -50%);
+  border: none;
+
+  opacity: 0.45;        /* 👈 iets zichtbaarder */
+  filter: blur(6px);    /* 👈 minder blur */
+  z-index: 0;
+  pointer-events: none;
+}
