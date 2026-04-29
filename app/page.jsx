@@ -105,6 +105,7 @@ export default function AdminPage() {
 
   return (
  <div
+ <div
   className="background"
   style={{
     backgroundImage: `
@@ -113,7 +114,8 @@ export default function AdminPage() {
     `,
   }}
 />
-      <div className="glow" />
+
+<div className="glow" />
 
       <div className="admin-shell">
         <header className="admin-header">
