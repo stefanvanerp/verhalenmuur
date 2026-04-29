@@ -96,17 +96,17 @@ export default function ScreenPage() {
         />
       )}
 
-      {!youtubeId && !settings?.background_video_url && (
-        <div
-          className="background"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
-              url(${settings?.background_url || '/motu-bg.jpg'})
-            `,
-          }}
-        />
-      )}
+     {!youtubeId && !settings?.background_video_url && (
+  <div
+    className="background"
+    style={{
+      backgroundImage: `
+        linear-gradient(90deg, rgba(3,3,7,.6), rgba(10,7,16,.3), rgba(3,3,7,.6)),
+        url(${settings?.background_url || '/motu-bg.jpg'})
+      `,
+    }}
+  />
+)}
 
       <div className="glow" />
 
