@@ -300,14 +300,9 @@ return (
             ))}
           </div>
 
-          <div className="admin-preview">
-          <div className="admin-preview">
+             <div className="admin-preview">
             <Brand settings={settings} />
             <CTA settings={settings} />
             <StoryGrid stories={approved} />
           </div>
         </section>
-      </div>
-    </main>
-  );
-}
