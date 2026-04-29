@@ -479,8 +479,8 @@ button, input { font: inherit; }
   left: -10vw !important;
   top: -10vh !important;
   border: 0 !important;
-  filter: blur(14px);
-  opacity: 0.32;
+  filter: blur(6px);
+  opacity: 0.5;
   transform: scale(1.15);
   z-index: 0;
   pointer-events: none;
