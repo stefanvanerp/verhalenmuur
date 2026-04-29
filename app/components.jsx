@@ -12,11 +12,9 @@ export function Brand() {
 export function CTA() {
   return (
     <div className="cta-hero">
-      <img
-        src="/instagram.png"
-        alt="Instagram"
-        className="insta-logo"
-      />
+      <div className="insta-logo-css">
+        <span />
+      </div>
 
       <div className="cta-copy">
         <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
