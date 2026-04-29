@@ -61,28 +61,41 @@ export default function ScreenPage() {
   };
 }, []);
 
-   return (
-    <main className="app screen">
-     <div
-  className="background"
-  style={{
-    backgroundImage: `
-      linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
-      url(${settings?.background_url || '/motu-bg.jpg'})
-    `,
-  }}
-/>
-      <div className="glow" />
+  return (
+  <main className="app screen">
+    {settings?.background_video_url && (
+      <video
+        className="video-background"
+        src={settings.background_video_url}
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+    )}
 
-      <div className="screen-shell">
-<Brand settings={settings} />
-        <div className="cta-wrapper cinematic-cta">
-<CTA settings={settings} />        </div>
+    <div
+      className="background"
+      style={{
+        backgroundImage: `
+          linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
+          url(${settings?.background_url || '/motu-bg.jpg'})
+        `,
+      }}
+    />
 
-        <div className="stories-lower">
-          <StoryGrid stories={stories} />
-        </div>
+    <div className="glow" />
+
+    <div className="screen-shell">
+      <Brand settings={settings} />
+
+      <div className="cta-wrapper cinematic-cta">
+        <CTA settings={settings} />
       </div>
-    </main>
-  );
-}
+
+      <div className="stories-lower">
+        <StoryGrid stories={stories} />
+      </div>
+    </div>
+  </main>
+);
