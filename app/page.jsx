@@ -185,6 +185,35 @@ return (
         .upsert({ ...settings, id: 1 });
 
       setMessage(error ? error.message : 'Instellingen opgeslagen');
+
+      <input
+  type="file"
+  accept="image/*"
+  onChange={async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const fileName = `bg-${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(fileName, file);
+
+    if (error) {
+      alert('Upload mislukt');
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(fileName);
+
+    setSettings({
+      ...settings,
+      background_url: data.publicUrl,
+    });
+  }}
+/>
     }}
   >
     Opslaan
