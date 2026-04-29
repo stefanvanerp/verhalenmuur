@@ -32,12 +32,14 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  const [settings, setSettings] = useState({
-    cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
-    cta_title: 'MAAK JE STORY EN TAG',
-    cta_handle: '@SONYPICTURESNL',
-    cta_hashtag: '#MASTERSOFTHEUNIVERSE',
-  });
+ const [settings, setSettings] = useState({
+  cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
+  cta_title: 'MAAK JE STORY EN TAG',
+  cta_handle: '@SONYPICTURESNL',
+  cta_hashtag: '#MASTERSOFTHEUNIVERSE',
+  logo_url: '/motu-logo.png',
+  background_url: '/background.jpg',
+});
 
   async function loadStories() {
     if (!supabaseConfigured) {
@@ -152,6 +154,20 @@ export default function AdminPage() {
     value={settings.cta_hashtag}
     onChange={(e) => setSettings({ ...settings, cta_hashtag: e.target.value })}
     placeholder="Hashtag"
+  />
+
+  {/* NIEUW ↓ */}
+
+  <input
+    value={settings.logo_url}
+    onChange={(e) => setSettings({ ...settings, logo_url: e.target.value })}
+    placeholder="Logo URL, bv /motu-logo.png"
+  />
+
+  <input
+    value={settings.background_url}
+    onChange={(e) => setSettings({ ...settings, background_url: e.target.value })}
+    placeholder="Achtergrond URL, bv /background.jpg"
   />
 </section>
 
