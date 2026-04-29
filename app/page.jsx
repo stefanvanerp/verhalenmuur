@@ -142,43 +142,34 @@ return (
 <section className="settings-panel">
   <h2>Teksten aanpassen</h2>
 
-  <input
-    value={settings.cta_kicker}
-    onChange={(e) => setSettings({ ...settings, cta_kicker: e.target.value })}
-    placeholder="Kleine tekst"
-  />
+  <input ... />
+  <input ... />
+  <input ... />
+  <input ... />
+  <input ... />
+  <input ... />
 
-  <input
-    value={settings.cta_title}
-    onChange={(e) => setSettings({ ...settings, cta_title: e.target.value })}
-    placeholder="Hoofdtitel"
-  />
+  <button
+    onClick={async () => {
+      const { error } = await supabase
+        .from('site_settings')
+        .upsert({ ...settings, id: 1 });
 
-  <input
-    value={settings.cta_handle}
-    onChange={(e) => setSettings({ ...settings, cta_handle: e.target.value })}
-    placeholder="Instagram handle"
-  />
-
-  <input
-    value={settings.cta_hashtag}
-    onChange={(e) => setSettings({ ...settings, cta_hashtag: e.target.value })}
-    placeholder="Hashtag"
-  />
-
-  {/* NIEUW ↓ */}
-
-  <input
-    value={settings.logo_url}
-    onChange={(e) => setSettings({ ...settings, logo_url: e.target.value })}
-    placeholder="Logo URL, bv /motu-logo.png"
-  />
-
-  <input
-    value={settings.background_url}
-    onChange={(e) => setSettings({ ...settings, background_url: e.target.value })}
-    placeholder="Achtergrond URL, bv /background.jpg"
-  />
+      setMessage(error ? error.message : 'Instellingen opgeslagen');
+    }}
+    style={{
+      marginTop: 10,
+      padding: '12px 16px',
+      borderRadius: 10,
+      background: 'white',
+      color: 'black',
+      fontWeight: 700,
+      cursor: 'pointer'
+    }}
+  >
+    Opslaan
+  </button>
+</section>
 </section>
 
         <section className="admin-layout">
