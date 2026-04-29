@@ -57,7 +57,6 @@ export default function AdminPage() {
 
   // rest van je code...
 }
-    }
 
     const { data, error } = await supabase
       .from('stories')
