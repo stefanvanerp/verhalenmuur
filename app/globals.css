@@ -338,7 +338,15 @@ button, input { font: inherit; }
   border-radius: 50%;
 }
 .stories-lower {
-  margin-top: 180px;
+  position: fixed;
+  bottom: 12vh; /* 👈 omhoog */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  width: 95vw;
+  display: flex;
+  justify-content: center;
 }
 .story-card {
   width: 120px;
@@ -643,22 +651,15 @@ iframe.youtube-background {
 }
 
 .stories-lower .story-card,
-.stories-lower .story-preview,
-.stories-lower img,
-.stories-lower video {
-  width: 100% !important;
-  aspect-ratio: 9 / 16 !important;
-  height: auto !important;
-  border-radius: 28px !important;
-  object-fit: cover !important;
-}
-
-.stories-lower .story-card,
 .stories-lower .story-preview {
-  overflow: hidden !important;
+  width: 280px;
+  height: 500px;
+  border-radius: 30px;
+  overflow: hidden;
+
   box-shadow:
-    0 35px 90px rgba(0,0,0,0.75),
-    0 0 0 1px rgba(255,255,255,0.18) !important;
+    0 40px 100px rgba(0,0,0,0.8),
+    0 0 0 1px rgba(255,255,255,0.15);
 }
 .cinema-headline {
   position: fixed;
