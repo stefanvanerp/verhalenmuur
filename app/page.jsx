@@ -105,7 +105,12 @@ export default function AdminPage() {
 
   return (
     <main className="app admin">
-      <div className="background" />
+    <div
+  className="background"
+  style={{
+    backgroundImage: `url(${settings.background_url || '/background.jpg'})`,
+  }}
+/>
       <div className="glow" />
 
       <div className="admin-shell">
