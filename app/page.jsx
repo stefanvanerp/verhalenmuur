@@ -213,7 +213,6 @@ return (
       background_url: data.publicUrl,
     });
   }}
-/>
 <input
   type="file"
   accept="image/*"
