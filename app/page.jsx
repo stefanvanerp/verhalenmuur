@@ -128,6 +128,7 @@ export default function AdminPage() {
 </section>
 
 <section className="settings-panel">
+ <section className="settings-panel">
   <h2>Teksten aanpassen</h2>
 
   <input
