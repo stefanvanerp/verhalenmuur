@@ -306,3 +306,7 @@ return (
             <StoryGrid stories={approved} />
           </div>
         </section>
+   </div>
+    </main>
+  );
+}
