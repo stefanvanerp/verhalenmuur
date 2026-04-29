@@ -595,3 +595,28 @@ iframe.youtube-background {
   position: relative;
   z-index: 3;
 }
+.production-headline {
+  position: fixed;
+  top: 6vh;
+  left: 34vw;
+  z-index: 4;
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  color: white;
+  text-transform: uppercase;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.8);
+}
+
+.production-headline span {
+  font-size: 34px;
+  font-weight: 900;
+  opacity: 0.78;
+}
+
+.production-headline strong,
+.production-headline em {
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 950;
+}
