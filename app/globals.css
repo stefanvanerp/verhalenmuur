@@ -281,8 +281,7 @@ button, input { font: inherit; }
   animation: ctaBreath 4s ease-in-out infinite;
 }
 
-.cinematic-cta::before {
-  content: "◎";
+
   display: flex;
   align-items: center;
   justify-content: center;
