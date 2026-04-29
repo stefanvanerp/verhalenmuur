@@ -103,19 +103,20 @@ export default function AdminPage() {
     rejected: rejected.length,
   };
 
-  return (
- <div
- <div
-  className="background"
-  style={{
-    backgroundImage: `
-      linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
-      url(${settings.background_url || '/motu-bg.jpg'})
-    `,
-  }}
-/>
+return (
+  <main className="app admin">
+    <div
+      className="background"
+      style={{
+        backgroundImage: `
+          linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
+          url(${settings.background_url || '/motu-bg.jpg'})
+        `,
+      }}
+    />
 
-<div className="glow" />
+    <div className="glow" />
+
 
       <div className="admin-shell">
         <header className="admin-header">
