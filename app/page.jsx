@@ -57,7 +57,7 @@ export default function AdminPage() {
 
   // rest van je code...
 }
-
+async function loadStories() {
     const { data, error } = await supabase
       .from('stories')
       .select('*')
