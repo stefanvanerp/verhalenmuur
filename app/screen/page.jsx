@@ -102,9 +102,7 @@ export default function ScreenPage() {
       <div className="screen-shell">
         <Brand settings={settings} />
 
-     <div className="cinema-headline">
-  <span>DEEL JE STORIES MET</span>
-</div>
+<Brand settings={settings} />
 
 <div className="cta-bar">
   <div className="cta-main">
