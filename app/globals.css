@@ -551,3 +551,24 @@ button, input { font: inherit; }
 
   z-index: 0 !important;
 }
+iframe.youtube-background {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+
+  width: 100vw !important;
+  height: 56.25vw !important;
+  min-height: 100vh !important;
+  min-width: 177.77vh !important;
+
+  transform: translate(-50%, -50%) !important;
+
+  border: none !important;
+  pointer-events: none !important;
+
+  /* 👇 DIT is de fix */
+  filter: none !important;
+  opacity: 0.8 !important;
+
+  z-index: 0 !important;
+}
