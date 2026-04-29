@@ -569,3 +569,29 @@ iframe.youtube-background {
 
   z-index: 0 !important;
 }
+.production-bg {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.production-bg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 45%, rgba(0,0,0,0.15), rgba(0,0,0,0.72) 72%),
+    linear-gradient(90deg, rgba(0,0,0,0.25), rgba(0,0,0,0.1), rgba(0,0,0,0.55));
+}
+
+.glow {
+  z-index: 2;
+}
+
+.screen-shell {
+  position: relative;
+  z-index: 3;
+}
