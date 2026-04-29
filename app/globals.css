@@ -652,8 +652,8 @@ iframe.youtube-background {
 
 .stories-lower .story-card,
 .stories-lower .story-preview {
-  width: 320px;
-  height: 560px;
+  width: 340px;
+  height: 590px;
   border-radius: 30px;
   overflow: hidden;
 
@@ -686,8 +686,8 @@ iframe.youtube-background {
 }
 
 .cinema-headline span {
-  font-size: 24px;
-  opacity: 0.65;
+  font-size: 22px;
+  opacity: 0.55;
 }
 
 .cinema-headline strong {
