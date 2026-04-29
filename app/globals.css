@@ -800,3 +800,38 @@ iframe.youtube-background {
   font-weight: 700;
   opacity: 0.85;
 }
+.cta-bar {
+  position: absolute;
+  top: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  padding: 14px 28px;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.cta-main {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.04em;
+}
+
+.cta-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+}
