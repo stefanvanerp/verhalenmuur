@@ -139,33 +139,6 @@ return (
   <div><span>Afgewezen</span><strong>{stats.rejected}</strong></div>
 </section>
 
-<section className="settings-panel">
-  <h2>Teksten aanpassen</h2>
-
-  <input
-    value={settings.cta_kicker}
-    onChange={(e) => setSettings({ ...settings, cta_kicker: e.target.value })}
-    placeholder="Kleine tekst"
-  />
-
-  <input
-    value={settings.cta_title}
-    onChange={(e) => setSettings({ ...settings, cta_title: e.target.value })}
-    placeholder="Hoofdtitel"
-  />
-
-  <input
-    value={settings.cta_handle}
-    onChange={(e) => setSettings({ ...settings, cta_handle: e.target.value })}
-    placeholder="Instagram handle"
-  />
-
-  <input
-    value={settings.cta_hashtag}
-    onChange={(e) => setSettings({ ...settings, cta_hashtag: e.target.value })}
-    placeholder="Hashtag"
-  />
-
 <div className="upload-group">
   <label>Kies achtergrond afbeelding</label>
   <input
@@ -229,30 +202,6 @@ return (
     }}
   />
 </div>
-
-      const { data } = supabase.storage
-        .from('artwork')
-        .getPublicUrl(fileName);
-
-      setSettings({
-        ...settings,
-        logo_url: data.publicUrl,
-      });
-    }}
-  />
-
-  <button
-    onClick={async () => {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({ ...settings, id: 1 });
-
-      setMessage(error ? error.message : 'Instellingen opgeslagen');
-    }}
-  >
-    Opslaan
-  </button>
-</section>
 
         <section className="admin-layout">
           <div className="admin-panel">
