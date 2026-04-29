@@ -43,15 +43,21 @@ export default function ScreenPage() {
 
    return (
     <main className="app screen">
-      <div className="background" />
+     <div
+  className="background"
+  style={{
+    backgroundImage: `
+      linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
+      url(${settings?.background_url || '/motu-bg.jpg'})
+    `,
+  }}
+/>
       <div className="glow" />
 
       <div className="screen-shell">
-        <Brand />
-
+<Brand settings={settings} />
         <div className="cta-wrapper cinematic-cta">
-          <CTA />
-        </div>
+<CTA settings={settings} />        </div>
 
         <div className="stories-lower">
           <StoryGrid stories={stories} />
