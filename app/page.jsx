@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { startStories } from './data';
-import { supabase, supabaseConfigured } from './supabase';
+import { supabase } from './supabase';
 import { Brand, CTA, StoryGrid } from './components';
 
 function StoryPreview({ story, controls = false }) {
@@ -14,12 +13,7 @@ function StoryPreview({ story, controls = false }) {
   return (
     <div className="story-preview">
       {isVideo ? (
-        <video
-          src={story.image_url}
-          controls={controls}
-          muted
-          playsInline
-        />
+        <video src={story.image_url} controls={controls} muted playsInline />
       ) : (
         <img src={story.image_url} alt="Story" />
       )}
@@ -28,36 +22,12 @@ function StoryPreview({ story, controls = false }) {
 }
 
 export default function AdminPage() {
-  const [settings, setSettings] = useState(null);
+  const [settings, setSettings] = useState({});
+  const [stories, setStories] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  async function handleBackgroundVideoUpload(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const filePath = `backgrounds/${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(filePath, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(filePath);
-
-    setSettings((prev) => ({
-      ...prev,
-      background_video_url: data.publicUrl,
-    }));
-  }
-
-  // rest van je code...
-}
-async function loadStories() {
+  async function loadStories() {
     const { data, error } = await supabase
       .from('stories')
       .select('*')
@@ -71,11 +41,109 @@ async function loadStories() {
     setStories(data || []);
   }
 
-  useEffect(() => {
-    loadStories();
-    const interval = setInterval(loadStories, 2500);
-    return () => clearInterval(interval);
-  }, []);
+  async function loadSettings() {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .eq('id', 1)
+      .single();
+
+    if (error) {
+      setMessage(error.message);
+      return;
+    }
+
+    setSettings(data || {});
+  }
+
+  async function handleBackgroundImageUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const fileName = `backgrounds/bg-${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(fileName, file);
+
+    if (error) {
+      alert('Upload mislukt');
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(fileName);
+
+    setSettings((prev) => ({
+      ...prev,
+      background_url: data.publicUrl,
+      background_video_url: '',
+    }));
+  }
+
+  async function handleBackgroundVideoUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const fileName = `backgrounds/video-${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(fileName, file);
+
+    if (error) {
+      alert('Upload mislukt');
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(fileName);
+
+    setSettings((prev) => ({
+      ...prev,
+      background_video_url: data.publicUrl,
+    }));
+  }
+
+  async function handleLogoUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const fileName = `logos/logo-${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(fileName, file);
+
+    if (error) {
+      alert('Upload mislukt');
+      return;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(fileName);
+
+    setSettings((prev) => ({
+      ...prev,
+      logo_url: data.publicUrl,
+    }));
+  }
+
+  async function saveSettings() {
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({ ...settings, id: 1 });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    alert('Instellingen opgeslagen');
+  }
 
   async function setStatus(id, status) {
     if (String(id).startsWith('demo-')) return;
@@ -93,13 +161,24 @@ async function loadStories() {
     setLoading(false);
   }
 
+  useEffect(() => {
+    loadStories();
+    loadSettings();
+
+    const interval = setInterval(loadStories, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   const approved = useMemo(
     () => stories.filter((story) => story.status === 'approved'),
     [stories]
   );
 
   const incoming = useMemo(
-    () => stories.filter((story) => story.status === 'new' || story.status === 'pending'),
+    () =>
+      stories.filter(
+        (story) => story.status === 'new' || story.status === 'pending'
+      ),
     [stories]
   );
 
@@ -114,20 +193,19 @@ async function loadStories() {
     rejected: rejected.length,
   };
 
-return (
-  <main className="app admin">
-    <div
-      className="background"
-      style={{
-        backgroundImage: `
-          linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
-          url(${settings.background_url || '/motu-bg.jpg'})
-        `,
-      }}
-    />
+  return (
+    <main className="app admin">
+      <div
+        className="background"
+        style={{
+          backgroundImage: `
+            linear-gradient(90deg, rgba(3,3,7,.88), rgba(10,7,16,.62), rgba(3,3,7,.88)),
+            url(${settings?.background_url || '/motu-bg.jpg'})
+          `,
+        }}
+      />
 
-    <div className="glow" />
-
+      <div className="glow" />
 
       <div className="admin-shell">
         <header className="admin-header">
@@ -138,103 +216,72 @@ return (
           </div>
 
           <nav className="admin-controls">
-            <a href="/screen" target="_blank" rel="noreferrer">Open bioscoopscherm</a>
+            <a href="/screen" target="_blank" rel="noreferrer">
+              Open bioscoopscherm
+            </a>
           </nav>
         </header>
 
         {message ? <div className="notice">{message}</div> : null}
 
-     <section className="admin-stats">
-  <div><span>Nieuw</span><strong>{stats.new}</strong></div>
-  <div><span>Goedgekeurd</span><strong>{stats.approved}</strong></div>
-  <div><span>Afgewezen</span><strong>{stats.rejected}</strong></div>
-</section>
+        <section className="admin-stats">
+          <div>
+            <span>Nieuw</span>
+            <strong>{stats.new}</strong>
+          </div>
+          <div>
+            <span>Goedgekeurd</span>
+            <strong>{stats.approved}</strong>
+          </div>
+          <div>
+            <span>Afgewezen</span>
+            <strong>{stats.rejected}</strong>
+          </div>
+        </section>
 
-<section className="settings-panel">
+        <section className="settings-panel">
+          <div className="upload-group">
+            <label>Kies achtergrond afbeelding</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleBackgroundImageUpload}
+            />
+          </div>
 
-  <div className="upload-group">
-    <label>Kies achtergrond afbeelding</label>
-    <input
-      type="file"
-      accept="image/*"
-      onChange={async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
+          <div className="upload-group">
+            <label>Kies achtergrond video</label>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={handleBackgroundVideoUpload}
+            />
 
-        const fileName = `bg-${Date.now()}-${file.name}`;
+            {settings?.background_video_url && (
+              <video
+                src={settings.background_video_url}
+                muted
+                autoPlay
+                loop
+                playsInline
+                style={{
+                  width: '100%',
+                  marginTop: 12,
+                  borderRadius: 12,
+                }}
+              />
+            )}
+          </div>
 
-        const { error } = await supabase.storage
-          .from('artwork')
-          .upload(fileName, file);
+          <div className="upload-group">
+            <label>Kies film logo</label>
+            <input type="file" accept="image/*" onChange={handleLogoUpload} />
+          </div>
 
-        if (error) {
-          alert('Upload mislukt');
-          return;
-        }
-
-        const { data } = supabase.storage
-          .from('artwork')
-          .getPublicUrl(fileName);
-
-        setSettings((prev) => ({
-          ...prev,
-          background_url: data.publicUrl,
-        }));
-      }}
-    />
-  </div>
-
-  <div className="upload-group">
-    <label>Kies film logo</label>
-    <input
-      type="file"
-      accept="image/*"
-      onChange={async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const fileName = `logo-${Date.now()}-${file.name}`;
-
-        const { error } = await supabase.storage
-          .from('artwork')
-          .upload(fileName, file);
-
-        if (error) {
-          alert('Upload mislukt');
-          return;
-        }
-
-        const { data } = supabase.storage
-          .from('artwork')
-          .getPublicUrl(fileName);
-
-        setSettings((prev) => ({
-          ...prev,
-          logo_url: data.publicUrl,
-        }));
-      }}
-    />
-  </div>
-
-  <button
-    className="save-settings-button"
-    onClick={async () => {
-      const { error } = await supabase
-        .from('site_settings')
-        .upsert({ ...settings, id: 1 });
-
-      if (error) {
-        alert(error.message);
-        return;
-      }
-
-      alert('Instellingen opgeslagen');
-    }}
-  >
-    Opslaan
-  </button>
-
-</section>
+          <button className="save-settings-button" onClick={saveSettings}>
+            Opslaan
+          </button>
+        </section>
 
         <section className="admin-layout">
           <div className="admin-panel">
@@ -246,11 +293,17 @@ return (
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button disabled={loading} onClick={() => setStatus(story.id, 'approved')}>
+                <button
+                  disabled={loading}
+                  onClick={() => setStatus(story.id, 'approved')}
+                >
                   Goed
                 </button>
 
-                <button disabled={loading} onClick={() => setStatus(story.id, 'rejected')}>
+                <button
+                  disabled={loading}
+                  onClick={() => setStatus(story.id, 'rejected')}
+                >
                   Afwijs
                 </button>
               </div>
@@ -264,7 +317,10 @@ return (
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button disabled={loading} onClick={() => setStatus(story.id, 'pending')}>
+                <button
+                  disabled={loading}
+                  onClick={() => setStatus(story.id, 'pending')}
+                >
                   Terughalen
                 </button>
               </div>
@@ -278,20 +334,23 @@ return (
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button disabled={loading} onClick={() => setStatus(story.id, 'pending')}>
+                <button
+                  disabled={loading}
+                  onClick={() => setStatus(story.id, 'pending')}
+                >
                   Terugzetten
                 </button>
               </div>
             ))}
           </div>
 
-             <div className="admin-preview">
+          <div className="admin-preview">
             <Brand settings={settings} />
             <CTA settings={settings} />
             <StoryGrid stories={approved} />
           </div>
         </section>
-   </div>
+      </div>
     </main>
   );
 }
