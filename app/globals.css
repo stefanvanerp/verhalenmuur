@@ -471,3 +471,41 @@ button, input { font: inherit; }
   position: relative;
   z-index: 3;
 }
+.youtube-background {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 120vw !important;
+  height: 120vh !important;
+  left: -10vw !important;
+  top: -10vh !important;
+  border: 0 !important;
+  filter: blur(14px);
+  opacity: 0.32;
+  transform: scale(1.15);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.video-background {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover;
+  filter: blur(14px);
+  opacity: 0.32;
+  transform: scale(1.08);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glow {
+  position: fixed;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.screen-shell {
+  position: relative;
+  z-index: 3;
+}
