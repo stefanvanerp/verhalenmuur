@@ -236,6 +236,17 @@ return (
             <StoryGrid stories={approved} />
           </div>
         </section>
+        <button
+  onClick={async () => {
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({ ...settings, id: 1 });
+
+    setMessage(error ? error.message : 'Instellingen opgeslagen');
+  }}
+>
+  Opslaan
+</button>
       </div>
     </main>
   );
