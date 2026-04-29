@@ -31,20 +31,22 @@ export default function ScreenPage() {
     }
   }
 
- return (
-  <main className="app screen">
-    <div className="background" />
-    <div className="glow" />
+   return (
+    <main className="app screen">
+      <div className="background" />
+      <div className="glow" />
 
-   <div className="screen-shell">
-  <Brand />
+      <div className="screen-shell">
+        <Brand />
 
-  <div className="cta-wrapper cinematic-cta">
-    <CTA />
-  </div>
+        <div className="cta-wrapper cinematic-cta">
+          <CTA />
+        </div>
 
-  <div className="stories-lower">
-    <StoryGrid stories={stories} />
-  </div>
-</div>
-    }
+        <div className="stories-lower">
+          <StoryGrid stories={stories} />
+        </div>
+      </div>
+    </main>
+  );
+}
