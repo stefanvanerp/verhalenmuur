@@ -107,9 +107,14 @@ export default function ScreenPage() {
 </div>
 
 <div className="cta-bar">
-  <strong>{settings?.cta_title || 'MAAK JE STORY EN TAG'}</strong>
-  <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
-  <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
+  <div className="cta-main">
+    {settings?.cta_title || 'MAAK JE STORY EN TAG'}
+  </div>
+
+  <div className="cta-meta">
+    <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
+    <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
+  </div>
 </div>
 
         <div className="stories-lower">
