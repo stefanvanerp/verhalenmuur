@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 
-export function Brand() {
+export function Brand({ settings }) {
   return (
     <section className="brand">
-      <img src="/motu-logo.png" alt="Masters of the Universe" />
+      <img
+        src={settings?.logo_url || '/motu-logo.png'}
+        alt="Film logo"
+      />
       <p><strong>4 JUNI</strong> IN DE BIOSCOOP</p>
     </section>
   );
