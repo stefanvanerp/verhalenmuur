@@ -178,6 +178,66 @@ return (
     placeholder="Achtergrond URL, bv /motu-bg.jpg"
   />
 
+  <p>Upload achtergrond</p>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const fileName = `bg-${Date.now()}-${file.name}`;
+
+      const { error } = await supabase.storage
+        .from('artwork')
+        .upload(fileName, file);
+
+      if (error) {
+        alert('Upload mislukt');
+        return;
+      }
+
+      const { data } = supabase.storage
+        .from('artwork')
+        .getPublicUrl(fileName);
+
+      setSettings({
+        ...settings,
+        background_url: data.publicUrl,
+      });
+    }}
+  />
+
+  <p>Upload logo</p>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const fileName = `logo-${Date.now()}-${file.name}`;
+
+      const { error } = await supabase.storage
+        .from('artwork')
+        .upload(fileName, file);
+
+      if (error) {
+        alert('Upload mislukt');
+        return;
+      }
+
+      const { data } = supabase.storage
+        .from('artwork')
+        .getPublicUrl(fileName);
+
+      setSettings({
+        ...settings,
+        logo_url: data.publicUrl,
+      });
+    }}
+  />
+
   <button
     onClick={async () => {
       const { error } = await supabase
@@ -185,63 +245,10 @@ return (
         .upsert({ ...settings, id: 1 });
 
       setMessage(error ? error.message : 'Instellingen opgeslagen');
-
-<input
-  type="file"
-  accept="image/*"
-  onChange={async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const fileName = `bg-${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(fileName, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(fileName);
-
-    setSettings({
-      ...settings,
-      background_url: data.publicUrl,
-    });
-  }}
-/>
-<input
-  type="file"
-  accept="image/*"
-  onChange={async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const fileName = `logo-${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(fileName, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(fileName);
-
-    setSettings({
-      ...settings,
-      logo_url: data.publicUrl,
-    });
-  }}
-/>
+    }}
+  >
+    Opslaan
+  </button>
 </section>
 
         <section className="admin-layout">
@@ -294,22 +301,12 @@ return (
           </div>
 
           <div className="admin-preview">
-<Brand settings={settings} /> 
+          <div className="admin-preview">
+            <Brand settings={settings} />
             <CTA settings={settings} />
             <StoryGrid stories={approved} />
           </div>
         </section>
-        <button
-  onClick={async () => {
-    const { error } = await supabase
-      .from('site_settings')
-      .upsert({ ...settings, id: 1 });
-
-    setMessage(error ? error.message : 'Instellingen opgeslagen');
-  }}
->
-  Opslaan
-</button>
       </div>
     </main>
   );
