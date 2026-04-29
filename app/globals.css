@@ -703,20 +703,21 @@ iframe.youtube-background {
   position: absolute;
   inset: 0;
 
-  background: radial-gradient(
-    circle at 50% 65%,
-    rgba(0,0,0,0.2),
-    rgba(0,0,0,0.85)
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.6) 0%,
+    rgba(0,0,0,0.4) 40%,
+    rgba(0,0,0,0.8) 100%
   );
 
   z-index: 1;
   pointer-events: none;
 }
-.production-bg::after {
-  content: "";
-  position: absolute;
+.production-bg {
+  position: fixed;
   inset: 0;
-
+  z-index: 0;
+}
   background: radial-gradient(
     ellipse at center,
     rgba(0,0,0,0.1) 40%,
@@ -724,4 +725,12 @@ iframe.youtube-background {
   );
 
   pointer-events: none;
+}
+.story-preview {
+  transform: scale(1.05);
+  transition: transform 0.4s ease;
+}
+
+.story-preview:hover {
+  transform: scale(1.1);
 }
