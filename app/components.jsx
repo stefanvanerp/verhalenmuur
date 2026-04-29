@@ -12,13 +12,21 @@ export function Brand() {
 export function CTA() {
   return (
     <div className="cta-hero">
-      <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
+      <img
+        src="/instagram.png"
+        alt="Instagram"
+        className="insta-logo"
+      />
 
-      <h2>MAAK JE STORY EN TAG</h2>
+      <div className="cta-copy">
+        <p className="cta-kicker">ZIE JEZELF OP HET GROTE DOEK</p>
 
-      <p className="cta-tag">@SONYPICTURESNL</p>
+        <h2>MAAK JE STORY EN TAG</h2>
 
-      <p className="cta-hashtag">#MASTERSOFTHEUNIVERSE</p>
+        <p className="cta-tag">@SONYPICTURESNL</p>
+
+        <p className="cta-hashtag">#MASTERSOFTHEUNIVERSE</p>
+      </div>
     </div>
   );
 }
