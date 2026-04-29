@@ -28,23 +28,35 @@ function StoryPreview({ story, controls = false }) {
 }
 
 export default function AdminPage() {
-  const [stories, setStories] = useState(startStories);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [settings, setSettings] = useState(null);
 
- const [settings, setSettings] = useState({
-  cta_kicker: 'ZIE JEZELF OP HET GROTE DOEK',
-  cta_title: 'MAAK JE STORY EN TAG',
-  cta_handle: '@SONYPICTURESNL',
-  cta_hashtag: '#MASTERSOFTHEUNIVERSE',
-  logo_url: '/motu-logo.png',
-  background_url: '/background.jpg',
-});
+  async function handleBackgroundVideoUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  async function loadStories() {
-    if (!supabaseConfigured) {
-      setMessage('Supabase keys ontbreken in Vercel. Demo data wordt getoond.');
+    const filePath = `backgrounds/${Date.now()}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(filePath, file);
+
+    if (error) {
+      alert('Upload mislukt');
       return;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(filePath);
+
+    setSettings((prev) => ({
+      ...prev,
+      background_video_url: data.publicUrl,
+    }));
+  }
+
+  // rest van je code...
+}
     }
 
     const { data, error } = await supabase
