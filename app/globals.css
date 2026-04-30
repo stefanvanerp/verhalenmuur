@@ -173,8 +173,9 @@ input {
 
 .story-grid {
   width: 100%;
-  max-width: 1500px;
+  max-width: 1328px;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .story-track {
@@ -186,9 +187,9 @@ input {
 
 .story-card,
 .story-preview {
-  width: 340px;
-  height: 590px;
-  flex: 0 0 340px;
+  width: 310px;
+  height: 550px;
+  flex: 0 0 310px;
   border-radius: 30px;
   overflow: hidden;
   background: black;
