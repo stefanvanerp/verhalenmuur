@@ -510,3 +510,41 @@ input {
     font-size: 12px;
   }
 }
+.admin-control-page {
+  min-height: 100vh;
+  padding: 40px;
+  background: #08070a;
+  color: white;
+}
+
+.admin-control-page h1 {
+  margin-top: 0;
+}
+
+.admin-control-page h2 {
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.admin-control-page div {
+  margin-bottom: 14px;
+}
+
+.admin-control-page label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.admin-control-page input[type="text"] {
+  width: min(100%, 520px);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.admin-control-page input[type="range"] {
+  width: 260px;
+}
