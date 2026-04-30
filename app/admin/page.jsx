@@ -135,7 +135,19 @@ async function saveSettings() {
             value={settings.logo_url || ''}
             onChange={(e) => updateLocal('logo_url', e.target.value)}
           />
+<label>Achtergrond uploaden</label>
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => setBackgroundFile(e.target.files[0])}
+/>
 
+<label>Logo uploaden</label>
+<input
+  type="file"
+  accept="image/*"
+  onChange={(e) => setLogoFile(e.target.files[0])}
+/>
           <label>Achtergrond afbeelding url</label>
           <input
             type="text"
