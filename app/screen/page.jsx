@@ -13,7 +13,11 @@ function getYouTubeId(url) {
 
   return match ? match[1] : null;
 }
-
+function cssPosition(value, fallback) {
+  if (value === null || value === undefined || value === '') return fallback;
+  if (typeof value === 'number') return `${value}%`;
+  return value;
+}
 export default function ScreenPage() {
   const [stories, setStories] = useState([]);
   const [settings, setSettings] = useState(null);
@@ -95,24 +99,23 @@ export default function ScreenPage() {
       <div className="glow" />
 
       <div className="screen-shell">
-  <div
-    className="layer brand-layer"
-    style={{
-      top: settings?.brand_top || '40px',
-      left: settings?.brand_left || '40px',
-    }}
-  >
+<div
+  className="layer brand-layer"
+  style={{
+    top: cssPosition(settings?.brand_top, '40px'),
+    left: cssPosition(settings?.brand_left, '40px'),
+  }}
+>
     <Brand settings={settings} />
   </div>
 
-  <div
-    className="layer cta-layer"
-    style={{
-      top: settings?.cta_top || '80px',
-      left: settings?.cta_left || '50%',
-      transform: 'translateX(-50%)',
-    }}
-  >
+<div
+  className="layer cta-layer"
+  style={{
+    top: cssPosition(settings?.cta_top, '80px'),
+    left: cssPosition(settings?.cta_left, '50%'),
+  }}
+>
     <div className="cta-bar">
       <div className="cta-main">
         {settings?.cta_title || 'MAAK JE STORY EN TAG'}
