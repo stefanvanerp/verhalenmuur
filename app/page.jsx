@@ -162,7 +162,30 @@ async function setStatus(id, status) {
 }
 
 async function deleteStory(id) {
-  const confirmed = window.confirm(
+
+  async function deleteStory(id) {
+  console.log('DELETE CLICKED', id);
+
+  const confirmed = window.confirm('Weet je zeker dat je deze story wilt verwijderen?');
+  if (!confirmed) return;
+
+  setLoading(true);
+
+  const { error } = await supabase
+    .from('stories')
+    .delete()
+    .eq('id', id);
+
+  console.log('DELETE RESULT', error);
+
+  if (error) {
+    alert(error.message);
+    setMessage(error.message);
+  }
+
+  await loadStories();
+  setLoading(false);
+}const confirmed = window.confirm(
     'Weet je zeker dat je deze story definitief wilt verwijderen?'
   );
 
