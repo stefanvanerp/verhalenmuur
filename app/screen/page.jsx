@@ -99,24 +99,4 @@ export default function ScreenPage() {
 
       <div className="glow" />
 
-      <div className="screen-shell">
-        <Brand settings={settings} />
-
-<div className="cta-bar">
-  <div className="cta-main">
-    {settings?.cta_title || 'MAAK JE STORY EN TAG'}
-  </div>
-
-  <div className="cta-meta">
-    <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
-    <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
-  </div>
-</div>
-
-        <div className="stories-lower">
-          <StoryGrid stories={stories} />
-        </div>
-      </div>
-    </main>
-  );
-}
+    }
