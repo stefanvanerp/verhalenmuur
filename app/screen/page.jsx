@@ -98,3 +98,42 @@ export default function ScreenPage() {
 <div className="production-bg-overlay" />
 
       <div className="glow" />
+
+      <div className="screen-shell">
+  <div
+    className="layer brand-layer"
+    style={{
+      top: settings?.brand_top || '40px',
+      left: settings?.brand_left || '40px',
+    }}
+  >
+    <Brand settings={settings} />
+  </div>
+
+  <div
+    className="layer cta-layer"
+    style={{
+      top: settings?.cta_top || '80px',
+      left: settings?.cta_left || '50%',
+      transform: 'translateX(-50%)',
+    }}
+  >
+    <div className="cta-bar">
+      <div className="cta-main">
+        {settings?.cta_title || 'MAAK JE STORY EN TAG'}
+      </div>
+
+      <div className="cta-meta">
+        <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
+        <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
+      </div>
+    </div>
+  </div>
+
+  <div className="stories-lower">
+    <StoryGrid stories={stories} />
+  </div>
+</div>
+</main>
+);
+}
