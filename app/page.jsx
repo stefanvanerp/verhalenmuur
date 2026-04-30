@@ -145,7 +145,7 @@ export default function AdminPage() {
     alert('Instellingen opgeslagen');
   }
 
-async function setStatus(id, status) {
+async function setStatus(id, status) { 
   if (String(id).startsWith('demo-')) return;
 
   setLoading(true);
