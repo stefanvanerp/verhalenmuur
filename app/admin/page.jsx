@@ -93,6 +93,46 @@ export default function AdminPage() {
           }
         />
       </div>
+<h2>Stories blok</h2>
+
+<div>
+  <label>Top: {settings.stories_top}</label>
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value={settings.stories_top || 0}
+    onChange={(e) =>
+      updateSetting('stories_top', Number(e.target.value))
+    }
+  />
+</div>
+
+<div>
+  <label>Left: {settings.stories_left}</label>
+  <input
+    type="range"
+    min="0"
+    max="100"
+    value={settings.stories_left || 0}
+    onChange={(e) =>
+      updateSetting('stories_left', Number(e.target.value))
+    }
+  />
+</div>
+
+<div>
+  <label>Width: {settings.stories_width}</label>
+  <input
+    type="range"
+    min="40"
+    max="100"
+    value={settings.stories_width || 90}
+    onChange={(e) =>
+      updateSetting('stories_width', Number(e.target.value))
+    }
+  />
+</div>
     </main>
   );
 }
