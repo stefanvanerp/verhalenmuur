@@ -35,8 +35,8 @@ export default function AdminPage() {
   if (!settings) return <p style={{ padding: 40 }}>Loading...</p>;
 
   return (
-    <main style={{ padding: 40 }}>
-      <h1>Admin controls</h1>
+<main className="admin-control-page">
+  <h1>Admin controls</h1>
 <h2>Tekst aanpassen</h2>
 
 <div>
