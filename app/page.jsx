@@ -239,63 +239,8 @@ export default function AdminPage() {
           </div>
         </section>
 
-        <section className="settings-panel">
-          <div className="upload-group">
-            <label>Kies achtergrond afbeelding</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleBackgroundImageUpload}
-            />
-          </div>
-<div className="upload-group">
-  <label>YouTube trailer link</label>
-  <input
-    type="url"
-    placeholder="https://www.youtube.com/watch?v=..."
-    value={settings?.background_youtube_url || ''}
-    onChange={(e) =>
-      setSettings((prev) => ({
-        ...prev,
-        background_youtube_url: e.target.value,
-        background_video_url: '',
-      }))
-    }
-  />
-</div>
-          <div className="upload-group">
-            <label>Kies achtergrond video</label>
-            <input
-              type="file"
-              accept="video/*"
-              onChange={handleBackgroundVideoUpload}
-            />
 
-            {settings?.background_video_url && (
-              <video
-                src={settings.background_video_url}
-                muted
-                autoPlay
-                loop
-                playsInline
-                style={{
-                  width: '100%',
-                  marginTop: 12,
-                  borderRadius: 12,
-                }}
-              />
-            )}
-          </div>
-
-          <div className="upload-group">
-            <label>Kies film logo</label>
-            <input type="file" accept="image/*" onChange={handleLogoUpload} />
-          </div>
-
-          <button className="save-settings-button" onClick={saveSettings}>
-            Opslaan
-          </button>
-        </section>
+      
 
         <section className="admin-layout">
           <div className="admin-panel">
