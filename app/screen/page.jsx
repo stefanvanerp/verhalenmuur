@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Brand, CTA, StoryGrid } from '../components';
+import { Brand, StoryGrid } from '../components';
 import { supabase } from '../supabase';
 
 function getYouTubeId(url) {
@@ -13,11 +13,13 @@ function getYouTubeId(url) {
 
   return match ? match[1] : null;
 }
+
 function cssPosition(value, fallback) {
   if (value === null || value === undefined || value === '') return fallback;
   if (typeof value === 'number') return `${value}%`;
   return value;
 }
+
 export default function ScreenPage() {
   const [stories, setStories] = useState([]);
   const [settings, setSettings] = useState(null);
@@ -75,8 +77,6 @@ export default function ScreenPage() {
 
   return (
     <main className="app screen">
-    {/* YouTube background disabled for production layout */}
-
       {!youtubeId && settings?.background_video_url && (
         <video
           className="video-background"
@@ -88,58 +88,59 @@ export default function ScreenPage() {
         />
       )}
 
-    <div
-  className="production-bg"
-  style={{
-    backgroundImage: `url(${settings?.background_url || '/motu-bg.jpg'})`,
-  }}
-/>
-<div className="production-bg-overlay" />
+      <div
+        className="production-bg"
+        style={{
+          backgroundImage: `url(${settings?.background_url || '/motu-bg.jpg'})`,
+        }}
+      />
 
+      <div className="production-bg-overlay" />
       <div className="glow" />
 
       <div className="screen-shell">
-<div
-  className="layer brand-layer"
-  style={{
-    top: cssPosition(settings?.brand_top, '40px'),
-    left: cssPosition(settings?.brand_left, '40px'),
-  }}
->
-    <Brand settings={settings} />
-  </div>
+        <div
+          className="layer brand-layer"
+          style={{
+            top: cssPosition(settings?.brand_top, '40px'),
+            left: cssPosition(settings?.brand_left, '40px'),
+          }}
+        >
+          <Brand settings={settings} />
+        </div>
 
-<div
-  className="layer cta-layer"
-  style={{
-    top: cssPosition(settings?.cta_top, '80px'),
-    left: cssPosition(settings?.cta_left, '50%'),
-  }}
->
-    <div className="cta-bar">
-      <div className="cta-main">
-        {settings?.cta_title || 'MAAK JE STORY EN TAG'}
+        <div
+          className="layer cta-layer"
+          style={{
+            top: cssPosition(settings?.cta_top, '80px'),
+            left: cssPosition(settings?.cta_left, '50%'),
+          }}
+        >
+          <div className="cta-bar">
+            <div className="cta-main">
+              {settings?.cta_title || 'MAAK JE STORY EN TAG'}
+            </div>
+
+            <div className="cta-meta">
+              <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
+              <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="layer stories-layer"
+          style={{
+            top: cssPosition(settings?.stories_top, '42%'),
+            left: cssPosition(settings?.stories_left, '5%'),
+            width: cssPosition(settings?.stories_width, '90%'),
+          }}
+        >
+          <div className="stories-lower">
+            <StoryGrid stories={stories} />
+          </div>
+        </div>
       </div>
-
-      <div className="cta-meta">
-        <span>{settings?.cta_handle || '@SONYPICTURESNL'}</span>
-        <span>{settings?.cta_hashtag || '#MASTERSOFTHEUNIVERSE'}</span>
-      </div>
-    </div>
-  </div>
-
-<div
-  className="layer stories-layer"
-  style={{
-    top: cssPosition(settings?.stories_top, '42%'),
-    left: cssPosition(settings?.stories_left, '5%'),
-    width: cssPosition(settings?.stories_width, '90%'),
-  }}
->
-  <div className="stories-lower">
-    <StoryGrid stories={stories} />
-  </div>
-    </div>
-  </main>
-);
+    </main>
+  );
 }
