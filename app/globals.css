@@ -548,3 +548,145 @@ input {
 .admin-control-page input[type="range"] {
   width: 260px;
 }
+.admin-control-page {
+  min-height: 100vh;
+  padding: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(140, 20, 20, 0.28), transparent 38%),
+    #08070a;
+  color: white;
+}
+
+.admin-control-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  padding: 24px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 24px;
+}
+
+.admin-kicker {
+  margin: 0 0 8px;
+  color: #ffb3ad;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.admin-control-header h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+}
+
+.admin-control-header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.admin-screen-button {
+  text-decoration: none;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  font-weight: 900;
+}
+
+.admin-control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-bottom: 110px;
+}
+
+.admin-card {
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-card h2 {
+  margin: 0 0 18px;
+}
+
+.admin-card label {
+  display: block;
+  margin: 14px 0 7px;
+  font-weight: 800;
+}
+
+.admin-card input[type="text"] {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: white;
+}
+
+.admin-slider {
+  margin-bottom: 18px;
+}
+
+.admin-slider div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.admin-slider input {
+  width: 100%;
+}
+
+.admin-save-bar {
+  position: fixed;
+  left: 32px;
+  right: 32px;
+  bottom: 24px;
+  z-index: 100;
+  padding: 16px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-save-bar button {
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 24px;
+  font-weight: 1000;
+  cursor: pointer;
+  background: white;
+  color: #111;
+}
+
+.admin-save-bar span {
+  color: #a7ffb5;
+  font-weight: 800;
+}
+
+.admin-loading {
+  padding: 40px;
+  color: white;
+}
+
+@media (max-width: 900px) {
+  .admin-control-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-control-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
