@@ -2,12 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Brand, CTA, StoryGrid } from '../components';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { supabase } from '../supabase';
 
 function getYouTubeId(url) {
   if (!url) return null;
