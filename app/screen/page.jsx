@@ -98,5 +98,3 @@ export default function ScreenPage() {
 <div className="production-bg-overlay" />
 
       <div className="glow" />
-
-    }
