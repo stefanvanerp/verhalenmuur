@@ -128,10 +128,15 @@ export default function ScreenPage() {
     </div>
   </div>
 
+<div
+  className="layer stories-layer"
+  style={{
+    top: cssPosition(settings?.stories_top, '42%'),
+    left: cssPosition(settings?.stories_left, '5%'),
+    width: cssPosition(settings?.stories_width, '90%'),
+  }}
+>
   <div className="stories-lower">
     <StoryGrid stories={stories} />
   </div>
 </div>
-</main>
-);
-}
