@@ -37,6 +37,63 @@ export default function AdminPage() {
   return (
 <main className="admin-control-page">
   <h1>Admin controls</h1>
+  <h2>Tekst aanpassen</h2>
+
+<div>
+  <label>CTA titel</label>
+  <input
+    type="text"
+    value={settings.cta_title || ''}
+    onChange={(e) => updateSetting('cta_title', e.target.value)}
+  />
+</div>
+
+<div>
+  <label>Instagram handle</label>
+  <input
+    type="text"
+    value={settings.cta_handle || ''}
+    onChange={(e) => updateSetting('cta_handle', e.target.value)}
+  />
+</div>
+
+<div>
+  <label>Hashtag</label>
+  <input
+    type="text"
+    value={settings.cta_hashtag || ''}
+    onChange={(e) => updateSetting('cta_hashtag', e.target.value)}
+  />
+</div>
+
+<h2>Beeld aanpassen</h2>
+
+<div>
+  <label>Logo url</label>
+  <input
+    type="text"
+    value={settings.logo_url || ''}
+    onChange={(e) => updateSetting('logo_url', e.target.value)}
+  />
+</div>
+
+<div>
+  <label>Achtergrond afbeelding url</label>
+  <input
+    type="text"
+    value={settings.background_url || ''}
+    onChange={(e) => updateSetting('background_url', e.target.value)}
+  />
+</div>
+
+<div>
+  <label>YouTube trailer url</label>
+  <input
+    type="text"
+    value={settings.background_youtube_url || ''}
+    onChange={(e) => updateSetting('background_youtube_url', e.target.value)}
+  />
+</div>
 <h2>Tekst aanpassen</h2>
 
 <div>
