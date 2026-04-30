@@ -6,6 +6,8 @@ import { supabase } from '../supabase';
 export default function AdminPage() {
   const [settings, setSettings] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [backgroundFile, setBackgroundFile] = useState(null);
+const [logoFile, setLogoFile] = useState(null);
 
   async function fetchSettings() {
     const { data } = await supabase
@@ -29,22 +31,60 @@ export default function AdminPage() {
 
     setSaved(false);
   }
+async function uploadFile(file, folder) {
+  if (!file) return null;
 
-  async function saveSettings() {
-    const { error } = await supabase
-      .from('site_settings')
-      .update(settings)
-      .eq('id', 1);
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${folder}-${Date.now()}.${fileExt}`;
+  const filePath = `${folder}/${fileName}`;
 
-    if (!error) {
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2500);
+  const { error } = await supabase.storage
+    .from('uploads')
+    .upload(filePath, file, {
+      upsert: true,
+    });
+
+  if (error) {
+    alert('Upload mislukt');
+    console.error(error);
+    return null;
+  }
+
+  const { data } = supabase.storage
+    .from('uploads')
+    .getPublicUrl(filePath);
+
+  return data.publicUrl;
+async function saveSettings() {
+  let nextSettings = { ...settings };
+
+  if (backgroundFile) {
+    const backgroundUrl = await uploadFile(backgroundFile, 'backgrounds');
+    if (backgroundUrl) {
+      nextSettings.background_url = backgroundUrl;
     }
   }
 
-  if (!settings) {
-    return <p className="admin-loading">Loading...</p>;
+  if (logoFile) {
+    const logoUrl = await uploadFile(logoFile, 'logos');
+    if (logoUrl) {
+      nextSettings.logo_url = logoUrl;
+    }
   }
+
+  const { error } = await supabase
+    .from('site_settings')
+    .update(nextSettings)
+    .eq('id', 1);
+
+  if (!error) {
+    setSettings(nextSettings);
+    setBackgroundFile(null);
+    setLogoFile(null);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2500);
+  }
+}
 
   return (
     <main className="admin-control-page">
