@@ -139,4 +139,4 @@ export default function ScreenPage() {
   <div className="stories-lower">
     <StoryGrid stories={stories} />
   </div>
-</div>
+}
