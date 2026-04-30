@@ -5,8 +5,8 @@ import { supabase } from '../supabase';
 
 export default function AdminPage() {
   const [settings, setSettings] = useState(null);
+  const [saved, setSaved] = useState(false);
 
-  // ophalen van settings
   async function fetchSettings() {
     const { data } = await supabase
       .from('site_settings')
@@ -21,231 +21,179 @@ export default function AdminPage() {
     fetchSettings();
   }, []);
 
-  // update functie
-  async function updateSetting(key, value) {
-    const updated = { ...settings, [key]: value };
-    setSettings(updated);
+  function updateLocal(key, value) {
+    setSettings((current) => ({
+      ...current,
+      [key]: value,
+    }));
 
-    await supabase
-      .from('site_settings')
-      .update({ [key]: value })
-      .eq('id', 1);
+    setSaved(false);
   }
 
-  if (!settings) return <p style={{ padding: 40 }}>Loading...</p>;
+  async function saveSettings() {
+    const { error } = await supabase
+      .from('site_settings')
+      .update(settings)
+      .eq('id', 1);
+
+    if (!error) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    }
+  }
+
+  if (!settings) {
+    return <p className="admin-loading">Loading...</p>;
+  }
 
   return (
-<main className="admin-control-page">
-  <h1>Admin controls</h1>
-  <h2>Tekst aanpassen</h2>
+    <main className="admin-control-page">
+      <header className="admin-control-header">
+        <div>
+          <p className="admin-kicker">Verhalenmuur</p>
+          <h1>Admin controls</h1>
+          <p>Pas tekst, beeld en positie aan voor het bioscoopscherm.</p>
+        </div>
 
-<div>
-  <label>CTA titel</label>
-  <input
-    type="text"
-    value={settings.cta_title || ''}
-    onChange={(e) => updateSetting('cta_title', e.target.value)}
-  />
-</div>
+        <a className="admin-screen-button" href="/screen" target="_blank">
+          Open bioscoopscherm
+        </a>
+      </header>
 
-<div>
-  <label>Instagram handle</label>
-  <input
-    type="text"
-    value={settings.cta_handle || ''}
-    onChange={(e) => updateSetting('cta_handle', e.target.value)}
-  />
-</div>
+      <section className="admin-control-grid">
+        <div className="admin-card">
+          <h2>Tekst</h2>
 
-<div>
-  <label>Hashtag</label>
-  <input
-    type="text"
-    value={settings.cta_hashtag || ''}
-    onChange={(e) => updateSetting('cta_hashtag', e.target.value)}
-  />
-</div>
+          <label>CTA titel</label>
+          <input
+            type="text"
+            value={settings.cta_title || ''}
+            onChange={(e) => updateLocal('cta_title', e.target.value)}
+          />
 
-<h2>Beeld aanpassen</h2>
+          <label>Instagram handle</label>
+          <input
+            type="text"
+            value={settings.cta_handle || ''}
+            onChange={(e) => updateLocal('cta_handle', e.target.value)}
+          />
 
-<div>
-  <label>Logo url</label>
-  <input
-    type="text"
-    value={settings.logo_url || ''}
-    onChange={(e) => updateSetting('logo_url', e.target.value)}
-  />
-</div>
+          <label>Hashtag</label>
+          <input
+            type="text"
+            value={settings.cta_hashtag || ''}
+            onChange={(e) => updateLocal('cta_hashtag', e.target.value)}
+          />
+        </div>
 
-<div>
-  <label>Achtergrond afbeelding url</label>
-  <input
-    type="text"
-    value={settings.background_url || ''}
-    onChange={(e) => updateSetting('background_url', e.target.value)}
-  />
-</div>
+        <div className="admin-card">
+          <h2>Beeld</h2>
 
-<div>
-  <label>YouTube trailer url</label>
-  <input
-    type="text"
-    value={settings.background_youtube_url || ''}
-    onChange={(e) => updateSetting('background_youtube_url', e.target.value)}
-  />
-</div>
-<h2>Tekst aanpassen</h2>
+          <label>Logo url</label>
+          <input
+            type="text"
+            value={settings.logo_url || ''}
+            onChange={(e) => updateLocal('logo_url', e.target.value)}
+          />
 
-<div>
-  <label>CTA titel</label>
-  <input
-    type="text"
-    value={settings.cta_title || ''}
-    onChange={(e) => updateSetting('cta_title', e.target.value)}
-  />
-</div>
+          <label>Achtergrond afbeelding url</label>
+          <input
+            type="text"
+            value={settings.background_url || ''}
+            onChange={(e) => updateLocal('background_url', e.target.value)}
+          />
 
-<div>
-  <label>Instagram handle</label>
-  <input
-    type="text"
-    value={settings.cta_handle || ''}
-    onChange={(e) => updateSetting('cta_handle', e.target.value)}
-  />
-</div>
+          <label>YouTube trailer url</label>
+          <input
+            type="text"
+            value={settings.background_youtube_url || ''}
+            onChange={(e) => updateLocal('background_youtube_url', e.target.value)}
+          />
+        </div>
 
-<div>
-  <label>Hashtag</label>
-  <input
-    type="text"
-    value={settings.cta_hashtag || ''}
-    onChange={(e) => updateSetting('cta_hashtag', e.target.value)}
-  />
-</div>
+        <div className="admin-card">
+          <h2>Logo positie</h2>
 
-<h2>Beeld aanpassen</h2>
+          <Slider
+            label="Boven"
+            value={settings.brand_top || 0}
+            onChange={(value) => updateLocal('brand_top', value)}
+          />
 
-<div>
-  <label>Logo url</label>
-  <input
-    type="text"
-    value={settings.logo_url || ''}
-    onChange={(e) => updateSetting('logo_url', e.target.value)}
-  />
-</div>
+          <Slider
+            label="Links"
+            value={settings.brand_left || 0}
+            onChange={(value) => updateLocal('brand_left', value)}
+          />
+        </div>
 
-<div>
-  <label>Achtergrond url</label>
-  <input
-    type="text"
-    value={settings.background_url || ''}
-    onChange={(e) => updateSetting('background_url', e.target.value)}
-  />
-</div>
+        <div className="admin-card">
+          <h2>CTA positie</h2>
 
-<div>
-  <label>YouTube trailer url</label>
-  <input
-    type="text"
-    value={settings.background_youtube_url || ''}
-    onChange={(e) => updateSetting('background_youtube_url', e.target.value)}
-  />
-</div>
-      <h2>Logo positie</h2>
+          <Slider
+            label="Boven"
+            value={settings.cta_top || 0}
+            onChange={(value) => updateLocal('cta_top', value)}
+          />
 
-      <div>
-        <label>Top: {settings.brand_top}</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={settings.brand_top || 0}
-          onChange={(e) =>
-            updateSetting('brand_top', Number(e.target.value))
-          }
-        />
+          <Slider
+            label="Links"
+            value={settings.cta_left || 0}
+            onChange={(value) => updateLocal('cta_left', value)}
+          />
+        </div>
+
+        <div className="admin-card">
+          <h2>Stories positie</h2>
+
+          <Slider
+            label="Boven"
+            value={settings.stories_top || 0}
+            onChange={(value) => updateLocal('stories_top', value)}
+          />
+
+          <Slider
+            label="Links"
+            value={settings.stories_left || 0}
+            onChange={(value) => updateLocal('stories_left', value)}
+          />
+
+          <Slider
+            label="Breedte"
+            value={settings.stories_width || 90}
+            min={40}
+            max={100}
+            onChange={(value) => updateLocal('stories_width', value)}
+          />
+        </div>
+      </section>
+
+      <div className="admin-save-bar">
+        <button onClick={saveSettings}>
+          Opslaan
+        </button>
+
+        {saved && <span>Opgeslagen</span>}
       </div>
-
-      <div>
-        <label>Left: {settings.brand_left}</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={settings.brand_left || 0}
-          onChange={(e) =>
-            updateSetting('brand_left', Number(e.target.value))
-          }
-        />
-      </div>
-
-      <h2>CTA positie</h2>
-
-      <div>
-        <label>Top: {settings.cta_top}</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={settings.cta_top || 0}
-          onChange={(e) =>
-            updateSetting('cta_top', Number(e.target.value))
-          }
-        />
-      </div>
-
-      <div>
-        <label>Left: {settings.cta_left}</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={settings.cta_left || 0}
-          onChange={(e) =>
-            updateSetting('cta_left', Number(e.target.value))
-          }
-        />
-      </div>
-<h2>Stories blok</h2>
-
-<div>
-  <label>Top: {settings.stories_top}</label>
-  <input
-    type="range"
-    min="0"
-    max="100"
-    value={settings.stories_top || 0}
-    onChange={(e) =>
-      updateSetting('stories_top', Number(e.target.value))
-    }
-  />
-</div>
-
-<div>
-  <label>Left: {settings.stories_left}</label>
-  <input
-    type="range"
-    min="0"
-    max="100"
-    value={settings.stories_left || 0}
-    onChange={(e) =>
-      updateSetting('stories_left', Number(e.target.value))
-    }
-  />
-</div>
-
-<div>
-  <label>Width: {settings.stories_width}</label>
-  <input
-    type="range"
-    min="40"
-    max="100"
-    value={settings.stories_width || 90}
-    onChange={(e) =>
-      updateSetting('stories_width', Number(e.target.value))
-    }
-  />
-</div>
     </main>
+  );
+}
+
+function Slider({ label, value, onChange, min = 0, max = 100 }) {
+  return (
+    <div className="admin-slider">
+      <div>
+        <label>{label}</label>
+        <strong>{value}</strong>
+      </div>
+
+      <input
+        type="range"
+        min={min}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+    </div>
   );
 }
