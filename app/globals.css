@@ -835,3 +835,13 @@ iframe.youtube-background {
   font-size: 14px;
   color: rgba(255,255,255,0.7);
 }
+.screen-shell {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.layer {
+  position: absolute;
+  z-index: 20;
+}
