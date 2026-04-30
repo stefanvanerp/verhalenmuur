@@ -55,6 +55,8 @@ async function uploadFile(file, folder) {
     .getPublicUrl(filePath);
 
   return data.publicUrl;
+}
+
 async function saveSettings() {
   let nextSettings = { ...settings };
 
@@ -85,7 +87,9 @@ async function saveSettings() {
     setTimeout(() => setSaved(false), 2500);
   }
 }
-
+if (!settings) {
+  return <p className="admin-loading">Loading...</p>;
+}
   return (
     <main className="admin-control-page">
       <header className="admin-control-header">
