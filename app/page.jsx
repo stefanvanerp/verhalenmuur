@@ -145,8 +145,40 @@ export default function AdminPage() {
     alert('Instellingen opgeslagen');
   }
 
-  async function setStatus(id, status) {
-    if (String(id).startsWith('demo-')) return;
+async function setStatus(id, status) {
+  if (String(id).startsWith('demo-')) return;
+
+  setLoading(true);
+
+  const { error } = await supabase
+    .from('stories')
+    .update({ status })
+    .eq('id', id);
+
+  if (error) setMessage(error.message);
+
+  await loadStories();
+  setLoading(false);
+}
+
+async function deleteStory(id) {
+  const confirmed = window.confirm('Weet je zeker dat je deze story wilt verwijderen?');
+  if (!confirmed) return;
+
+  setLoading(true);
+
+  const { error } = await supabase
+    .from('stories')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    setMessage(error.message);
+  }
+
+  await loadStories();
+  setLoading(false);
+}
 
     setLoading(true);
 
@@ -259,12 +291,27 @@ export default function AdminPage() {
                   Goed
                 </button>
 
-                <button
-                  disabled={loading}
-                  onClick={() => setStatus(story.id, 'rejected')}
-                >
-                  Afwijs
-                </button>
+  <button
+  disabled={loading}
+  onClick={() => setStatus(story.id, 'rejected')}
+>
+  Afwijs
+</button>
+
+<button
+  disabled={loading}
+  onClick={() => setStatus(story.id, 'pending')}
+>
+  Terughalen
+</button>
+
+<button
+  className="delete-button"
+  disabled={loading}
+  onClick={() => deleteStory(story.id)}
+>
+  Verwijder
+</button>
               </div>
             ))}
 
