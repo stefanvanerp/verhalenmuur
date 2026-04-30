@@ -39,7 +39,7 @@ async function uploadFile(file, folder) {
   const filePath = `${folder}/${fileName}`;
 
   const { error } = await supabase.storage
-    .from('uploads')
+    .from('artwork')
     .upload(filePath, file, {
       upsert: true,
     });
@@ -51,7 +51,7 @@ async function uploadFile(file, folder) {
   }
 
   const { data } = supabase.storage
-    .from('uploads')
+    .from('artwork')
     .getPublicUrl(filePath);
 
   return data.publicUrl;
