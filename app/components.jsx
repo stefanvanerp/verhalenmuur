@@ -65,7 +65,7 @@ if (!stories || stories.length <= 1) return;
       <div
         className="story-track"
         style={{
-          transform: `translateX(-${currentIndex * 284}px)`,
+transform: `translateX(-${currentIndex * 338}px)`,
           transition: "transform 0.8s ease-in-out",
         }}
       >
