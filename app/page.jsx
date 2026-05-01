@@ -295,36 +295,29 @@ async function deleteStory(id) {
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button
-                  disabled={loading}
-                  onClick={() => setStatus(story.id, 'approved')}
-                >
-                  Goed
-                </button>
+               <div className="moderation-actions">
+  <button
+    disabled={loading}
+    onClick={() => setStatus(story.id, 'approved')}
+  >
+    Goed
+  </button>
 
   <button
-  disabled={loading}
-  onClick={() => setStatus(story.id, 'rejected')}
->
-  Afwijs
-</button>
+    disabled={loading}
+    onClick={() => setStatus(story.id, 'rejected')}
+  >
+    Afwijs
+  </button>
 
-<button
-  disabled={loading}
-  onClick={() => setStatus(story.id, 'pending')}
->
-  Terughalen
-</button>
-
-<button
-  className="delete-button"
-  disabled={loading}
-  onClick={() => deleteStory(story.id)}
->
-  Verwijder
-</button>
-              </div>
-            ))}
+  <button
+    className="delete-button"
+    disabled={loading}
+    onClick={() => deleteStory(story.id)}
+  >
+    Verwijder
+  </button>
+</div>
 
             <h2 className="panel-subtitle">Goedgekeurd</h2>
 
