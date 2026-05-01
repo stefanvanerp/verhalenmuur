@@ -263,11 +263,11 @@ export default function AdminPage() {
               checked={autoSave}
               onChange={(e) => setAutoSave(e.target.checked)}
             />
-            Auto save
+Live preview
           </label>
 
           <a className="admin-screen-button" href="/screen" target="_blank">
-            Open bioscoopscherm
+Open live scherm
           </a>
         </div>
       </header>
@@ -419,7 +419,7 @@ export default function AdminPage() {
       </section>
 
       <div className="admin-save-bar">
-        <button onClick={saveSettings}>Opslaan</button>
+        <button onClick={saveSettings}>Definitief opslaan</button>
 
         <button
           className="secondary-button"
