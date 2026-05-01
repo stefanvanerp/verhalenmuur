@@ -38,200 +38,215 @@ export default function AdminPage() {
   const [saved, setSaved] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [autoSave, setAutoSave] = useState(false);
-const [lastSavedSettings, setLastSavedSettings] = useState(null);
+  const [lastSavedSettings, setLastSavedSettings] = useState(null);
   const [backgroundFile, setBackgroundFile] = useState(null);
-const [logoFile, setLogoFile] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
 
   async function fetchSettings() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('site_settings')
       .select('*')
       .eq('id', 1)
       .single();
 
-   if (data) {
-  setSettings(data);
-  setLastSavedSettings(data);
-}
+    if (error) {
+      console.error(error);
+      setSettings({});
+      return;
+    }
+
+    if (data) {
+      setSettings(data);
+      setLastSavedSettings(data);
+    }
+  }
 
   useEffect(() => {
     fetchSettings();
   }, []);
-async function updateLocal(key, value) {
-  const nextSettings = {
-    ...settings,
-    [key]: value,
-  };
 
-  setSettings(nextSettings);
-  setSaved(false);
-  setDirty(true);
+  async function updateLocal(key, value) {
+    const nextSettings = {
+      ...settings,
+      [key]: value,
+    };
 
-  if (autoSave) {
-    const { error } = await supabase
+    setSettings(nextSettings);
+    setSaved(false);
+    setDirty(true);
+
+    if (autoSave) {
+      const { error } = await supabase
+        .from('site_settings')
+        .update({ [key]: value })
+        .eq('id', 1);
+
+      if (!error) {
+        setDirty(false);
+        setSaved(true);
+        setLastSavedSettings(nextSettings);
+        setTimeout(() => setSaved(false), 2500);
+      }
+    }
+  }
+
+  async function updatePosition(key, value) {
+    setSettings((current) => ({
+      ...current,
+      [key]: value,
+    }));
+
+    await supabase
       .from('site_settings')
       .update({ [key]: value })
       .eq('id', 1);
+  }
+
+  async function applyPreset(name) {
+    const confirmed = window.confirm(
+      'Weet je zeker dat je deze preset wilt toepassen?'
+    );
+
+    if (!confirmed) return;
+
+    const preset = PRESETS[name];
+
+    setSettings((current) => ({
+      ...current,
+      ...preset,
+    }));
+
+    await supabase
+      .from('site_settings')
+      .update(preset)
+      .eq('id', 1);
+  }
+
+  async function resetLogo() {
+    const reset = {
+      brand_top: PRESETS.cinema.brand_top,
+      brand_left: PRESETS.cinema.brand_left,
+    };
+
+    setSettings((current) => ({
+      ...current,
+      ...reset,
+    }));
+
+    await supabase
+      .from('site_settings')
+      .update(reset)
+      .eq('id', 1);
+  }
+
+  async function resetCta() {
+    const reset = {
+      cta_top: PRESETS.cinema.cta_top,
+      cta_left: PRESETS.cinema.cta_left,
+    };
+
+    setSettings((current) => ({
+      ...current,
+      ...reset,
+    }));
+
+    await supabase
+      .from('site_settings')
+      .update(reset)
+      .eq('id', 1);
+  }
+
+  async function resetStories() {
+    const reset = {
+      stories_top: PRESETS.cinema.stories_top,
+      stories_left: PRESETS.cinema.stories_left,
+      stories_width: PRESETS.cinema.stories_width,
+    };
+
+    setSettings((current) => ({
+      ...current,
+      ...reset,
+    }));
+
+    await supabase
+      .from('site_settings')
+      .update(reset)
+      .eq('id', 1);
+  }
+
+  async function uploadFile(file, folder) {
+    if (!file) return null;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${folder}-${Date.now()}.${fileExt}`;
+    const filePath = `${folder}/${fileName}`;
+
+    const { error } = await supabase.storage
+      .from('artwork')
+      .upload(filePath, file, {
+        upsert: true,
+      });
+
+    if (error) {
+      alert('Upload mislukt');
+      console.error(error);
+      return null;
+    }
+
+    const { data } = supabase.storage
+      .from('artwork')
+      .getPublicUrl(filePath);
+
+    return data.publicUrl;
+  }
+
+  async function saveSettings() {
+    let nextSettings = { ...settings };
+
+    if (backgroundFile) {
+      const backgroundUrl = await uploadFile(backgroundFile, 'backgrounds');
+      if (backgroundUrl) {
+        nextSettings.background_url = backgroundUrl;
+      }
+    }
+
+    if (logoFile) {
+      const logoUrl = await uploadFile(logoFile, 'logos');
+      if (logoUrl) {
+        nextSettings.logo_url = logoUrl;
+      }
+    }
+
+    const { error } = await supabase
+      .from('site_settings')
+      .update(nextSettings)
+      .eq('id', 1);
 
     if (!error) {
-      setDirty(false);
-      setSaved(true);
+      setSettings(nextSettings);
       setLastSavedSettings(nextSettings);
+      setBackgroundFile(null);
+      setLogoFile(null);
+      setSaved(true);
+      setDirty(false);
       setTimeout(() => setSaved(false), 2500);
     }
   }
-}
-}
 
-async function updatePosition(key, value) {
-  setSettings((current) => ({
-    ...current,
-    [key]: value,
-  }));
-
-  await supabase
-    .from('site_settings')
-    .update({ [key]: value })
-    .eq('id', 1);
-}
-
-async function applyPreset(name) {
-  const confirmed = window.confirm('Weet je zeker dat je deze preset wilt toepassen?');
-  if (!confirmed) return;
-
-  const preset = PRESETS[name];
-
-  setSettings((current) => ({
-    ...current,
-    ...preset,
-  }));
-
-  await supabase
-    .from('site_settings')
-    .update(preset)
-    .eq('id', 1);
-}
-
-async function resetLogo() {
-  const reset = {
-    brand_top: PRESETS.cinema.brand_top,
-    brand_left: PRESETS.cinema.brand_left,
-  };
-
-  setSettings((current) => ({
-    ...current,
-    ...reset,
-  }));
-
-  await supabase
-    .from('site_settings')
-    .update(reset)
-    .eq('id', 1);
-}
-
-async function resetCta() {
-  const reset = {
-    cta_top: PRESETS.cinema.cta_top,
-    cta_left: PRESETS.cinema.cta_left,
-  };
-
-  setSettings((current) => ({
-    ...current,
-    ...reset,
-  }));
-
-  await supabase
-    .from('site_settings')
-    .update(reset)
-    .eq('id', 1);
-}
-
-async function resetStories() {
-  const reset = {
-    stories_top: PRESETS.cinema.stories_top,
-    stories_left: PRESETS.cinema.stories_left,
-    stories_width: PRESETS.cinema.stories_width,
-  };
-
-  setSettings((current) => ({
-    ...current,
-    ...reset,
-  }));
-
-  await supabase
-    .from('site_settings')
-    .update(reset)
-    .eq('id', 1);
-}
-async function uploadFile(file, folder) {
-  if (!file) return null;
-
-  const fileExt = file.name.split('.').pop();
-  const fileName = `${folder}-${Date.now()}.${fileExt}`;
-  const filePath = `${folder}/${fileName}`;
-
-  const { error } = await supabase.storage
-    .from('artwork')
-    .upload(filePath, file, {
-      upsert: true,
-    });
-
-  if (error) {
-    alert('Upload mislukt');
-    console.error(error);
-    return null;
-  }
-
-  const { data } = supabase.storage
-    .from('artwork')
-    .getPublicUrl(filePath);
-
-  return data.publicUrl;
-}
-
-async function saveSettings() {
-  let nextSettings = { ...settings };
   function undoChanges() {
-  if (!lastSavedSettings) return;
+    if (!lastSavedSettings) return;
 
-  setSettings(lastSavedSettings);
-  setDirty(false);
-  setSaved(false);
-  setBackgroundFile(null);
-  setLogoFile(null);
-}
-
-  if (backgroundFile) {
-    const backgroundUrl = await uploadFile(backgroundFile, 'backgrounds');
-    if (backgroundUrl) {
-      nextSettings.background_url = backgroundUrl;
-    }
-  }
-
-  if (logoFile) {
-    const logoUrl = await uploadFile(logoFile, 'logos');
-    if (logoUrl) {
-      nextSettings.logo_url = logoUrl;
-    }
-  }
-
-  const { error } = await supabase
-    .from('site_settings')
-    .update(nextSettings)
-    .eq('id', 1);
-
-  if (!error) {
-    setSettings(nextSettings);
+    setSettings(lastSavedSettings);
     setDirty(false);
+    setSaved(false);
     setBackgroundFile(null);
     setLogoFile(null);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
   }
-}
-if (!settings) {
-  return <p className="admin-loading">Loading...</p>;
-}
+
+  if (!settings) {
+    return <p className="admin-loading">Loading...</p>;
+  }
+
   return (
     <main className="admin-control-page">
       <header className="admin-control-header">
@@ -241,9 +256,20 @@ if (!settings) {
           <p>Pas tekst, beeld en positie aan voor het bioscoopscherm.</p>
         </div>
 
-        <a className="admin-screen-button" href="/screen" target="_blank">
-          Open bioscoopscherm
-        </a>
+        <div className="admin-header-actions">
+          <label className="autosave-toggle">
+            <input
+              type="checkbox"
+              checked={autoSave}
+              onChange={(e) => setAutoSave(e.target.checked)}
+            />
+            Auto save
+          </label>
+
+          <a className="admin-screen-button" href="/screen" target="_blank">
+            Open bioscoopscherm
+          </a>
+        </div>
       </header>
 
       <section className="admin-control-grid">
@@ -281,19 +307,21 @@ if (!settings) {
             value={settings.logo_url || ''}
             onChange={(e) => updateLocal('logo_url', e.target.value)}
           />
-<label>Achtergrond uploaden</label>
-<input
-  type="file"
-  accept="image/*"
-  onChange={(e) => setBackgroundFile(e.target.files[0])}
-/>
 
-<label>Logo uploaden</label>
-<input
-  type="file"
-  accept="image/*"
-  onChange={(e) => setLogoFile(e.target.files[0])}
-/>
+          <label>Achtergrond uploaden</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setBackgroundFile(e.target.files[0])}
+          />
+
+          <label>Logo uploaden</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setLogoFile(e.target.files[0])}
+          />
+
           <label>Achtergrond afbeelding url</label>
           <input
             type="text"
@@ -305,102 +333,105 @@ if (!settings) {
           <input
             type="text"
             value={settings.background_youtube_url || ''}
-            onChange={(e) => updateLocal('background_youtube_url', e.target.value)}
+            onChange={(e) =>
+              updateLocal('background_youtube_url', e.target.value)
+            }
           />
         </div>
-<div className="admin-card">
-  <h2>Presets</h2>
 
-  <div className="preset-buttons">
-    <button onClick={() => applyPreset('cinema')}>Cinema breed</button>
-    <button onClick={() => applyPreset('compact')}>Compact</button>
-    <button onClick={() => applyPreset('fullscreen')}>Fullscreen</button>
-  </div>
-</div>
+        <div className="admin-card">
+          <h2>Presets</h2>
 
-<div className="admin-card">
-  <h2>Logo positie</h2>
+          <div className="preset-buttons">
+            <button onClick={() => applyPreset('cinema')}>Cinema breed</button>
+            <button onClick={() => applyPreset('compact')}>Compact</button>
+            <button onClick={() => applyPreset('fullscreen')}>Fullscreen</button>
+          </div>
+        </div>
 
-  <Slider
-    label="Boven"
-    value={settings.brand_top || 0}
-    onChange={(value) => updatePosition('brand_top', value)}
-  />
+        <div className="admin-card">
+          <h2>Logo positie</h2>
 
-  <Slider
-    label="Links"
-    value={settings.brand_left || 0}
-    onChange={(value) => updatePosition('brand_left', value)}
-  />
+          <Slider
+            label="Boven"
+            value={settings.brand_top || 0}
+            onChange={(value) => updatePosition('brand_top', value)}
+          />
 
-  <button className="secondary-button" onClick={resetLogo}>
-    Logo resetten
-  </button>
-</div>
+          <Slider
+            label="Links"
+            value={settings.brand_left || 0}
+            onChange={(value) => updatePosition('brand_left', value)}
+          />
 
-<div className="admin-card">
-  <h2>CTA positie</h2>
+          <button className="secondary-button" onClick={resetLogo}>
+            Logo resetten
+          </button>
+        </div>
 
-  <Slider
-    label="Boven"
-    value={settings.cta_top || 0}
-    onChange={(value) => updatePosition('cta_top', value)}
-  />
+        <div className="admin-card">
+          <h2>CTA positie</h2>
 
-  <Slider
-    label="Links"
-    value={settings.cta_left || 0}
-    onChange={(value) => updatePosition('cta_left', value)}
-  />
+          <Slider
+            label="Boven"
+            value={settings.cta_top || 0}
+            onChange={(value) => updatePosition('cta_top', value)}
+          />
 
-  <button className="secondary-button" onClick={resetCta}>
-    CTA resetten
-  </button>
-</div>
+          <Slider
+            label="Links"
+            value={settings.cta_left || 0}
+            onChange={(value) => updatePosition('cta_left', value)}
+          />
 
-<div className="admin-card">
-  <h2>Stories positie</h2>
+          <button className="secondary-button" onClick={resetCta}>
+            CTA resetten
+          </button>
+        </div>
 
-  <Slider
-    label="Boven"
-    value={settings.stories_top || 0}
-    onChange={(value) => updatePosition('stories_top', value)}
-  />
+        <div className="admin-card">
+          <h2>Stories positie</h2>
 
-  <Slider
-    label="Links"
-    value={settings.stories_left || 0}
-    onChange={(value) => updatePosition('stories_left', value)}
-  />
+          <Slider
+            label="Boven"
+            value={settings.stories_top || 0}
+            onChange={(value) => updatePosition('stories_top', value)}
+          />
 
-  <Slider
-    label="Breedte"
-    value={settings.stories_width || 90}
-    min={40}
-    max={100}
-    onChange={(value) => updatePosition('stories_width', value)}
-  />
-  <button className="secondary-button" onClick={resetStories}>
-    Stories resetten
-  </button>
-</div>
-     </section>
+          <Slider
+            label="Links"
+            value={settings.stories_left || 0}
+            onChange={(value) => updatePosition('stories_left', value)}
+          />
+
+          <Slider
+            label="Breedte"
+            value={settings.stories_width || 90}
+            min={40}
+            max={100}
+            onChange={(value) => updatePosition('stories_width', value)}
+          />
+
+          <button className="secondary-button" onClick={resetStories}>
+            Stories resetten
+          </button>
+        </div>
+      </section>
 
       <div className="admin-save-bar">
-  <button onClick={saveSettings}>
-    Opslaan
-  </button>
+        <button onClick={saveSettings}>Opslaan</button>
 
-  <button
-    className="secondary-button"
-    onClick={undoChanges}
-    disabled={!dirty}
-  >
-    Ongedaan maken
-  </button>
+        <button
+          className="secondary-button"
+          onClick={undoChanges}
+          disabled={!dirty}
+        >
+          Ongedaan maken
+        </button>
 
-{dirty && <span className="unsaved">Niet opgeslagen wijzigingen</span>}
-{saved && <span className="saved">Opgeslagen</span>}      </div>
+        {dirty && <span className="unsaved">Niet opgeslagen wijzigingen</span>}
+        {saved && <span className="saved">Opgeslagen</span>}
+      </div>
     </main>
   );
 }
