@@ -22,7 +22,14 @@ const [logoFile, setLogoFile] = useState(null);
   useEffect(() => {
     fetchSettings();
   }, []);
+function updateLocal(key, value) {
+  setSettings((current) => ({
+    ...current,
+    [key]: value,
+  }));
 
+  setSaved(false);
+}
  async function updatePosition(key, value) {
   setSettings((current) => ({
     ...current,
@@ -170,62 +177,61 @@ if (!settings) {
           />
         </div>
 
-        <div className="admin-card">
-          <h2>Logo positie</h2>
+       <div className="admin-card">
+  <h2>Logo positie</h2>
 
-        <Slider
-  label="Boven"
-  value={settings.brand_top || 0}
-  onChange={(value) => updatePosition('brand_top', value)}
-/>
+  <Slider
+    label="Boven"
+    value={settings.brand_top || 0}
+    onChange={(value) => updatePosition('brand_top', value)}
+  />
 
-          <Slider
-            label="Links"
-            value={settings.brand_left || 0}
-           onChange={(value) => updatePosition('brand_top', value)}
-          />
-        </div>
+  <Slider
+    label="Links"
+    value={settings.brand_left || 0}
+    onChange={(value) => updatePosition('brand_left', value)}
+  />
+</div>
 
-        <div className="admin-card">
-          <h2>CTA positie</h2>
+<div className="admin-card">
+  <h2>CTA positie</h2>
 
-          <Slider
-            label="Boven"
-            value={settings.cta_top || 0}
-          onChange={(value) => updatePosition('brand_top', value)}
-          />
+  <Slider
+    label="Boven"
+    value={settings.cta_top || 0}
+    onChange={(value) => updatePosition('cta_top', value)}
+  />
 
-          <Slider
-            label="Links"
-            value={settings.cta_left || 0}
-            onChange={(value) => updatePosition('brand_top', value)}
-          />
-        </div>
+  <Slider
+    label="Links"
+    value={settings.cta_left || 0}
+    onChange={(value) => updatePosition('cta_left', value)}
+  />
+</div>
 
-        <div className="admin-card">
-          <h2>Stories positie</h2>
+<div className="admin-card">
+  <h2>Stories positie</h2>
 
-          <Slider
-            label="Boven"
-            value={settings.stories_top || 0}
-           onChange={(value) => updatePosition('brand_top', value)}
-          />
+  <Slider
+    label="Boven"
+    value={settings.stories_top || 0}
+    onChange={(value) => updatePosition('stories_top', value)}
+  />
 
-          <Slider
-            label="Links"
-            value={settings.stories_left || 0}
-           onChange={(value) => updatePosition('brand_top', value)}
-          />
+  <Slider
+    label="Links"
+    value={settings.stories_left || 0}
+    onChange={(value) => updatePosition('stories_left', value)}
+  />
 
-          <Slider
-            label="Breedte"
-            value={settings.stories_width || 90}
-            min={40}
-            max={100}
-          onChange={(value) => updatePosition('brand_top', value)}
-          />
-        </div>
-      </section>
+  <Slider
+    label="Breedte"
+    value={settings.stories_width || 90}
+    min={40}
+    max={100}
+    onChange={(value) => updatePosition('stories_width', value)}
+  />
+</div>      </section>
 
       <div className="admin-save-bar">
         <button onClick={saveSettings}>
