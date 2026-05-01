@@ -56,153 +56,44 @@ export default function AdminPage() {
     setSettings(data || {});
   }
 
-  async function handleBackgroundImageUpload(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  async function setStatus(id, status) {
+    setLoading(true);
 
-    const fileName = `backgrounds/bg-${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(fileName, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(fileName);
-
-    setSettings((prev) => ({
-      ...prev,
-      background_url: data.publicUrl,
-      background_video_url: '',
-    }));
-  }
-
-  async function handleBackgroundVideoUpload(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const fileName = `backgrounds/video-${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(fileName, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(fileName);
-
-    setSettings((prev) => ({
-      ...prev,
-      background_video_url: data.publicUrl,
-    }));
-  }
-
-  async function handleLogoUpload(e) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const fileName = `logos/logo-${Date.now()}-${file.name}`;
-
-    const { error } = await supabase.storage
-      .from('artwork')
-      .upload(fileName, file);
-
-    if (error) {
-      alert('Upload mislukt');
-      return;
-    }
-
-    const { data } = supabase.storage
-      .from('artwork')
-      .getPublicUrl(fileName);
-
-    setSettings((prev) => ({
-      ...prev,
-      logo_url: data.publicUrl,
-    }));
-  }
-
-  async function saveSettings() {
     const { error } = await supabase
-      .from('site_settings')
-      .upsert({ ...settings, id: 1 });
+      .from('stories')
+      .update({ status })
+      .eq('id', id);
+
+    if (error) {
+      setMessage(error.message);
+    }
+
+    await loadStories();
+    setLoading(false);
+  }
+
+  async function deleteStory(id) {
+    const confirmed = window.confirm(
+      'Weet je zeker dat je deze story definitief wilt verwijderen?'
+    );
+
+    if (!confirmed) return;
+
+    setLoading(true);
+
+    const { error } = await supabase
+      .from('stories')
+      .delete()
+      .eq('id', id);
 
     if (error) {
       alert(error.message);
-      return;
+      setMessage(error.message);
     }
 
-    alert('Instellingen opgeslagen');
+    await loadStories();
+    setLoading(false);
   }
-
-async function setStatus(id, status) {
-  if (String(id).startsWith('demo-')) return;
-
-  setLoading(true);
-
-  const { error } = await supabase
-    .from('stories')
-    .update({ status })
-    .eq('id', id);
-
-  if (error) setMessage(error.message);
-
-  await loadStories();
-  setLoading(false);
-}
-
-async function deleteStory(id) {
-
-  async function deleteStory(id) {
-  console.log('DELETE CLICKED', id);
-
-  const confirmed = window.confirm('Weet je zeker dat je deze story wilt verwijderen?');
-  if (!confirmed) return;
-
-  setLoading(true);
-
-  const { error } = await supabase
-    .from('stories')
-    .delete()
-    .eq('id', id);
-
-  console.log('DELETE RESULT', error);
-
-  if (error) {
-    alert(error.message);
-    setMessage(error.message);
-  }
-
-  await loadStories();
-  setLoading(false);
-}const confirmed = window.confirm(
-    'Weet je zeker dat je deze story definitief wilt verwijderen?'
-  );
-
-  if (!confirmed) return;
-
-  setLoading(true);
-
-  const { error } = await supabase
-    .from('stories')
-    .delete()
-    .eq('id', id);
-
-  if (error) setMessage(error.message);
-
-  await loadStories();
-  setLoading(false);
-}
 
   useEffect(() => {
     loadStories();
@@ -272,18 +163,17 @@ async function deleteStory(id) {
             <span>Nieuw</span>
             <strong>{stats.new}</strong>
           </div>
+
           <div>
             <span>Goedgekeurd</span>
             <strong>{stats.approved}</strong>
           </div>
+
           <div>
             <span>Afgewezen</span>
             <strong>{stats.rejected}</strong>
           </div>
         </section>
-
-
-      
 
         <section className="admin-layout">
           <div className="admin-panel">
@@ -295,29 +185,31 @@ async function deleteStory(id) {
 
                 <strong>{story.username || '@gast'}</strong>
 
-               <div className="moderation-actions">
-  <button
-    disabled={loading}
-    onClick={() => setStatus(story.id, 'approved')}
-  >
-    Goed
-  </button>
+                <div className="moderation-actions">
+                  <button
+                    disabled={loading}
+                    onClick={() => setStatus(story.id, 'approved')}
+                  >
+                    Goed
+                  </button>
 
-  <button
-    disabled={loading}
-    onClick={() => setStatus(story.id, 'rejected')}
-  >
-    Afwijs
-  </button>
+                  <button
+                    disabled={loading}
+                    onClick={() => setStatus(story.id, 'rejected')}
+                  >
+                    Afwijs
+                  </button>
 
-  <button
-    className="delete-button"
-    disabled={loading}
-    onClick={() => deleteStory(story.id)}
-  >
-    Verwijder
-  </button>
-</div>
+                  <button
+                    className="delete-button"
+                    disabled={loading}
+                    onClick={() => deleteStory(story.id)}
+                  >
+                    Verwijder
+                  </button>
+                </div>
+              </div>
+            ))}
 
             <h2 className="panel-subtitle">Goedgekeurd</h2>
 
@@ -327,12 +219,22 @@ async function deleteStory(id) {
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button
-                  disabled={loading}
-                  onClick={() => setStatus(story.id, 'pending')}
-                >
-                  Terughalen
-                </button>
+                <div className="moderation-actions">
+                  <button
+                    disabled={loading}
+                    onClick={() => setStatus(story.id, 'pending')}
+                  >
+                    Terughalen
+                  </button>
+
+                  <button
+                    className="delete-button"
+                    disabled={loading}
+                    onClick={() => deleteStory(story.id)}
+                  >
+                    Verwijder
+                  </button>
+                </div>
               </div>
             ))}
 
@@ -344,16 +246,25 @@ async function deleteStory(id) {
 
                 <strong>{story.username || '@gast'}</strong>
 
-                <button
-                  disabled={loading}
-                  onClick={() => setStatus(story.id, 'pending')}
-                >
-                  Terugzetten
-                </button>
+                <div className="moderation-actions">
+                  <button
+                    disabled={loading}
+                    onClick={() => setStatus(story.id, 'pending')}
+                  >
+                    Terugzetten
+                  </button>
+
+                  <button
+                    className="delete-button"
+                    disabled={loading}
+                    onClick={() => deleteStory(story.id)}
+                  >
+                    Verwijder
+                  </button>
+                </div>
               </div>
             ))}
           </div>
-        </section>
 
           <div className="admin-preview">
             <Brand settings={settings} />
