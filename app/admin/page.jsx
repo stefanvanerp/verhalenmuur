@@ -37,6 +37,8 @@ export default function AdminPage() {
   const [settings, setSettings] = useState(null);
   const [saved, setSaved] = useState(false);
   const [dirty, setDirty] = useState(false);
+  const [autoSave, setAutoSave] = useState(false);
+const [lastSavedSettings, setLastSavedSettings] = useState(null);
   const [backgroundFile, setBackgroundFile] = useState(null);
 const [logoFile, setLogoFile] = useState(null);
 
@@ -47,20 +49,38 @@ const [logoFile, setLogoFile] = useState(null);
       .eq('id', 1)
       .single();
 
-    if (data) setSettings(data);
-  }
+   if (data) {
+  setSettings(data);
+  setLastSavedSettings(data);
+}
 
   useEffect(() => {
     fetchSettings();
   }, []);
-function updateLocal(key, value) {
-  setSettings((current) => ({
-    ...current,
+async function updateLocal(key, value) {
+  const nextSettings = {
+    ...settings,
     [key]: value,
-  }));
+  };
 
+  setSettings(nextSettings);
   setSaved(false);
   setDirty(true);
+
+  if (autoSave) {
+    const { error } = await supabase
+      .from('site_settings')
+      .update({ [key]: value })
+      .eq('id', 1);
+
+    if (!error) {
+      setDirty(false);
+      setSaved(true);
+      setLastSavedSettings(nextSettings);
+      setTimeout(() => setSaved(false), 2500);
+    }
+  }
+}
 }
 
 async function updatePosition(key, value) {
@@ -171,6 +191,15 @@ async function uploadFile(file, folder) {
 
 async function saveSettings() {
   let nextSettings = { ...settings };
+  function undoChanges() {
+  if (!lastSavedSettings) return;
+
+  setSettings(lastSavedSettings);
+  setDirty(false);
+  setSaved(false);
+  setBackgroundFile(null);
+  setLogoFile(null);
+}
 
   if (backgroundFile) {
     const backgroundUrl = await uploadFile(backgroundFile, 'backgrounds');
@@ -358,9 +387,17 @@ if (!settings) {
      </section>
 
       <div className="admin-save-bar">
-        <button onClick={saveSettings}>
-          Opslaan
-        </button>
+  <button onClick={saveSettings}>
+    Opslaan
+  </button>
+
+  <button
+    className="secondary-button"
+    onClick={undoChanges}
+    disabled={!dirty}
+  >
+    Ongedaan maken
+  </button>
 
 {dirty && <span className="unsaved">Niet opgeslagen wijzigingen</span>}
 {saved && <span className="saved">Opgeslagen</span>}      </div>
