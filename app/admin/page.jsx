@@ -34,8 +34,6 @@ const PRESETS = {
 };
 
 export default function AdminPage() {
-};
-export default function AdminPage() {
   const [settings, setSettings] = useState(null);
   const [saved, setSaved] = useState(false);
   const [backgroundFile, setBackgroundFile] = useState(null);
@@ -62,11 +60,19 @@ function updateLocal(key, value) {
 
   setSaved(false);
 }
- async function updatePosition(key, value) {
+
+async function updatePosition(key, value) {
   setSettings((current) => ({
     ...current,
     [key]: value,
   }));
+
+  await supabase
+    .from('site_settings')
+    .update({ [key]: value })
+    .eq('id', 1);
+}
+
 async function applyPreset(name) {
   const preset = PRESETS[name];
 
@@ -92,7 +98,10 @@ async function resetLogo() {
     ...reset,
   }));
 
-  await supabase.from('site_settings').update(reset).eq('id', 1);
+  await supabase
+    .from('site_settings')
+    .update(reset)
+    .eq('id', 1);
 }
 
 async function resetCta() {
@@ -106,7 +115,10 @@ async function resetCta() {
     ...reset,
   }));
 
-  await supabase.from('site_settings').update(reset).eq('id', 1);
+  await supabase
+    .from('site_settings')
+    .update(reset)
+    .eq('id', 1);
 }
 
 async function resetStories() {
@@ -121,13 +133,11 @@ async function resetStories() {
     ...reset,
   }));
 
-  await supabase.from('site_settings').update(reset).eq('id', 1);
-}
   await supabase
     .from('site_settings')
-    .update({ [key]: value })
+    .update(reset)
     .eq('id', 1);
-  }
+}
 async function uploadFile(file, folder) {
   if (!file) return null;
 
