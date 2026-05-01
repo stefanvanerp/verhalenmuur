@@ -690,3 +690,34 @@ input {
     flex-direction: column;
   }
 }
+.moderation-item {
+  position: relative;
+  align-items: flex-start;
+}
+
+.moderation-actions {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  z-index: 5;
+}
+
+.moderation-actions button {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.86);
+  color: #111;
+}
+
+.moderation-actions .delete-button {
+  background: rgba(255, 50, 50, 0.8) !important;
+  color: white !important;
+}
