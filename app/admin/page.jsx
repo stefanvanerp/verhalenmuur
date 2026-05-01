@@ -3,6 +3,38 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
 
+const PRESETS = {
+  cinema: {
+    brand_top: 5,
+    brand_left: 5,
+    cta_top: 8,
+    cta_left: 38,
+    stories_top: 38,
+    stories_left: 5,
+    stories_width: 90,
+  },
+  compact: {
+    brand_top: 4,
+    brand_left: 4,
+    cta_top: 12,
+    cta_left: 32,
+    stories_top: 44,
+    stories_left: 8,
+    stories_width: 84,
+  },
+  fullscreen: {
+    brand_top: 4,
+    brand_left: 4,
+    cta_top: 6,
+    cta_left: 50,
+    stories_top: 34,
+    stories_left: 3,
+    stories_width: 94,
+  },
+};
+
+export default function AdminPage() {
+};
 export default function AdminPage() {
   const [settings, setSettings] = useState(null);
   const [saved, setSaved] = useState(false);
@@ -35,7 +67,62 @@ function updateLocal(key, value) {
     ...current,
     [key]: value,
   }));
+async function applyPreset(name) {
+  const preset = PRESETS[name];
 
+  setSettings((current) => ({
+    ...current,
+    ...preset,
+  }));
+
+  await supabase
+    .from('site_settings')
+    .update(preset)
+    .eq('id', 1);
+}
+
+async function resetLogo() {
+  const reset = {
+    brand_top: PRESETS.cinema.brand_top,
+    brand_left: PRESETS.cinema.brand_left,
+  };
+
+  setSettings((current) => ({
+    ...current,
+    ...reset,
+  }));
+
+  await supabase.from('site_settings').update(reset).eq('id', 1);
+}
+
+async function resetCta() {
+  const reset = {
+    cta_top: PRESETS.cinema.cta_top,
+    cta_left: PRESETS.cinema.cta_left,
+  };
+
+  setSettings((current) => ({
+    ...current,
+    ...reset,
+  }));
+
+  await supabase.from('site_settings').update(reset).eq('id', 1);
+}
+
+async function resetStories() {
+  const reset = {
+    stories_top: PRESETS.cinema.stories_top,
+    stories_left: PRESETS.cinema.stories_left,
+    stories_width: PRESETS.cinema.stories_width,
+  };
+
+  setSettings((current) => ({
+    ...current,
+    ...reset,
+  }));
+
+  await supabase.from('site_settings').update(reset).eq('id', 1);
+}
   await supabase
     .from('site_settings')
     .update({ [key]: value })
