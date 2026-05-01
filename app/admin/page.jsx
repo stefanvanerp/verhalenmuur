@@ -273,8 +273,17 @@ if (!settings) {
             onChange={(e) => updateLocal('background_youtube_url', e.target.value)}
           />
         </div>
+<div className="admin-card">
+  <h2>Presets</h2>
 
-       <div className="admin-card">
+  <div className="preset-buttons">
+    <button onClick={() => applyPreset('cinema')}>Cinema breed</button>
+    <button onClick={() => applyPreset('compact')}>Compact</button>
+    <button onClick={() => applyPreset('fullscreen')}>Fullscreen</button>
+  </div>
+</div>
+
+<div className="admin-card">
   <h2>Logo positie</h2>
 
   <Slider
@@ -288,6 +297,10 @@ if (!settings) {
     value={settings.brand_left || 0}
     onChange={(value) => updatePosition('brand_left', value)}
   />
+
+  <button className="secondary-button" onClick={resetLogo}>
+    Logo resetten
+  </button>
 </div>
 
 <div className="admin-card">
@@ -304,6 +317,10 @@ if (!settings) {
     value={settings.cta_left || 0}
     onChange={(value) => updatePosition('cta_left', value)}
   />
+
+  <button className="secondary-button" onClick={resetCta}>
+    CTA resetten
+  </button>
 </div>
 
 <div className="admin-card">
@@ -328,7 +345,16 @@ if (!settings) {
     max={100}
     onChange={(value) => updatePosition('stories_width', value)}
   />
+
+  <button className="secondary-button" onClick={resetStories}>
+    Stories resetten
+  </button>
+</div>
 </div>      </section>
+     <button className="secondary-button" onClick={resetStories}>
+    Stories resetten
+  </button>
+</div>
 
       <div className="admin-save-bar">
         <button onClick={saveSettings}>
