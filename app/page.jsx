@@ -353,6 +353,7 @@ async function deleteStory(id) {
               </div>
             ))}
           </div>
+        </section>
 
           <div className="admin-preview">
             <Brand settings={settings} />
