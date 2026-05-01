@@ -346,11 +346,7 @@ if (!settings) {
     onChange={(value) => updatePosition('stories_width', value)}
   />
 
-  <button className="secondary-button" onClick={resetStories}>
-    Stories resetten
-  </button>
-</div>
-</div>      </section>
+     </section>
      <button className="secondary-button" onClick={resetStories}>
     Stories resetten
   </button>
