@@ -345,12 +345,11 @@ if (!settings) {
     max={100}
     onChange={(value) => updatePosition('stories_width', value)}
   />
-
-     </section>
-     <button className="secondary-button" onClick={resetStories}>
+  <button className="secondary-button" onClick={resetStories}>
     Stories resetten
   </button>
 </div>
+     </section>
 
       <div className="admin-save-bar">
         <button onClick={saveSettings}>
