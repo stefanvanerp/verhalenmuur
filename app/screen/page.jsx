@@ -54,26 +54,30 @@ export default function ScreenPage() {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const channel = supabase
-      .channel('settings-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'site_settings',
-        },
-        () => {
-          fetchSettings();
-        }
-      )
-      .subscribe();
+ useEffect(() => {
+  const channel = supabase
+    .channel('settings-changes')
+    .on(
+      'postgres_changes',
+      {
+        event: 'UPDATE',
+        schema: 'public',
+        table: 'site_settings',
+        filter: 'id=eq.1',
+      },
+      (payload) => {
+        console.log('Realtime settings update:', payload.new);
+        setSettings(payload.new);
+      }
+    )
+    .subscribe((status) => {
+      console.log('Realtime status:', status);
+    });
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
+  return () => {
+    supabase.removeChannel(channel);
+  };
+}, []);
 
   return (
     <main className="app screen">
