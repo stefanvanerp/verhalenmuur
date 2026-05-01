@@ -23,13 +23,16 @@ const [logoFile, setLogoFile] = useState(null);
     fetchSettings();
   }, []);
 
-  function updateLocal(key, value) {
-    setSettings((current) => ({
-      ...current,
-      [key]: value,
-    }));
+ async function updatePosition(key, value) {
+  setSettings((current) => ({
+    ...current,
+    [key]: value,
+  }));
 
-    setSaved(false);
+  await supabase
+    .from('site_settings')
+    .update({ [key]: value })
+    .eq('id', 1);
   }
 async function uploadFile(file, folder) {
   if (!file) return null;
@@ -170,16 +173,17 @@ if (!settings) {
         <div className="admin-card">
           <h2>Logo positie</h2>
 
-          <Slider
-            label="Boven"
-            value={settings.brand_top || 0}
-            onChange={(value) => updateLocal('brand_top', value)}
+        <Slider
+  label="Boven"
+  value={settings.brand_top || 0}
+  onChange={(value) => updatePosition('brand_top', value)}
+/>
           />
 
           <Slider
             label="Links"
             value={settings.brand_left || 0}
-            onChange={(value) => updateLocal('brand_left', value)}
+           onChange={(value) => updatePosition('brand_top', value)}
           />
         </div>
 
@@ -189,13 +193,13 @@ if (!settings) {
           <Slider
             label="Boven"
             value={settings.cta_top || 0}
-            onChange={(value) => updateLocal('cta_top', value)}
+          onChange={(value) => updatePosition('brand_top', value)}
           />
 
           <Slider
             label="Links"
             value={settings.cta_left || 0}
-            onChange={(value) => updateLocal('cta_left', value)}
+            onChange={(value) => updatePosition('brand_top', value)}
           />
         </div>
 
@@ -205,13 +209,13 @@ if (!settings) {
           <Slider
             label="Boven"
             value={settings.stories_top || 0}
-            onChange={(value) => updateLocal('stories_top', value)}
+           onChange={(value) => updatePosition('brand_top', value)}
           />
 
           <Slider
             label="Links"
             value={settings.stories_left || 0}
-            onChange={(value) => updateLocal('stories_left', value)}
+           onChange={(value) => updatePosition('brand_top', value)}
           />
 
           <Slider
@@ -219,7 +223,7 @@ if (!settings) {
             value={settings.stories_width || 90}
             min={40}
             max={100}
-            onChange={(value) => updateLocal('stories_width', value)}
+          onChange={(value) => updatePosition('brand_top', value)}
           />
         </div>
       </section>
