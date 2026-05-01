@@ -178,7 +178,6 @@ if (!settings) {
   value={settings.brand_top || 0}
   onChange={(value) => updatePosition('brand_top', value)}
 />
-          />
 
           <Slider
             label="Links"
