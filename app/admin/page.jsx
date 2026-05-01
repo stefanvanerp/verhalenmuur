@@ -36,6 +36,7 @@ const PRESETS = {
 export default function AdminPage() {
   const [settings, setSettings] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const [backgroundFile, setBackgroundFile] = useState(null);
 const [logoFile, setLogoFile] = useState(null);
 
@@ -59,6 +60,7 @@ function updateLocal(key, value) {
   }));
 
   setSaved(false);
+  setDirty(true);
 }
 
 async function updatePosition(key, value) {
@@ -74,6 +76,9 @@ async function updatePosition(key, value) {
 }
 
 async function applyPreset(name) {
+  const confirmed = window.confirm('Weet je zeker dat je deze preset wilt toepassen?');
+  if (!confirmed) return;
+
   const preset = PRESETS[name];
 
   setSettings((current) => ({
@@ -188,6 +193,7 @@ async function saveSettings() {
 
   if (!error) {
     setSettings(nextSettings);
+    setDirty(false);
     setBackgroundFile(null);
     setLogoFile(null);
     setSaved(true);
@@ -356,8 +362,8 @@ if (!settings) {
           Opslaan
         </button>
 
-        {saved && <span>Opgeslagen</span>}
-      </div>
+{dirty && <span className="unsaved">Niet opgeslagen wijzigingen</span>}
+{saved && <span className="saved">Opgeslagen</span>}      </div>
     </main>
   );
 }
