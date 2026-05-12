@@ -114,12 +114,12 @@ export default function ScreenPage() {
         </div>
 
           <div
-      className="layer cta-layer"
-      style={{
-      top: cssPosition(settings?.cta_top, '80px'),
-      left: cssPosition(settings?.cta_left, '50%'),
-      transform: `scale(${settings?.cta_scale || 1})`,
-      transformOrigin: 'center',
+  className="layer cta-layer"
+  style={{
+    top: cssPosition(settings?.cta_top, '80px'),
+    left: cssPosition(settings?.cta_left, '50%'),
+    transform: `translateX(-50%) scale(${settings?.cta_scale || 1})`,
+    transformOrigin: 'center',
   }}
 >
           <div className="cta-bar">
