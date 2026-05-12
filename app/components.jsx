@@ -7,7 +7,9 @@ export function Brand({ settings }) {
         src={settings?.logo_url || '/motu-logo.png'}
         alt="Film logo"
       />
-      <p><strong>4 JUNI</strong> IN DE BIOSCOOP</p>
+      {settings?.brand_subtitle && (
+  <p>{settings.brand_subtitle}</p>
+)}
     </section>
   );
 }
