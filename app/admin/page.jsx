@@ -283,6 +283,14 @@ Open live scherm
             onChange={(e) => updateLocal('cta_title', e.target.value)}
           />
 
+          <label>Logo subtitel</label>
+          <input
+            type="text"
+            value={settings.brand_subtitle || ''}
+            onChange={(e) => updateLocal('brand_subtitle', e.target.value)}
+            placeholder="Bijv. 4 JUNI IN DE BIOSCOOP"
+          />
+
           <label>Instagram handle</label>
           <input
             type="text"
