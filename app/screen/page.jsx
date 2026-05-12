@@ -113,13 +113,15 @@ export default function ScreenPage() {
           <Brand settings={settings} />
         </div>
 
-        <div
-          className="layer cta-layer"
-          style={{
-            top: cssPosition(settings?.cta_top, '80px'),
-            left: cssPosition(settings?.cta_left, '50%'),
-          }}
-        >
+          <div
+      className="layer cta-layer"
+      style={{
+      top: cssPosition(settings?.cta_top, '80px'),
+      left: cssPosition(settings?.cta_left, '50%'),
+      transform: `scale(${settings?.cta_scale || 1})`,
+      transformOrigin: 'center',
+  }}
+>
           <div className="cta-bar">
             <div className="cta-main">
               {settings?.cta_title || 'MAAK JE STORY EN TAG'}
