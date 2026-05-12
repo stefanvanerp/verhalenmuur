@@ -392,6 +392,15 @@ Open live scherm
             onChange={(value) => updatePosition('cta_left', value)}
           />
 
+          <Slider
+            label="Grootte"
+            value={settings.cta_scale || 1}
+            min={0.5}
+            max={2}
+            step={0.1}
+            onChange={(value) => updatePosition('cta_scale', value)}
+          />
+
           <button className="secondary-button" onClick={resetCta}>
             CTA resetten
           </button>
