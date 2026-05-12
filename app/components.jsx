@@ -7,8 +7,16 @@ export function Brand({ settings }) {
         src={settings?.logo_url || '/motu-logo.png'}
         alt="Film logo"
       />
-      {settings?.brand_subtitle && (
-  <p>{settings.brand_subtitle}</p>
+      {{settings?.brand_subtitle && (
+  <p
+    style={{
+      textAlign: 'center',
+      width: '100%',
+      marginTop: '10px',
+    }}
+  >
+    {settings.brand_subtitle}
+  </p>
 )}
     </section>
   );
