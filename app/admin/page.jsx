@@ -453,8 +453,7 @@ Open live scherm
   );
 }
 
-function Slider({ label, value, onChange, min = 0, max = 100 }) {
-  return (
+function Slider({ label, value, onChange, min = 0, max = 100, step = 1 }) {  return (
     <div className="admin-slider">
       <div>
         <label>{label}</label>
@@ -463,6 +462,7 @@ function Slider({ label, value, onChange, min = 0, max = 100 }) {
 
       <input
         type="range"
+        step={step}
         min={min}
         max={max}
         value={value}
