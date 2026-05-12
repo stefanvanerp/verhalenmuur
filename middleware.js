@@ -1,18 +1,21 @@
 export function middleware(request) {
-  const protectedPaths = ["/", "/admin", "/upload"];
-
   const pathname = request.nextUrl.pathname;
 
-  const isProtected =
-    pathname === "/" ||
-    protectedPaths.some((path) =>
-      pathname.startsWith(path)
-    );
+  // Webhook moet openbaar blijven, anders kan Meta geen stories pushen
+  if (pathname.startsWith("/api/instagram/webhook")) {
+    return;
+  }
 
-  // screen mag openbaar blijven
+  // Bioscoopscherm moet openbaar blijven
   if (pathname.startsWith("/screen")) {
     return;
   }
+
+  const protectedPaths = ["/", "/admin", "/upload"];
+
+  const isProtected =
+    pathname === "/" ||
+    protectedPaths.some((path) => pathname.startsWith(path));
 
   if (!isProtected) {
     return;
@@ -42,5 +45,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/", "/admin/:path*", "/upload/:path*"],
+  matcher: ["/", "/admin/:path*", "/upload/:path*", "/api/instagram/webhook/:path*"],
 };
