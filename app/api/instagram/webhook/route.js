@@ -5,14 +5,14 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+const VERIFY_TOKEN = "premiere2026";
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
 
   const mode = searchParams.get("hub.mode");
   const token = searchParams.get("hub.verify_token");
   const challenge = searchParams.get("hub.challenge");
-
-  const VERIFY_TOKEN = "premiere2026";
 
   if (mode === "subscribe" && token === VERIFY_TOKEN) {
     return new Response(challenge, {
@@ -38,40 +38,48 @@ export async function POST(request) {
       const attachments = event.message?.attachments || [];
 
       for (const attachment of attachments) {
-        if (attachment.type !== "story_mention") continue;
+        if (attachment.type !== "story_mention") {
+          continue;
+        }
 
-        const storyUrl = attachment.payload?.url;
-        const senderId = event.sender?.id;
-        const messageId = event.message?.mid;
+        const storyUrl = attachment.payload?.url || "";
+        const senderId = event.sender?.id || "";
+        const messageId = event.message?.mid || "";
 
-  // bepaal type via de echte Content-Type van de URL
-let mediaType = "image";
+        if (!storyUrl) {
+          console.log("Story mention zonder URL ontvangen");
+          continue;
+        }
 
-try {
-  const mediaResponse = await fetch(storyUrl, { method: "HEAD" });
-  const contentType = mediaResponse.headers.get("content-type") || "";
+        let mediaType = "image";
 
-  if (contentType.startsWith("video/")) {
-    mediaType = "video";
-  }
+        try {
+          const mediaResponse = await fetch(storyUrl, { method: "HEAD" });
+          const contentType = mediaResponse.headers.get("content-type") || "";
 
-  console.log("Detected media type:", contentType, mediaType);
-} catch (error) {
-  console.error("Media type detection failed:", error.message);
+          if (contentType.startsWith("video/")) {
+            mediaType = "video";
+          }
 
-  if (storyUrl?.includes(".mp4") || storyUrl?.includes("video")) {
-    mediaType = "video";
-  }
-}
-const { error } = await supabase.from("stories").insert([
-  {
-    user_name: "",
-    caption: "",
-    image_url: storyUrl,
-    media_type: mediaType,
-    status: "new",
-  },
-]);
+          console.log("Detected media type:", contentType, mediaType);
+        } catch (error) {
+          console.error("Media type detection failed:", error.message);
+
+          if (storyUrl.includes(".mp4") || storyUrl.includes("video")) {
+            mediaType = "video";
+          }
+        }
+
+        const { error } = await supabase.from("stories").insert([
+          {
+            user_name: senderId || "instagram",
+            caption: "Instagram story mention",
+            image_url: storyUrl,
+            media_type: mediaType,
+            status: "new",
+          },
+        ]);
+
         if (error) {
           console.error("Supabase insert error:", error.message);
         } else {
